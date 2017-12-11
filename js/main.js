@@ -8,17 +8,25 @@ var playerHand = [];
 var playerHandTotal = 0;
 var dealerHandTotal = 0;
 
-var currentTurn = "player";
+// Since aces get treated differently, it's good to know if players have them!
+// These will get shifted to true if they get an ace but start out default as false
+var playerHasAce = false;
+var dealerHasAce = false;
 
 var dealerGameBoard = $("#dealer");
 var playerGameBoard = $("#user-hand");
 
-// Pobbile statuses are start (initial gameplay), stand, hit
+// Possible statuses are start (initial gameplay), stand, hit
 var dealerStatus = "start";
 var playerStatus = "start";
 
+// Starts game as players turn
+var currentTurn = "player";
+
 
 var checkForWin = function() {
+
+console.log("Current total for dealer is " + dealerHandTotal + ". Current total for player is " + playerHandTotal);
 
 	if (currentTurn === "player") {
 		if (playerHandTotal === 21) {
@@ -26,26 +34,35 @@ var checkForWin = function() {
 
 		} else if (playerHandTotal > 21) {
 
-			// Check value of aces, because if player gets over 21 with an ace
-			// the ace can now equal 1
-			for (const i in playerHand) {
-				if (playerHand[i].name === "ace") {
-					console.log("Player has an ace");
-					playerHand[i].value = 1; // change ace value to 1
-					
+			// First, see if they have an ace since this will adjust their score
+			if (playerHasAce === true) {
+				console.log("Player has an ace");
+
+				//Update total to turn ace into value of 1 instead of 11
+				playerHandTotal -= 10;
+				$("#hand-total").text(playerHandTotal);
+				console.log("Player's new score is " + playerHandTotal);
+				
+				// Now with the new total, see if they won
+				if (playerHandTotal === 21) {
+					console.log("Thanks to that ace, you win");
+				} else if (playerHandTotal < 21) {
+					console.log("Thanks to that ace, keep on playing");
+				} else if (playerHandTotal > 21) {
+					console.log("The ace couldn't save you, you lose.")
 				}
+
+			} else if (playerHasAce === false) {
+				console.log("You have lost this game.");
 			}
+		}	
 
-			console.log("You lose, Dealer wins");
-		}
-
-	// If the dealer is standing, or if it's before we have seen the hidden dealer card, we don't want the below to run
+	// If it's before we have seen the hidden dealer card (ie still player's turn), we don't want the below to run
 	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
 
 		// If it's just the initial round, first we need to flip the hidden card
 		if (dealerHand.length === 2) {
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
-			console.log("Changing second dealer card to " + dealerHand[1].src);
 		} 
 
 		// Now, run through what the dealer should do next based on standard rules
@@ -93,22 +110,25 @@ var dealCard = function(hand, location) {
 
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player") {
+
+		// Check for aces
+		if (hand[index].name === "ace") {
+			playerHasAce = true;
+		}
+
+		// Update scores and totals
 		playerHandTotal += hand[index].value;
 		cardImage.attr("id", "player-card-" + index);
-		console.log("Current total for player is " + playerHandTotal);
-		// Update score and total area
 		$("#hand-total").text(playerHandTotal);
 
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
 		cardImage.attr("id", "dealer-card-" + index);
 
-		// Second card for dealer should show face down
+		// Second card only for dealer should show face down
 		if (dealerHand.length === 2) {
 			cardImage.attr("src", "img/card_back.png");
 		}
-
-		console.log("Current total for dealer is " + dealerHandTotal);
 	}
 
 	checkForWin();
@@ -121,7 +141,7 @@ var startGame = function() {
 	cardsInDeck.sort(function() 
 		{return 0.5 - Math.random()});
 
-	// Deals two cards to start
+	// Deals two cards to start, so loops through ths twice
 	for (var i=0; i < 2; i++) {
 
 		currentTurn = "player";

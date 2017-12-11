@@ -17,8 +17,16 @@
 	width: 85px;
 }
 
-button {
+#hand-total {
+	overflow: auto;
+	font-size: 28px;
 	padding: 10px;
+}
+
+button {
+	height: 75px;
+	width: 75px;
+	margin: 10px;
 }
 
 footer {
