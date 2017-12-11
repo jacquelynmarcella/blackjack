@@ -17,6 +17,10 @@
 	width: 85px;
 }
 
+button {
+	padding: 10px;
+}
+
 footer {
 	padding: 40px;
 	border: 2px solid slategrey;
@@ -28,3 +32,4 @@ footer {
 #computer-players, #rules {
 	display: none;
 }
+

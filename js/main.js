@@ -21,18 +21,34 @@ var playerStatus = "start";
 var checkForWin = function() {
 
 	if (currentTurn === "player") {
-		if (playerHandTotal > 21) {
-		console.log("You lose, Dealer wins");
+		if (playerHandTotal === 21) {
+			console.log("You win");
+
+		} else if (playerHandTotal > 21) {
+
+			// Check value of aces, because if player gets over 21 with an ace
+			// the ace can now equal 1
+			for (const i in playerHand) {
+				if (playerHand[i].name === "ace") {
+					console.log("Player has an ace");
+					playerHand[i].value = 1; // change ace value to 1
+					
+				}
+			}
+
+			console.log("You lose, Dealer wins");
 		}
 
 	// If the dealer is standing, or if it's before we have seen the hidden dealer card, we don't want the below to run
 	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
 
+		// If it's just the initial round, first we need to flip the hidden card
 		if (dealerHand.length === 2) {
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
 			console.log("Changing second dealer card to " + dealerHand[1].src);
 		} 
 
+		// Now, run through what the dealer should do next based on standard rules
 		if (dealerHandTotal < 17) {
 			dealCard(dealerHand, dealerGameBoard);
 
@@ -45,13 +61,23 @@ var checkForWin = function() {
 		// If dealer's cards are 17 or above, must stand
 		} else if (dealerHandTotal >= 17) {
 			dealerStatus = "stand";
-			currentTurn = "player";
 			console.log("Dealer is now standing");
 		} 
 	}
+
+	// Now, we need to compare scores if both are under 21 and standing
+	if (dealerStatus === "stand" && playerStatus =="stand") {
+		if (playerHandTotal > dealerHandTotal) {
+			console.log("Player wins");
+		} else if (playerHandTotal < dealerHandTotal) {
+			console.log("Dealer wins");
+		} else if (playerHandTotal === dealerHandTotal) {
+			console.log("There was a draw");
+		}
+	}
+
 	//TO DO: If there's a win remove event listeners and show some kind of game over screen
 }
-
 
 // Can put player or dealer into function to make this action work for both
 var dealCard = function(hand, location) {
@@ -76,6 +102,12 @@ var dealCard = function(hand, location) {
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
 		cardImage.attr("id", "dealer-card-" + index);
+
+		// Second card for dealer should show face down
+		if (dealerHand.length === 2) {
+			cardImage.attr("src", "img/card_back.png");
+		}
+
 		console.log("Current total for dealer is " + dealerHandTotal);
 	}
 
