@@ -11,12 +11,22 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<header>
-		<h1>blackjack</h1>
-	</header>
-	<nav>
-		Rules, Quit Game, New Game
-	</nav>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">blackjack</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Rules</a></li>
+        <li><a href="#">New Game</a></li>
+        <li><a href="#">Quit Game</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="#">Rules</a></li>
+        <li><a href="#">New Game</a></li>
+        <li><a href="#">Quit Game</a></li>
+      </ul>
+    </div>
+  </nav>
 	<div class="container">
 		<div class="row">
 			<div class="col s12" id="rules">

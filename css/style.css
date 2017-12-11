@@ -8,6 +8,10 @@
 	padding: 20px;
 }
 
+#user-hand {
+	height: 100%;
+}
+
 .row {
 	margin: 0 auto;
 }
