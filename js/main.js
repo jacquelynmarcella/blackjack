@@ -11,9 +11,7 @@ var playerGameBoard = $("#user-hand");
 
 
 // Can put player or dealer into function to make this action work for both
-
 var dealCard = function(hand, location) {
-
 	var cardDrawn = cardsInDeck.pop();
 	hand.push(cardDrawn);
 	var index = hand.length - 1;
@@ -27,24 +25,28 @@ var dealCard = function(hand, location) {
 }
 
 var startGame = function() {
-
-	console.log("New game!");
-	console.log(cardsInDeck);
-
 	// Shuffles the card deck array
 	cardsInDeck.sort(function() 
 		{return 0.5 - Math.random()});
 
-	dealCard(playerHand, playerGameBoard);
-	dealCard(dealerHand, dealerGameBoard);
-	dealCard(playerHand, playerGameBoard);
-	dealCard(dealerHand, dealerGameBoard);
+	// Deals two cards to start
+	for (var i=0; i < 2; i++) {
+		dealCard(playerHand, playerGameBoard);
+		dealCard(dealerHand, dealerGameBoard);
+	}
 }
 
-startGame();
+// Event listeners
+$("#hit-button").click(function(){
+	dealCard(playerHand,playerGameBoard);
+});
+
+$("#stand-button").click(function(){
+	console.log("Stand button clicked");
+});
 
 // Navigation button on mobile
 $(".button-collapse").sideNav();
 
-// Event listeners
-$("#hit-button").click(dealCard(playerHand,playerGameBoard));
+
+startGame();
