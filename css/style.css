@@ -3,17 +3,23 @@
 	text-align: center;
 }
 
-#dealer, #sidebar, #user-hand, #rules, #computer-players, footer {
+.game-section {
 	border: 2px solid slategrey;
 	padding: 20px;
 }
 
-#user-hand {
-	height: 100%;
-}
-
 .row {
 	margin: 0 auto;
+}
+
+.card {
+	height: 130px;
+	width: 85px;
+}
+
+footer {
+	padding: 40px;
+	border: 2px solid slategrey;
 }
 
 /* TO DO: */

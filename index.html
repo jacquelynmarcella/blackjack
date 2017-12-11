@@ -31,25 +31,35 @@
 		<div class="row">
 			<div class="col s12" id="rules">
 				Rules section visible at start, hidden during gameplay but can be pulled back by nav.
-			</div>
-		</div>
-        <div class="row">
-			<div class="col s12" id="dealer">
-				Dealer section of cards, status about who's turn, etc.
+				<button id="start-game">Start</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col s12" id="computer-players">
+			<div class="col s12 m12 game-section">
+        		<h4>Dealer's Hand</h3>
+        	</div>
+        </div>
+        <div class="row">
+			<div class="col m7 s12 game-section">
+				<div id="dealer"></div>
+			</div>
+			<div class="col m5 hide-on-small-only game-section" id="deck-pile">
+				<img src="img/card_back.png" class="card">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 game-section" id="computer-players">
 				Future possible AI players (hidden section)
 			</div>
 		</div>
 		<div class="row">
-      		<div class="col s12 m9" id="user-hand">
-      			Main card deck
+      		<div class="col s12 m9 game-section">
+      			<h4>Your Hand</h3>
+      			<div id="user-hand"></div>
 			</div>
-			<div class="col s12 m3" id="sidebar">
+			<div class="col s12 m3 game-section" id="sidebar">
         		Sidebar of score, how much to bet, etc
-        		<button>Hit</button>
+        		<button id="hit-button">Hit</button>
         		<button>Stand</button>
      	 	</div>
 		</div>

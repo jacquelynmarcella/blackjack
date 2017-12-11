@@ -1,3 +1,5 @@
+//Full array of possible cards
+var cards = 
 [
 	{ 
 		"suit": "clubs",
