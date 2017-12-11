@@ -1,0 +1,20 @@
+* {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#dealer, #sidebar, #user-hand, #rules, #computer-players, footer {
+	border: 2px solid slategrey;
+	padding: 20px;
+}
+
+.row {
+	margin: 0 auto;
+}
+
+/* TO DO: */
+/* Rules to be visible at start, hidden during game play */
+/* AI potential section to come later */
+#computer-players, #rules {
+	display: none;
+}

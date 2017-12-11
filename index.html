@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>blackjack</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<header>
+		<h1>blackjack</h1>
+	</header>
+	<nav>
+		Rules, Quit Game, New Game
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col s12" id="rules">
+				Rules section visible at start, hidden during gameplay but can be pulled back by nav.
+			</div>
+		</div>
+        <div class="row">
+			<div class="col s12" id="dealer">
+				Dealer section of cards, status about who's turn, etc.
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12" id="computer-players">
+				Future possible AI players (hidden section)
+			</div>
+		</div>
+		<div class="row">
+      		<div class="col s12 m9" id="user-hand">
+      			Main card deck
+			</div>
+			<div class="col s12 m3" id="sidebar">
+        		Sidebar of score, how much to bet, etc
+        		<button>Hit</button>
+        		<button>Stand</button>
+     	 	</div>
+		</div>
+    </div>
+    <footer>
+    	Footer content
+    </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
