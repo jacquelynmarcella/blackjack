@@ -52,9 +52,8 @@ h4 {
 }
 
 button {
-	height: 65px;
-	width: 65px;
 	margin: 5px;
+	padding: 10px;
 }
 
 footer {
@@ -64,8 +63,7 @@ footer {
 
 /* TO DO: */
 /* Rules to be visible at start, hidden during game play */
-/* AI potential section to come later */
-#computer-players, #rules {
+#rules {
 	display: none;
 }
 

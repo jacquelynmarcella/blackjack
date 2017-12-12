@@ -20,13 +20,19 @@ var playerGameBoard = $("#user-hand");
 var dealerStatus = "start";
 var playerStatus = "start";
 
+// If the user splits the game:
+var splitGame = false; // default value
+var playerSplitStatus;
+var playerSplitHand = [];
+var playerSplitHandTotal = 0;
+var playerSplitGameBoard = $("#user-split-hand");
+
 // Starts game as players turn
 var currentTurn = "player";
 
 
-
 var gameOver = function() {
-
+	console.log("Game over");
 }
 
 
@@ -35,31 +41,37 @@ var checkForWin = function() {
 console.log("Current total for dealer is " + dealerHandTotal + ". Current total for player is " + playerHandTotal);
 
 	// Checking for win while player is going
-	if (currentTurn === "player") {
+	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
 		// First, see if exactly 21
-		if (playerHandTotal === 21) {
+		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
 			console.log("You win");
 
 		// If they have greater than 21, first check if they have an ace
-		} else if (playerHandTotal > 21) {
+		} else if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
 		
 			if (playerAces > 0) {
-				console.log("Player has an ace");
 
-				//Update total to turn ace into value of 1 instead of 11
-				// To do: May need to update value in index instead? This may be buggy if they get a second ace
-				playerHandTotal = playerHandTotal - (playerAces * 10);
-				$("#hand-total").text(playerHandTotal);
-				console.log("Player's new score is " + playerHandTotal);
-				Materialize.toast("Your ace value changed from 11 to 1", 4000);
+				// If there's an ace, loop through all hand and change value of aces from 11 to 1
+				// Then recalculate the total
+
+				for (var i = 0; i < playerHand.length; i++) {
+					// Only focusing on aces that haven't been changed from 11 to 1
+				    if (playerHand[i].name === "ace" && playerHand[i].value === 11) {
+				        playerHand[i].value = 1;
+				        playerHandTotal -= 10;
+				        $("#hand-total").text(playerHandTotal);
+				        console.log("New player score is " + playerHandTotal);
+				        Materialize.toast("Your ace value changed from 11 to 1", 4000);
+				    }
+				  }
 				
 				// Now with the new total, see if they won
-				if (playerHandTotal === 21) {
+				if (playerHandTotal === 21 || playerSplitHandTotal) {
 					console.log("Thanks to that ace, you win");
-				} else if (playerHandTotal < 21) {
+				} else if (playerHandTotal < 21  || playerSplitHandTotal) {
 					console.log("Thanks to that ace, keep on playing");
-				} else if (playerHandTotal > 21) {
+				} else if (playerHandTotal > 21  || playerSplitHandTotal) {
 					console.log("The ace couldn't save you, you lose.")
 				}
 
@@ -122,7 +134,7 @@ var dealCard = function(hand, location) {
 	cardImage.appendTo($(location));
 
 	// Update total count of cards in hand based on who is playing
-	if (currentTurn === "player") {
+	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
 		// Check for aces
 		if (hand[index].name === "ace") {
@@ -175,17 +187,53 @@ var startGame = function() {
 // Event listeners
 $("#hit-button").click(function(){
 	console.log("Player is requesting another card");
-	currentTurn = "player"; //Just to make sure this is the case, for now..
-	playerStatus = "hit";
-	dealCard(playerHand, playerGameBoard);
+
+	if (splitGame === true) {
+		if (currentTurn === "player") {
+			playerStatus = "hit";
+			dealCard(playerHand, playerGameBoard);
+		} else if (currentTurn === "playerSplit") {
+			playerSplitStatus = "hit";
+			dealCard(playerSplitHand, playerSplitGameBoard);
+		} 
+	} else if (splitGame === false) {
+		playerStatus = "hit";
+		dealCard(playerHand, playerGameBoard);
+	}
 });
 
 $("#stand-button").click(function(){
 	console.log("Player is standing");
-	currentTurn = "dealer";
-	playerStatus = "stand";
-	dealerStatus = "hit";
-	checkForWin(); //We need to see the dealer's card before they just draw again
+
+	if (splitGame === true) {
+		if (currentTurn === "player") {
+			currentTurn = "playerSplit";
+		} else if (currentTurn === "playerSplit") {
+			currentTurn = "dealer";
+			dealerStatus = "hit";
+			checkForWin();
+		}
+	} else {
+		playerStatus = "stand";
+		currentTurn = "dealer";
+		dealerStatus = "hit";
+		checkForWin();
+	}
+	
+ //We need to see the dealer's card before they just draw again
+});
+
+
+// If a certain criteria is reached, then we need to activate this button (it should not be
+// active at the start); only activates after initial dealing if applicable
+$("#split-button").click(function(){
+	splitGame = true; 
+	var splitCard = playerHand.pop();
+	playerSplitHand.push(splitCard);
+	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
+	console.log(cardImage);
+	cardImage.appendTo($(playerSplitGameBoard));
+
 });
 
 // Navigation button on mobile
