@@ -15,13 +15,22 @@
 .card {
 	height: 130px;
 	width: 85px;
+	transition: all 3s;
+}
+
+#user-hand {
+	animation: 1s;
+	transition: all 3s;
 }
 
 #hand-total {
+	background: lightgrey;
 	overflow: auto;
-	font-size: 28px;
-	padding: 10px;
+	padding: 10px 40px;
+	margin: 10px;
+	display: inline-block;
 }
+
 
 button {
 	height: 75px;

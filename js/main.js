@@ -73,7 +73,7 @@ console.log("Current total for dealer is " + dealerHandTotal + ". Current total 
 			console.log("Dealer wins");
 
 		} else if (dealerHandTotal > 21) {
-			console.log("You win");
+			console.log("Player wins");
 
 		// If dealer's cards are 17 or above, must stand
 		} else if (dealerHandTotal >= 17) {
@@ -106,7 +106,12 @@ var dealCard = function(hand, location) {
 	var cardImage = $("<img/>");
 	cardImage.attr("class", "card");
 	cardImage.attr("src", "img/" + hand[index].src);
-	cardImage.appendTo($(location));
+
+	// To Do: work on animations as they go from pile to appropriate location
+	cardImage.appendTo($("#deck-pile"));
+	setTimeout(function(){ 
+		cardImage.appendTo($(location));
+	}, 0);
 
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player") {
@@ -154,13 +159,14 @@ var startGame = function() {
 
 // Event listeners
 $("#hit-button").click(function(){
+	console.log("Player is requesting another card");
 	currentTurn = "player"; //Just to make sure this is the case, for now..
 	playerStatus = "hit";
 	dealCard(playerHand, playerGameBoard);
 });
 
 $("#stand-button").click(function(){
-	console.log("Stand button clicked");
+	console.log("Player is standing");
 	currentTurn = "dealer";
 	playerStatus = "stand";
 	dealerStatus = "hit";

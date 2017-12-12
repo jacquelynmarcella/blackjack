@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>blackjack</title>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -34,17 +34,13 @@
 				<button id="start-game">Start</button>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col s12 m12 game-section">
-        		<h4>Dealer's Hand</h3>
-        	</div>
-        </div>
         <div class="row">
-			<div class="col m7 s12 game-section">
+			<div class="col m9 s12 game-section">
+				<h4>Dealer's Hand</h3>
 				<div id="dealer"></div>
 			</div>
-			<div class="col m5 hide-on-small-only game-section" id="deck-pile">
-				<img src="img/card_back.png" class="card">
+			<div class="col m3 hide-on-small-only game-section" id="deck-pile">
+			<img src="img/card_back.png" class="card pile">
 			</div>
 		</div>
 		<div class="row">
@@ -56,9 +52,14 @@
       		<div class="col s12 m9 game-section">
       			<h4>Your Hand</h3>
       			<div id="user-hand"></div>
+      			<p id="hand-total">0</p>
 			</div>
 			<div class="col s12 m3 game-section" id="sidebar">
-        		<p id="hand-total">0</p>
+				<p>Current chips to show here</p>
+				<form>
+					<input type="radio" id="regular-bet" name="bet-type"> <label for="regular-bet">Regular</label>
+    				<input type="radio" id="double-bet" name="bet-type"> <label for="double-bet">Double</label>
+				</form>
         		<button id="hit-button">Hit</button>
         		<button id="stand-button">Stand</button>
      	 	</div>
@@ -68,6 +69,7 @@
     	Footer content
     </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="js/cards.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
