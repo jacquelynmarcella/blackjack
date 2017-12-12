@@ -11,6 +11,7 @@ var dealerHandTotal = 0;
 // This will increment if the player draws an ace
 // Aces are important as if the player goes over 21, they will want their ace to equal
 // 1 not 11 per blackjack rules
+// Can this just be one for split and regular and it loops through both arra
 var playerAces = 0;
 
 var dealerGameBoard = $("#dealer");
@@ -36,9 +37,27 @@ var gameOver = function() {
 }
 
 
+// Deck should be playerHand or playerSplitHand
+// Total should be playerHandTotal or playerSplitHandTotal
+var reduceAcesValue = function(deck, total) {
+
+	for (var i = 0; i < deck.length; i++) {
+	// Only focusing on aces that haven't been changed from 11 to 1
+		if (deck[i].name === "ace" && deck[i].value === 11) {
+			deck[i].value = 1;
+			total -= 10;
+				       
+			$("#hand-total").text(total);  // Need to adjust this to work w/ both
+			console.log("New player score is " + total);
+			Materialize.toast("Your ace value changed from 11 to 1", 4000);
+		}
+	}
+}
+
 var checkForWin = function() {
 
 console.log("Current total for dealer is " + dealerHandTotal + ". Current total for player is " + playerHandTotal);
+console.log("Split hand total is " + playerSplitHandTotal);
 
 	// Checking for win while player is going
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
@@ -52,26 +71,18 @@ console.log("Current total for dealer is " + dealerHandTotal + ". Current total 
 		
 			if (playerAces > 0) {
 
-				// If there's an ace, loop through all hand and change value of aces from 11 to 1
-				// Then recalculate the total
+				if (currentTurn === "playerSplit") {
+					reduceAcesValue(playerSplitHand, playerSplitHandTotal);
+				} else if (currentTurn ==="player") {
+					reduceAcesValue(playerHand, playerHandTotal);
+				}
 
-				for (var i = 0; i < playerHand.length; i++) {
-					// Only focusing on aces that haven't been changed from 11 to 1
-				    if (playerHand[i].name === "ace" && playerHand[i].value === 11) {
-				        playerHand[i].value = 1;
-				        playerHandTotal -= 10;
-				        $("#hand-total").text(playerHandTotal);
-				        console.log("New player score is " + playerHandTotal);
-				        Materialize.toast("Your ace value changed from 11 to 1", 4000);
-				    }
-				  }
-				
 				// Now with the new total, see if they won
-				if (playerHandTotal === 21 || playerSplitHandTotal) {
+				if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
 					console.log("Thanks to that ace, you win");
-				} else if (playerHandTotal < 21  || playerSplitHandTotal) {
+				} else if (playerHandTotal < 21  || playerSplitHandTotal < 21) {
 					console.log("Thanks to that ace, keep on playing");
-				} else if (playerHandTotal > 21  || playerSplitHandTotal) {
+				} else if (playerHandTotal > 21  || playerSplitHandTotal > 21) {
 					console.log("The ace couldn't save you, you lose.")
 				}
 
@@ -134,7 +145,7 @@ var dealCard = function(hand, location) {
 	cardImage.appendTo($(location));
 
 	// Update total count of cards in hand based on who is playing
-	if (currentTurn === "player" || currentTurn === "playerSplit") {
+	if (currentTurn === "player") {
 
 		// Check for aces
 		if (hand[index].name === "ace") {
@@ -145,6 +156,18 @@ var dealCard = function(hand, location) {
 		playerHandTotal += hand[index].value;
 		cardImage.attr("id", "player-card-" + index);
 		$("#hand-total").text(playerHandTotal);
+
+	} else if (currentTurn === "playerSplit") {
+
+		// Check for aces
+		if (hand[index].name === "ace") {
+			playerAces++;
+		}
+
+		// Update scores and totals
+		playerSplitHandTotal += hand[index].value;
+		cardImage.attr("id", "player-split-card-" + index);
+		$("#split-hand-total").text(playerSplitHandTotal);
 
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
@@ -182,6 +205,9 @@ var startGame = function() {
 		currentTurn = "dealer";
 		dealCard(dealerHand, dealerGameBoard);
 	}
+
+	// Player starts game
+	currentTurn = "player";
 }
 
 // Event listeners
@@ -208,7 +234,9 @@ $("#stand-button").click(function(){
 	if (splitGame === true) {
 		if (currentTurn === "player") {
 			currentTurn = "playerSplit";
+			playerStatus = "stand";
 		} else if (currentTurn === "playerSplit") {
+			playerSplitStatus = "stand";
 			currentTurn = "dealer";
 			dealerStatus = "hit";
 			checkForWin();
@@ -228,11 +256,23 @@ $("#stand-button").click(function(){
 // active at the start); only activates after initial dealing if applicable
 $("#split-button").click(function(){
 	splitGame = true; 
+
+	// Need to adjust scores and totals for each deck
+	playerHandTotal = playerHandTotal - playerHand[1].value;
+	$("#hand-total").text(playerHandTotal);
+
+	playerSplitHandTotal = playerHand[1].value;
+	$("#split-hand-total").text(playerSplitHandTotal);
+
+	// Now, move the item out of the array
 	var splitCard = playerHand.pop();
 	playerSplitHand.push(splitCard);
+
+	// And move the image on the game board
 	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
-	console.log(cardImage);
 	cardImage.appendTo($(playerSplitGameBoard));
+
+	// TO DO: This button should de-activate after being clicked
 
 });
 

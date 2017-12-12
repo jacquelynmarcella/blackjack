@@ -39,7 +39,7 @@ h4 {
 	transition: all 3s;
 }
 
-#hand-total {
+#hand-total, #split-hand-total {
 	background: lightgrey;
 	overflow: auto;
 	padding: 10px 40px;
