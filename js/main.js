@@ -58,13 +58,15 @@ var gameOver = function() {
 
 }
 
-// Should be playerStatus, then playerSplit or dealer gets passed through
-// changeHand(playerStatus);
-// nextDeck(playerSplitStatus);
-// Call this whenever there isn't a clear game over yet but we just need to move along
 var changeHand = function(currentDeckStatus) {
+
+	// Changes whatever deck was at play to now being in "stand" status
 	currentDeckStatus = "stand";
 
+	// Then, dependent on the type of game it figures out what should be moved
+	// to next if there has not been an obvious game over or if the
+	// deck was split, we need to move to the next deck before going full
+	// game over
 	if (currentTurn === "player") {
 
 		if (splitGame === true) {
@@ -85,100 +87,86 @@ var changeHand = function(currentDeckStatus) {
 }
 
 
-// Deck should be playerHand or playerSplitHand
-// Total should be playerHandTotal or playerSplitHandTotal
-var reduceAcesValue = function(deck, total) {
+
+// The purpose of this function is to review the active deck being
+// played (split or default player deck) and change aces value from 11 to 1.
+// This is only called when the player has gone over 21 in their current deck.
+var reduceAcesValue = function(deck) {
 
 	for (var i = 0; i < deck.length; i++) {
 	// Only focusing on aces that haven't been changed from 11 to 1 already
 		if (deck[i].name === "ace" && deck[i].value === 11) {
 			deck[i].value = 1;
-			total -= 10;
-				       
-			$("#hand-total").text(total);  // Need to adjust this to work w/ both
-			console.log("New player score is " + total);
+
+			if (currentTurn === "player") {
+				playerHandTotal -= 10;
+				$("#hand-total").text(playerHandTotal);
+
+			} else if (currentTurn === "playerSplit") {
+				playerSplitHandTotal -= 10;
+				$("#split-hand-total").text(playerSplitHandTotal);
+			}
+
 			Materialize.toast("Your ace value changed from 11 to 1", 4000);
 		}
 	}
 }
 
 // Possibly rename this - more of a next move analysis type of thing
-// Really need to clean this up
 var checkForWin = function() {
 
-console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
+	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
-	// Checking for win while player is going
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
-		// First, see if exactly 21
-		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
+		// First, if we went over 21 we need to check on a couple of parameters
+		if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
+		
+			// If they have greater than 21, first check if they have an ace 
+			// since we will want to change this value from 11 to 1
+			// Then, we will want to see if they are still over 21 after
+
+			if (playerAces > 0) {
+
+				if (currentTurn === "playerSplit") {
+					reduceAcesValue(playerSplitHand);
+
+				} else if (currentTurn ==="player") {
+					reduceAcesValue(playerHand);
+				}
+			}
+		
+			if (currentTurn === "player" && splitGame === true) {
+				changeHand(playerStatus);
+
+			} else if (currentTurn === "playerSplit" && splitGame === true) {
+				if (playerSplitHandTotal > 21) {
+					changeHand(playerSplitStatus); // Because this is checking both, we dont want to run this if just the first card deck is over 21
+				}
+			
+			} else if (currentTurn === "player" && splitGame === false) {
+				gameOver();
+			}
+
+		// See if the player got exactly 21
+		} else if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
 			
 			// If it's a splitgame, we need to move onto the next player deck before fully game over
 			if (currentTurn === "player" && splitGame === true) {
 				changeHand(playerStatus);
-				console.log(currentTurn + " is the current turn");
 
 			} else if (currentTurn === "playerSplit" && splitGame === true) {
 				gameOver();
 				// If we get 21, should finish up and see if a draw with dealer or if player wins
 				// on either one of their decks
+				// Game over function will tell us if dealer also got 21
 
 			} else if (currentTurn === "player" && splitGame === false) {
 				gameOver();
 				// If we get 21, should finish up and see if a draw with dealer or if player wins
-			}
-
-		// If they have greater than 21, first check if they have an ace
-		} else if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
-		
-			if (playerAces > 0) {
-
-				if (currentTurn === "playerSplit") {
-					reduceAcesValue(playerSplitHand, playerSplitHandTotal);
-
-				} else if (currentTurn ==="player") {
-					reduceAcesValue(playerHand, playerHandTotal);
-				}
-
-				// Now with the new total, see what their standing is
-				// because it could be less than 21, or exactly 21 now
-
-				if (playerHandTotal === 21) {
-
-					if (currentTurn === "player" && splitGame === true) {
-						changeHand(playerStatus);
-					}
-
-				} else if (playerHandTotal < 21) {
-					console.log ("Keep on playing");
-
-				} else if (playerHandTotal > 21) {
-
-					if (currentTurn === "player" && splitGame === true) {
-						changeHand(playerStatus);
-
-					} else if (currentTurn === "playerSplit" && splitGame === true) {
-						changeHand(playerSplitStatus);
-
-					} else if (currentTurn === "player" && splitGame === false) {
-						gameOver();
-					}
-				}
-
-			} else if (playerAces === 0) {
-				if (currentTurn === "player" && splitGame === true) {
-					changeHand(playerStatus);
-
-				} else if (currentTurn === "playerSplit" && splitGame === true) {
-					changeHand(playerSplitStatus);
-
-				} else if (currentTurn === "player" && splitGame === false) {
-					gameOver();
-				}
+				// Game over function will tell us if dealer also got 21
 			}
 		}	
-
 	// If it's before we have seen the hidden dealer card (ie still player's turn), we don't want the below to run
 	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
 
@@ -288,7 +276,7 @@ var startGame = function() {
 
 // Event listeners
 $("#hit-button").click(function(){
-	console.log("Player is requesting another card");
+	console.log(currentTurn + " is requesting another card");
 
 	if (currentTurn === "player") {
 		dealCard(playerHand, playerGameBoard);
@@ -309,7 +297,7 @@ $("#stand-button").click(function(){
 	} else if (currentTurn === "playerSplit") {
 		changeHand(playerSplitStatus);
 	}
-	
+
 });
 
 
@@ -337,6 +325,19 @@ $("#split-button").click(function(){
 
 	// TO DO: This button should de-activate after being clicked
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
+
+});
+
+$("#double-down-button").click(function(){
+	console.log("Player has doubled their bet");
+
+	//Double chip count wagered
+	//Deactivate DD after click
+
+	//The player is allowed to increase the initial bet by up to 100% in 
+	//exchange for committing to stand after receiving exactly one more card.
+
+	// SOme places dont let you DD After splitting. Starting with that logic first
 
 });
 

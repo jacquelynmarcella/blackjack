@@ -18,6 +18,15 @@ h4 {
 	margin: 0 auto;
 }
 
+
+input[type="radio"]:checked+label{
+	border: 2px solid red;
+} 
+
+input[type="radio"]#ten-chip-bet:unchecked { 
+    visibility:hidden;
+}
+
 #deck-pile, #dealer {
 	display: inline-block;
 }
@@ -32,6 +41,7 @@ h4 {
 	height: 50px;
 	width: 50px;
 	margin: 5px;
+	display: inline-block;
 }
 
 #user-hand {
