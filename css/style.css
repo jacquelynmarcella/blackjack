@@ -44,6 +44,10 @@ input[type="radio"]#ten-chip-bet:unchecked {
 	display: inline-block;
 }
 
+.wager:hover {
+	outline: 2px solid red;
+}
+
 #user-hand {
 	animation: 1s;
 	transition: all 3s;
@@ -64,6 +68,10 @@ input[type="radio"]#ten-chip-bet:unchecked {
 button {
 	margin: 5px;
 	padding: 10px;
+}
+
+.disabled-button {
+	border: 1px solid red;
 }
 
 footer {

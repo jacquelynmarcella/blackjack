@@ -1,41 +1,52 @@
-// Setting up an array of cards in the current deck so that way we can pop
-// cards out of it as the came progresses without impacting the original array
-// that holds all possible card values
+// Starting game board values
 var cardsInDeck = cards;
+var currentTurn = "player";
+var currentWager = 0;
+
+// Dealer hand and starting totals
 var dealerHand = [];
-var playerHand = [];
-
-var playerHandTotal = 0;
 var dealerHandTotal = 0;
-
-// This will increment if the player draws an ace
-// Aces are important as if the player goes over 21, they will want their ace to equal
-// 1 not 11 per blackjack rules
-// Can this just be one for split and regular and it loops through both arra
-var playerAces = 0;
-
 var dealerGameBoard = $("#dealer");
+var dealerStatus = "start"; // Possible statuses are start (initial gameplay), stand, hit
+
+// Player hand and starting totals
+var playerHand = [];
+var playerHandTotal = 0;
 var playerGameBoard = $("#user-hand");
+var playerStatus = "start";  // Possible statuses are start (initial gameplay), stand, hit
 
-// Possible statuses are start (initial gameplay), stand, hit
-var dealerStatus = "start";
-var playerStatus = "start";
+//Because aces can equal 1 or 11, need to quickly know if player has aces so we can
+// adjust value if they go over 21
+var playerAces = 0;  
 
-// If the user splits the game:
-var splitGame = false; // default value
+// Player split game variables if the player splits their hand
+var splitGame = false; // default value is false, must be turned true
 var playerSplitStatus;
 var playerSplitHand = [];
 var playerSplitHandTotal = 0;
 var playerSplitGameBoard = $("#user-split-hand");
 
-// Starts game as players turn
-var currentTurn = "player";
+// Buttons
+var startButton = $("#start-game-button");
+var doubleDownButton = $("#double-down-button");
+var hitButton = $("#hit-button");
+var standButton = $("#stand-button");
+var splitButton = $("#split-button");
 
 
 var gameOver = function() {
 	console.log("Game over");
 
 	// Checking final scores
+
+	// Dealer && Player < 21
+			//dealer > player - dealer wins
+			// and if dealer > player split, dealer wins
+			// player > dealer || playersplit > dealer - player wins
+			// If Dealer & player = same value - draw
+			// and if dealer & playerspplit = same value - draw
+
+
 
 	if (dealerStatus === "stand" && playerStatus =="stand") {
 
@@ -86,8 +97,6 @@ var changeHand = function(currentDeckStatus) {
 
 }
 
-
-
 // The purpose of this function is to review the active deck being
 // played (split or default player deck) and change aces value from 11 to 1.
 // This is only called when the player has gone over 21 in their current deck.
@@ -116,6 +125,11 @@ var reduceAcesValue = function(deck) {
 var checkForWin = function() {
 
 	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
+
+	// Player can only do DD after first 2 cards drawn
+	if (playerHand.length === 3 || dealerStatus === "hit" || currentTurn === "playerSplit") {
+		disableButton(doubleDownButton);
+	}
 
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
@@ -169,6 +183,15 @@ var checkForWin = function() {
 		}	
 	// If it's before we have seen the hidden dealer card (ie still player's turn), we don't want the below to run
 	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
+		// Need this "hit" status otherwise this would run when cards still
+		// being dealt, which we dont want
+
+		// Deactivate buttons now
+		// May be able to do function to minimize code here, like buttton off and adding class..
+
+		disableButton(standButton);
+		disableButton(hitButton);
+		disableButton(splitButton);
 
 		// If it's just the initial round, first we need to flip the hidden card
 		// Turn this into a flipcard function
@@ -196,8 +219,14 @@ var checkForWin = function() {
 
 }
 
+var disableButton = function(buttonName) {
+	$(buttonName).off();
+	$(buttonName).addClass("disabled-button");
+}
+
 // Can put player or dealer into function to make this action work for both
 var dealCard = function(hand, location) {
+
 	var cardDrawn = cardsInDeck.pop();
 	hand.push(cardDrawn);
 	var index = hand.length - 1;
@@ -270,11 +299,39 @@ var startGame = function() {
 
 	// Player starts game
 	currentTurn = "player";
-
+	
 	// TO DO: Activate functionality to split game based on matching criteria of card
 }
 
 // Event listeners
+
+$("#start-game-button").click(function(){
+	if (currentWager === 0) {
+		console.log("User must select a wager before beginning");
+	} else {
+		$("#current-wager").text(currentWager);
+		startGame();
+	}
+});
+
+// Clicking the chip images allows for you to select your wager
+$("#chip-5").click(function(){
+	currentWager = 5;
+});
+
+$("#chip-25").click(function(){
+	currentWager = 25;
+});
+
+$("#chip-50").click(function(){
+	currentWager = 50;
+});
+
+$("#chip-100").click(function(){
+	currentWager = 100;
+});
+
+
 $("#hit-button").click(function(){
 	console.log(currentTurn + " is requesting another card");
 
@@ -323,6 +380,8 @@ $("#split-button").click(function(){
 
 	console.log("Split game. Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
+	disableButton(splitButton);
+
 	// TO DO: This button should de-activate after being clicked
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
 
@@ -330,20 +389,13 @@ $("#split-button").click(function(){
 
 $("#double-down-button").click(function(){
 	console.log("Player has doubled their bet");
-
-	//Double chip count wagered
-	//Deactivate DD after click
-
-	//The player is allowed to increase the initial bet by up to 100% in 
-	//exchange for committing to stand after receiving exactly one more card.
-
-	// SOme places dont let you DD After splitting. Starting with that logic first
-
+	currentWager = currentWager * 2;
+	$("#current-wager").text(currentWager);
+	disableButton(doubleDownButton);
 });
+
+
 
 // Navigation button on mobile
 // TO DO: Break out page transitional elements into separate JS file
 $(".button-collapse").sideNav();
-
-
-startGame();

@@ -37,11 +37,12 @@
   		<div class="row">
 			<div class="col s12 game-section" id="wager-options">
 				<h4>Select your bet</h4>
-				<a href="#"><img src="img/chip_yellow_top.png" class="wager" id="chip-5">5</a>
-				<a href="#"><img src="img/chip_red_top.png" class="wager" id="chip-25">25</a>
-				<a href="#"><img src="img/chip_yellow_top.png" class="wager" id="chip-50">50</a>
-				<a href="#"><img src="img/chip_red_top.png" class="wager" id="chip-100">100</a>
-				<button id="start-game">Start</button>
+				<!-- Add alt tags -->
+				<a href="#" id="chip-5"><img src="img/chip_yellow_top.png" class="wager">5</a>
+				<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager">25</a>
+				<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager">50</a>
+				<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager">100</a>
+				<button id="start-game-button">Start</button>
 			</div>
   		</div>
   	</div>
@@ -65,7 +66,7 @@
       			<p id="split-hand-total">0</p>
 			</div>
 			<div class="col s12 m3 game-section" id="sidebar">
-				<p>Betting box <span>___</span> chips.</p>
+				<p>You have bet <span id="current-wager">___</span> chips.</p>
 				<p>Chip balance <span>___</span></p>
 	
         		<button id="hit-button">Hit</button>
