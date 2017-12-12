@@ -34,6 +34,28 @@ var currentTurn = "player";
 
 var gameOver = function() {
 	console.log("Game over");
+
+	// Checking final scores
+
+	if (dealerStatus === "stand" && playerStatus =="stand") {
+
+		// Need to check if above or over 21 here and do more robust logic
+
+		if (playerHandTotal > dealerHandTotal) {
+			console.log("Player wins with deck 1");
+
+		} else if (playerHandTotal < dealerHandTotal) {
+			console.log("Dealer wins");
+
+		// This needs to factor in if both are over 21, both lose.
+		} else if (playerHandTotal === dealerHandTotal) {
+			console.log("There was a draw");
+		}
+	}
+
+
+//TO DO: If there's a win remove event listeners and show some kind of game over screen
+
 }
 
 
@@ -42,7 +64,7 @@ var gameOver = function() {
 var reduceAcesValue = function(deck, total) {
 
 	for (var i = 0; i < deck.length; i++) {
-	// Only focusing on aces that haven't been changed from 11 to 1
+	// Only focusing on aces that haven't been changed from 11 to 1 already
 		if (deck[i].name === "ace" && deck[i].value === 11) {
 			deck[i].value = 1;
 			total -= 10;
@@ -54,17 +76,32 @@ var reduceAcesValue = function(deck, total) {
 	}
 }
 
+// Possibly rename this - more of a next move analysis type of thing
+// Really need to clean this up
 var checkForWin = function() {
 
-console.log("Current total for dealer is " + dealerHandTotal + ". Current total for player is " + playerHandTotal);
-console.log("Split hand total is " + playerSplitHandTotal);
+console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
 	// Checking for win while player is going
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
 		// First, see if exactly 21
 		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
-			console.log("You win");
+			
+			// If it's a splitgame, we need to move onto the next player deck before fully game over
+			if (currentTurn === "player" && splitGame === true) {
+				playerStatus = "stand";
+				currentTurn = "playerSplit";
+
+			} else if (currentTurn === "playerSplit" && splitGame === true) {
+				gameOver();
+				// If we get 21, should finish up and see if a draw with dealer or if player wins
+				// on either one of their decks
+
+			} else if (currentTurn === "player" && splitGame === false) {
+				gameOver();
+				// If we get 21, should finish up and see if a draw with dealer or if player wins
+			}
 
 		// If they have greater than 21, first check if they have an ace
 		} else if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
@@ -73,21 +110,50 @@ console.log("Split hand total is " + playerSplitHandTotal);
 
 				if (currentTurn === "playerSplit") {
 					reduceAcesValue(playerSplitHand, playerSplitHandTotal);
+
 				} else if (currentTurn ==="player") {
 					reduceAcesValue(playerHand, playerHandTotal);
 				}
 
-				// Now with the new total, see if they won
-				if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
-					console.log("Thanks to that ace, you win");
-				} else if (playerHandTotal < 21  || playerSplitHandTotal < 21) {
-					console.log("Thanks to that ace, keep on playing");
-				} else if (playerHandTotal > 21  || playerSplitHandTotal > 21) {
-					console.log("The ace couldn't save you, you lose.")
+				// Now with the new total, see what their standing is
+				// because it could be less than 21, or exactly 21 now
+
+				if (playerHandTotal === 21) {
+
+					if (currentTurn === "player" && splitGame === true) {
+						playerStatus = "stand";
+						currentTurn = "playerSplit";
+						// Maybe turn this string into a switch player function since I repeat it
+					}
+
+				} else if (playerHandTotal < 21) {
+					console.log ("Keep on playing");
+
+				} else if (playerHandTotal > 21) {
+
+					if (currentTurn === "player" && splitGame === true) {
+						playerStatus = "stand";
+						currentTurn = "playerSplit";
+						// Turn this into switch to split deck function (used 3x now)
+					} else if (currentTurn === "playerSplit" && splitGame === true) {
+						// Shift to dealer's turn now before full game over to see
+						// this is because it would only be 1 of 2 decks that is over
+					} else if (currentTurn === "player" && splitGame === false) {
+						gameOver();
+					}
 				}
 
 			} else if (playerAces === 0) {
-				console.log("You have lost this game.");
+				if (currentTurn === "player" && splitGame === true) {
+					playerStatus = "stand";
+					currentTurn = "playerSplit";
+					// The switch player function again (used 4x now)
+				} else if (currentTurn === "splitPlayer" && splitGame === true) {
+					// Shift to dealer's turn now before full game over to see
+					// this is because it would only be 1 of 2 decks that is over					
+				} else if (currentTurn === "player" && splitGame === false) {
+					gameOver();
+				}
 			}
 		}	
 
@@ -95,6 +161,7 @@ console.log("Split hand total is " + playerSplitHandTotal);
 	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
 
 		// If it's just the initial round, first we need to flip the hidden card
+		// Turn this into a flipcard function
 		if (dealerHand.length === 2) {
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
 		} 
@@ -104,30 +171,19 @@ console.log("Split hand total is " + playerSplitHandTotal);
 			dealCard(dealerHand, dealerGameBoard);
 
 		} else if (dealerHandTotal === 21) {
-			console.log("Dealer wins");
+			gameOver();
 
 		} else if (dealerHandTotal > 21) {
-			console.log("Player wins");
+			gameOver();
 
-		// If dealer's cards are 17 or above, must stand
+		// If dealer's cards are 17 or above, must stand and then we will check final scores
 		} else if (dealerHandTotal >= 17) {
 			dealerStatus = "stand";
-			console.log("Dealer is now standing");
-			checkForWin();
-		} 
-
-	// Now, we need to compare scores if both are under 21 and standing
-	} else if (dealerStatus === "stand" && playerStatus =="stand") {
-		if (playerHandTotal > dealerHandTotal) {
-			console.log("Player wins");
-		} else if (playerHandTotal < dealerHandTotal) {
-			console.log("Dealer wins");
-		} else if (playerHandTotal === dealerHandTotal) {
-			console.log("There was a draw");
+			gameOver();
 		}
-	}
 
-	//TO DO: If there's a win remove event listeners and show some kind of game over screen
+	} 
+
 }
 
 // Can put player or dealer into function to make this action work for both
@@ -147,7 +203,7 @@ var dealCard = function(hand, location) {
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player") {
 
-		// Check for aces
+		// First, we need to make note of if there's aces or not in the active deck
 		if (hand[index].name === "ace") {
 			playerAces++;
 		}
@@ -185,10 +241,7 @@ var dealCard = function(hand, location) {
 			cardImage.attr("src", "img/card_back.png");
 		}
 	}
-
 	checkForWin();
-
-	//TO DO: Second card should be face down for dealer only
 }
 
 var startGame = function() {
@@ -196,18 +249,19 @@ var startGame = function() {
 	cardsInDeck.sort(function() 
 		{return 0.5 - Math.random()});
 
-	// Deals two cards to start, so loops through ths twice
+	// Deals two cards to start, so loops through this twice
+	// In blackjack, 
 	for (var i=0; i < 2; i++) {
-
 		currentTurn = "player";
 		dealCard(playerHand, playerGameBoard);
-
 		currentTurn = "dealer";
 		dealCard(dealerHand, dealerGameBoard);
 	}
 
 	// Player starts game
 	currentTurn = "player";
+
+	// TO DO: Activate functionality to split game based on matching criteria of card
 }
 
 // Event listeners
@@ -247,8 +301,7 @@ $("#stand-button").click(function(){
 		dealerStatus = "hit";
 		checkForWin();
 	}
-	
- //We need to see the dealer's card before they just draw again
+
 });
 
 
@@ -272,7 +325,10 @@ $("#split-button").click(function(){
 	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
 	cardImage.appendTo($(playerSplitGameBoard));
 
+	console.log("Split game. Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
+
 	// TO DO: This button should de-activate after being clicked
+	// TO DO: Double down the bets/adjust bets accordingly when this is selected
 
 });
 
