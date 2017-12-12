@@ -58,6 +58,32 @@ var gameOver = function() {
 
 }
 
+// Should be playerStatus, then playerSplit or dealer gets passed through
+// changeHand(playerStatus);
+// nextDeck(playerSplitStatus);
+// Call this whenever there isn't a clear game over yet but we just need to move along
+var changeHand = function(currentDeckStatus) {
+	currentDeckStatus = "stand";
+
+	if (currentTurn === "player") {
+
+		if (splitGame === true) {
+			currentTurn = "playerSplit";
+
+		} else if (splitGame === false) {
+			currentTurn = "dealer";
+			dealerStatus = "hit";
+			checkForWin(); 
+		}
+
+	} else if (currentTurn === "playerSplit") {
+		currentTurn = "dealer";
+		dealerStatus = "hit";
+		checkForWin();
+	}
+
+}
+
 
 // Deck should be playerHand or playerSplitHand
 // Total should be playerHandTotal or playerSplitHandTotal
@@ -90,8 +116,8 @@ console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " 
 			
 			// If it's a splitgame, we need to move onto the next player deck before fully game over
 			if (currentTurn === "player" && splitGame === true) {
-				playerStatus = "stand";
-				currentTurn = "playerSplit";
+				changeHand(playerStatus);
+				console.log(currentTurn + " is the current turn");
 
 			} else if (currentTurn === "playerSplit" && splitGame === true) {
 				gameOver();
@@ -121,9 +147,7 @@ console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " 
 				if (playerHandTotal === 21) {
 
 					if (currentTurn === "player" && splitGame === true) {
-						playerStatus = "stand";
-						currentTurn = "playerSplit";
-						// Maybe turn this string into a switch player function since I repeat it
+						changeHand(playerStatus);
 					}
 
 				} else if (playerHandTotal < 21) {
@@ -132,12 +156,11 @@ console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " 
 				} else if (playerHandTotal > 21) {
 
 					if (currentTurn === "player" && splitGame === true) {
-						playerStatus = "stand";
-						currentTurn = "playerSplit";
-						// Turn this into switch to split deck function (used 3x now)
+						changeHand(playerStatus);
+
 					} else if (currentTurn === "playerSplit" && splitGame === true) {
-						// Shift to dealer's turn now before full game over to see
-						// this is because it would only be 1 of 2 decks that is over
+						changeHand(playerSplitStatus);
+
 					} else if (currentTurn === "player" && splitGame === false) {
 						gameOver();
 					}
@@ -145,12 +168,11 @@ console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " 
 
 			} else if (playerAces === 0) {
 				if (currentTurn === "player" && splitGame === true) {
-					playerStatus = "stand";
-					currentTurn = "playerSplit";
-					// The switch player function again (used 4x now)
-				} else if (currentTurn === "splitPlayer" && splitGame === true) {
-					// Shift to dealer's turn now before full game over to see
-					// this is because it would only be 1 of 2 decks that is over					
+					changeHand(playerStatus);
+
+				} else if (currentTurn === "playerSplit" && splitGame === true) {
+					changeHand(playerSplitStatus);
+
 				} else if (currentTurn === "player" && splitGame === false) {
 					gameOver();
 				}
@@ -268,40 +290,26 @@ var startGame = function() {
 $("#hit-button").click(function(){
 	console.log("Player is requesting another card");
 
-	if (splitGame === true) {
-		if (currentTurn === "player") {
-			playerStatus = "hit";
-			dealCard(playerHand, playerGameBoard);
-		} else if (currentTurn === "playerSplit") {
-			playerSplitStatus = "hit";
-			dealCard(playerSplitHand, playerSplitGameBoard);
-		} 
-	} else if (splitGame === false) {
-		playerStatus = "hit";
+	if (currentTurn === "player") {
 		dealCard(playerHand, playerGameBoard);
+
+	} else if (currentTurn === "playerSplit") {
+		playerSplitStatus = "hit";
+		dealCard(playerSplitHand, playerSplitGameBoard);
 	}
+
 });
 
 $("#stand-button").click(function(){
 	console.log("Player is standing");
 
-	if (splitGame === true) {
-		if (currentTurn === "player") {
-			currentTurn = "playerSplit";
-			playerStatus = "stand";
-		} else if (currentTurn === "playerSplit") {
-			playerSplitStatus = "stand";
-			currentTurn = "dealer";
-			dealerStatus = "hit";
-			checkForWin();
-		}
-	} else {
-		playerStatus = "stand";
-		currentTurn = "dealer";
-		dealerStatus = "hit";
-		checkForWin();
-	}
+	if (currentTurn === "player") {
+		changeHand(playerStatus);
 
+	} else if (currentTurn === "playerSplit") {
+		changeHand(playerSplitStatus);
+	}
+	
 });
 
 
