@@ -8,10 +8,10 @@ var playerHand = [];
 var playerHandTotal = 0;
 var dealerHandTotal = 0;
 
-// Since aces get treated differently, it's good to know if players have them!
-// These will get shifted to true if they get an ace but start out default as false
-var playerHasAce = false;
-var dealerHasAce = false;
+// This will increment if the player draws an ace
+// Aces are important as if the player goes over 21, they will want their ace to equal
+// 1 not 11 per blackjack rules
+var playerAces = 0;
 
 var dealerGameBoard = $("#dealer");
 var playerGameBoard = $("#user-hand");
@@ -24,24 +24,35 @@ var playerStatus = "start";
 var currentTurn = "player";
 
 
+
+var gameOver = function() {
+
+}
+
+
 var checkForWin = function() {
 
 console.log("Current total for dealer is " + dealerHandTotal + ". Current total for player is " + playerHandTotal);
 
+	// Checking for win while player is going
 	if (currentTurn === "player") {
+
+		// First, see if exactly 21
 		if (playerHandTotal === 21) {
 			console.log("You win");
 
+		// If they have greater than 21, first check if they have an ace
 		} else if (playerHandTotal > 21) {
-
-			// First, see if they have an ace since this will adjust their score
-			if (playerHasAce === true) {
+		
+			if (playerAces > 0) {
 				console.log("Player has an ace");
 
 				//Update total to turn ace into value of 1 instead of 11
-				playerHandTotal -= 10;
+				// To do: May need to update value in index instead? This may be buggy if they get a second ace
+				playerHandTotal = playerHandTotal - (playerAces * 10);
 				$("#hand-total").text(playerHandTotal);
 				console.log("Player's new score is " + playerHandTotal);
+				Materialize.toast("Your ace value changed from 11 to 1", 4000);
 				
 				// Now with the new total, see if they won
 				if (playerHandTotal === 21) {
@@ -52,7 +63,7 @@ console.log("Current total for dealer is " + dealerHandTotal + ". Current total 
 					console.log("The ace couldn't save you, you lose.")
 				}
 
-			} else if (playerHasAce === false) {
+			} else if (playerAces === 0) {
 				console.log("You have lost this game.");
 			}
 		}	
@@ -79,11 +90,11 @@ console.log("Current total for dealer is " + dealerHandTotal + ". Current total 
 		} else if (dealerHandTotal >= 17) {
 			dealerStatus = "stand";
 			console.log("Dealer is now standing");
+			checkForWin();
 		} 
-	}
 
 	// Now, we need to compare scores if both are under 21 and standing
-	if (dealerStatus === "stand" && playerStatus =="stand") {
+	} else if (dealerStatus === "stand" && playerStatus =="stand") {
 		if (playerHandTotal > dealerHandTotal) {
 			console.log("Player wins");
 		} else if (playerHandTotal < dealerHandTotal) {
@@ -108,17 +119,14 @@ var dealCard = function(hand, location) {
 	cardImage.attr("src", "img/" + hand[index].src);
 
 	// To Do: work on animations as they go from pile to appropriate location
-	cardImage.appendTo($("#deck-pile"));
-	setTimeout(function(){ 
-		cardImage.appendTo($(location));
-	}, 0);
+	cardImage.appendTo($(location));
 
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player") {
 
 		// Check for aces
 		if (hand[index].name === "ace") {
-			playerHasAce = true;
+			playerAces++;
 		}
 
 		// Update scores and totals
@@ -130,6 +138,13 @@ var dealCard = function(hand, location) {
 		dealerHandTotal += hand[index].value;
 		cardImage.attr("id", "dealer-card-" + index);
 
+		// Shows only the first card to mobile viewers in an abbreviated form
+		// To do: once or if dealer stands, then expand out full card view for the dealer
+		// as they make their next plays
+		if (index === 0) {
+			$("#dealer-condensed").text(hand[0].suit + " " + hand[0].name);
+		}
+		
 		// Second card only for dealer should show face down
 		if (dealerHand.length === 2) {
 			cardImage.attr("src", "img/card_back.png");

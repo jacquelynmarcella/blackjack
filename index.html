@@ -27,20 +27,23 @@
       </ul>
     </div>
   </nav>
-	<div class="container">
-		<div class="row">
+  	<div class="container">
+  		<div class="row">
 			<div class="col s12" id="rules">
 				Rules section visible at start, hidden during gameplay but can be pulled back by nav.
 				<button id="start-game">Start</button>
 			</div>
 		</div>
+  	</div>
+	<div class="container">
         <div class="row">
-			<div class="col m9 s12 game-section">
-				<h4>Dealer's Hand</h3>
-				<div id="dealer"></div>
-			</div>
-			<div class="col m3 hide-on-small-only game-section" id="deck-pile">
-			<img src="img/card_back.png" class="card pile">
+			<div class="col m12 s12 game-section">
+				<h4>Dealer's Hand</h4>
+				<div id="deck-pile" class="game-section hide-on-small-only">
+					<img src="img/card_back.png" class="card pile">
+				</div>
+				<div id="dealer" class="game-section hide-on-small-only"></div>
+				<div id="dealer-condensed" class="s12 hide-on-med-and-up game-section"></div>
 			</div>
 		</div>
 		<div class="row">
@@ -50,16 +53,13 @@
 		</div>
 		<div class="row">
       		<div class="col s12 m9 game-section">
-      			<h4>Your Hand</h3>
+      			<h4>Your Hand</h4>
       			<div id="user-hand"></div>
       			<p id="hand-total">0</p>
 			</div>
 			<div class="col s12 m3 game-section" id="sidebar">
-				<p>Current chips to show here</p>
-				<form>
-					<input type="radio" id="regular-bet" name="bet-type"> <label for="regular-bet">Regular</label>
-    				<input type="radio" id="double-bet" name="bet-type"> <label for="double-bet">Double</label>
-				</form>
+				<img src="img/chip_yellow_top.png" class="wager">
+				<img src="img/chip_red_top.png" class="wager">
         		<button id="hit-button">Hit</button>
         		<button id="stand-button">Stand</button>
      	 	</div>
