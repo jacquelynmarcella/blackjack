@@ -31,14 +31,14 @@ function gameOver() {
 			console.log("Player wins");
 			gameWinner = "player";
 
-		} else if (playerHandTotal > 21) {
-			if (splitGame === true && playerSplitHandTotal > 21) {
-				console.log("There was a draw");
-				gameWinner = "bust";
-			} else if (splitGame === false) {
-				console.log("There was a draw");
-				gameWinner = "bust";
-			}	
+		// } else if (playerHandTotal > 21) {
+		// 	if (splitGame === true && playerSplitHandTotal > 21) {
+		// 		console.log("There was a draw");
+		// 		gameWinner = "bust";
+		// 	} else if (splitGame === false) {
+		// 		console.log("There was a draw");
+		// 		gameWinner = "bust";
+			// }	
 		}
 
 	// If the dealer got less than 21
@@ -65,16 +65,16 @@ function gameOver() {
 	adjustChipBalance();
 } 
 
-//New section to do chips etc
+
 function adjustChipBalance() {
 
 	if (gameWinner === "player") {
 
-		// Check for blackjack scenario for 3:2 payout (1 ace, 1 10pt card)
+		// Check for blackjack scenario for 3:2 payout (requires 1 ace, 1 10pt card)
 		if (playerHasAce === true && playerHandTotal === 21 && playerHand.length === 2) {
-			currentChipBalance = currentWager * (3/2);
+			currentChipBalance += currentWager * (3/2);
 		} else if (playerHasAce === true && playerSplitHandTotal === 21 && playerSplitHand.length === 2) {
-			currentChipBalance = currentWager * (3/2);
+			currentChipBalance += currentWager * (3/2);
 		// Otherwise it's a 1:1 payout
 		} else {
 			currentChipBalance += currentWager;
@@ -86,14 +86,11 @@ function adjustChipBalance() {
 	// Net neutral, you get your money back (I think?)
 	} else if (gameWinner === "tie") {
 		currentChipBalance += currentWager;		
-
-	} else if (gameWinner === "bust") {  //if both dealer and player go over 21
-		console.log("No action needed here, dealer gets yo money");	
 	}
 	console.log("New chip balance is " + currentChipBalance);
 	$("#current-chip-balance").text(currentChipBalance);
 }
 
 function announceWinner() {
-	console.log("Modal to popup with relevant info");
+	console.log("Modal or other thing to popup with relevant info");
 }

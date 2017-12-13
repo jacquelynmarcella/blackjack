@@ -52,6 +52,33 @@ function dealCard(hand, location) {
 	checkForWin();
 }
 
+
+//POSSIBLE LAYOUT FOR FUNCTION
+
+// function evaluateGameStatus() {
+
+// 	// Player can only do double down after first 2 cards drawn
+// 	if (playerHand.length === 3 || dealerStatus === "hit" || currentTurn === "playerSplit") {
+// 		disableButton(doubleDownButton);
+// 	}
+
+// 	checkAcesValue();  // update any aces that need updating, checks if over 21 then adjusts score
+
+// If current turn is player or playerSplit:
+// 	isPlayerDone();
+	// These might change hand or go to game over, or do nothing..
+// 		isPlayerDone(currentTurn, playerHandTotal, playerStatus);  --status may not work..
+// 		isPlayerDone(currentTurn, playerSplitHandTotal, playerSplitStatus);
+
+// 	Or might need to:
+// 	isPlayerSplitDone();
+
+// If current turn is dealer:
+// 	beginDealerTurn(); // wont start if player current turn based on criteria
+
+// }
+
+
 // The purpose of this function is not to declare a winner right away, but to determine
 // When a player has hit or gone over 21 so that the game knows to move
 // on to the appropriate next step (dealer playing, second deck, etc)
