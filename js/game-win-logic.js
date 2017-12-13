@@ -30,15 +30,6 @@ function gameOver() {
 		if (playerHandTotal <= 21 || playerSplitHandTotal <= 21) {
 			console.log("Player wins");
 			gameWinner = "player";
-
-		// } else if (playerHandTotal > 21) {
-		// 	if (splitGame === true && playerSplitHandTotal > 21) {
-		// 		console.log("There was a draw");
-		// 		gameWinner = "bust";
-		// 	} else if (splitGame === false) {
-		// 		console.log("There was a draw");
-		// 		gameWinner = "bust";
-			// }	
 		}
 
 	// If the dealer got less than 21
