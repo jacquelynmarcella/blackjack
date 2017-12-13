@@ -35,8 +35,8 @@ h4 {
 	display: inline-block;
 }
 
-.wager:hover {
-	outline: 2px solid red;
+.wager:active {
+	border: 1px solid red;
 }
 
 #user-hand {
@@ -78,9 +78,8 @@ footer {
 /* TO DO: */
 /* Rules to be visible at start, hidden during game play */
 #rules {
-
+	display: none;
 }
 
 #game-board {
-
 }

@@ -34,9 +34,9 @@ var doubleDownButton = $("#double-down-button");
 var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $("#split-button");
-var playAgainButton = $("#play-again-button");
-var displayWagerOptionsButton = $("#display-wager-options-button");
-var resumeGameButton = $("#resume-game-button");
+var playAgainButton = $("#play-again-button"); 
+var displayWagerOptionsButton = $("#display-wager-options-button"); // need EL
+var resumeGameButton = $("#resume-game-button"); // need EL
 
 // Function to toggle a button off dependent on gameplay stage
 function disableButton(buttonName) {
@@ -57,9 +57,22 @@ function flipHiddenCard() {
 }
 
 function updateVisibleChipBalances() {
-	$("#current-wager").text(currentWager);
+	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
 }
+
+function updateVisibleHandTotals() {
+	$(".hand-total").text(playerHandTotal);
+	$(".split-hand-total").text(playerSplitHandTotal);
+	$(".dealer-hand-total").text(dealerHandTotal);
+}
+
+function selectWager(amount){
+	currentWager = amount;
+	updateVisibleChipBalances();
+}
+
+// Update visible hand totals?? Then can call it for all at once easily
 
 // PAGE/NON GAME INTERACTIONS:
 // Possible to do: Break out page transitional elements into separate JS file
@@ -67,16 +80,17 @@ $(".button-collapse").sideNav();	// Materialize functionality
 
 // EVENT LISTENERS:
 // Adjust wager based on chip clicked
-$("#chip-10").click(function(){currentWager = 10;});
-$("#chip-25").click(function(){currentWager = 25;});
-$("#chip-50").click(function(){currentWager = 50;});
-$("#chip-100").click(function(){currentWager = 100;});
+$("#chip-10").click(function(){selectWager(10)});
+$("#chip-25").click(function(){selectWager(25)});
+$("#chip-50").click(function(){selectWager(50)});
+$("#chip-100").click(function(){selectWager(100)});
 
 // Button activation
 $(startButton).click(startGame);
 $(doubleDownButton).click(doubleDown);  //may not want to call this right away?
 $(hitButton).click(hit);
 $(standButton).click(stand);
+$(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:

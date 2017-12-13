@@ -2,7 +2,6 @@
 
 // Can put player or dealer into function to make this action work for both
 function dealCard(hand, location) {
-
 	// Take the card out of the main array and add to the player or dealer's card deck array
 	var cardDrawn = cardsInDeck.pop();
 	hand.push(cardDrawn);
@@ -21,18 +20,15 @@ function dealCard(hand, location) {
 		if (hand[index].name === "ace") {
 			playerHasAce = true;
 		}
-
-		// TO DO: Can this be more dry?
+		
 		// Put into the correct player's hand deck dependent on if deck was split
 		if (currentTurn === "player") {
 			playerHandTotal += hand[index].value;
 			cardImage.attr("id", "player-card-" + index);
-			$(".hand-total").text(playerHandTotal);
 
 		} else if (currentTurn === "playerSplit") {
 			playerSplitHandTotal += hand[index].value;
 			cardImage.attr("id", "player-split-card-" + index);
-			$(".split-hand-total").text(playerSplitHandTotal);
 		}
 
 	} else if (currentTurn === "dealer") {
@@ -50,6 +46,7 @@ function dealCard(hand, location) {
 			cardImage.attr("src", "img/card_back.png");
 		}
 	}
+	updateVisibleHandTotals();
 	evaluateGameStatus();
 }
 
@@ -159,13 +156,12 @@ function reduceAcesValue(deck) {
 
 			if (currentTurn === "player") {
 				playerHandTotal -= 10;
-				$(".hand-total").text(playerHandTotal);
 
 			} else if (currentTurn === "playerSplit") {
 				playerSplitHandTotal -= 10;
-				$(".split-hand-total").text(playerSplitHandTotal);
 			}
 
+			updateVisibleHandTotals();
 			Materialize.toast("Your ace value changed from 11 to 1", 4000);
 		}
 	}

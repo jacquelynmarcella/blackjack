@@ -5,9 +5,12 @@ var startGame = function() {
 		console.log("User must select a wager before beginning");
 	} else {
 		currentChipBalance -= currentWager;
-		$("#current-wager").text(currentWager);
-		$("#current-chip-balance").text(currentChipBalance);
+		updateVisibleChipBalances();
 	
+		// Hide wager section
+		$("#wager-options").addClass("inactive");
+		$("#game-board").removeClass("inactive");
+
 		// Then shuffles the card deck array
 		cardsInDeck.sort(function() 
 			{return 0.5 - Math.random()});
@@ -68,8 +71,8 @@ var split = function() {
 	playerHandTotal = playerHandTotal - playerHand[1].value;
 	playerSplitHandTotal = playerHand[1].value;
 	$(playerSplitGameBoard).removeClass("inactive");
-	$("#split-hand-total").removeClass("inactive").text(playerSplitHandTotal);
-	$("#hand-total").text(playerHandTotal);
+	$(".split-hand-total").removeClass("inactive");
+	updateVisibleHandTotals();
 
 	// Now, move the item out of the array and into the split array
 	var splitCard = playerHand.pop();
@@ -102,10 +105,67 @@ var split = function() {
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
 }
 
-var doubleDown = function() {
+function doubleDown() {
 	console.log("Player has doubled their bet");
 	currentChipBalance -= currentWager; //subtracts the same value again from current balance
 	currentWager = currentWager * 2;
 	updateVisibleChipBalances();
 	disableButton(doubleDownButton);
 }
+
+function newGame() {
+	// when playAgainButton clicked
+	// Clears the board, but doesn't reset chip "bank" balance
+
+	cardsInDeck = cards;	
+	currentTurn = "player";
+	currentWager = 0;
+	gameWinner; 
+
+	dealerHand = [];
+	dealerHandTotal = 0;
+	dealerStatus = "start";
+
+	playerHand = [];
+	playerHandTotal = 0;
+	playerStatus = "start";  
+
+	playerHasAce = false;  
+	splitGame = false; 
+
+	playerSplitHand = [];
+	playerSplitHandTotal = 0;
+	playerSplitStatus;
+
+	updateVisibleChipBalances();
+	updateVisibleHandTotals();
+
+	// Function to deactive a section and reactivate perhaps?
+	// Look into jquery toggling
+	$(playerSplitGameBoard).addClass("inactive");
+	$("#game-over").addClass("inactive");
+	$(".split-hand-total").addClass("inactive");
+	$("#wager-options").removeClass("inactive");
+	
+	// Return buttons to active
+	enableButton(standButton, stand);
+	enableButton(hitButton, hit);
+	enableButton(doubleDownButton, doubleDown);
+
+	// Clear out game board images
+	dealerGameBoard.empty();
+	playerGameBoard.empty();
+	playerSplitGameBoard.empty();
+
+	//Toggle the chip selection menu back in and hide gameplay
+}
+
+function resetGame() {
+	// For a full reset that actually impacts chip balance
+
+	newGame();
+	var currentChipBalance = 500;
+	// Clear local storage out too?
+
+}
+

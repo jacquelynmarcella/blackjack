@@ -86,7 +86,9 @@ function updateChipBalance() {
 
 function announceWinner() {
 
-	$(".dealer-hand-total").text(dealerHandTotal);
+	updateVisibleHandTotals();
+	$("#game-board").addClass("inactive"); //May want to delay this so they can see gameplay a bit more
+	$("#game-over").removeClass("inactive");
 
 	if (gameWinner === "player") {
 		$("#game-outcome").text("You won");
