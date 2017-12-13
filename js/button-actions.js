@@ -64,10 +64,12 @@ var split = function() {
 	splitGame = true; 
 
 	// Need to adjust scores and totals for each deck
+	// As well as activate the viewing for the split deck
 	playerHandTotal = playerHandTotal - playerHand[1].value;
 	playerSplitHandTotal = playerHand[1].value;
+	$(playerSplitGameBoard).removeClass("inactive");
+	$("#split-hand-total").removeClass("inactive").text(playerSplitHandTotal);
 	$("#hand-total").text(playerHandTotal);
-	$("#split-hand-total").text(playerSplitHandTotal);
 
 	// Now, move the item out of the array and into the split array
 	var splitCard = playerHand.pop();

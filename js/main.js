@@ -34,6 +34,9 @@ var doubleDownButton = $("#double-down-button");
 var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $("#split-button");
+var playAgainButton = $("#play-again-button");
+var displayWagerOptionsButton = $("#display-wager-options-button");
+var resumeGameButton = $("#resume-game-button");
 
 // Function to toggle a button off dependent on gameplay stage
 function disableButton(buttonName) {
@@ -55,7 +58,7 @@ function flipHiddenCard() {
 
 function updateVisibleChipBalances() {
 	$("#current-wager").text(currentWager);
-	$("#current-chip-balance").text(currentChipBalance);
+	$(".current-chip-balance").text(currentChipBalance);
 }
 
 // PAGE/NON GAME INTERACTIONS:
@@ -76,17 +79,11 @@ $(hitButton).click(hit);
 $(standButton).click(stand);
 // Not calling split button at beginning since it should only be activated in certain situations
 
-
 // TO DO:
-// Ace adjutments on last card not working, need to break out these steps more
-// Make dealer choose a wager between 5, 25, 50, 100 and display it
-// Add logic for WHEN they can split the game, should only appear on certain circumstances
-// Flip over card on gameover if it is not flipped yet
 // Animate flipcard function
 // Local storage for chip balance
 // Prompt user for name?
 // Reset game
-// Win logic impacts where the chips go
 // Animation toggling off and on rules and start game 
 // Set winner then run function for popup that inputs values and impacts numbering based on winner
 // Switch statement for win?

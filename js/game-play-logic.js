@@ -27,12 +27,12 @@ function dealCard(hand, location) {
 		if (currentTurn === "player") {
 			playerHandTotal += hand[index].value;
 			cardImage.attr("id", "player-card-" + index);
-			$("#hand-total").text(playerHandTotal);
+			$(".hand-total").text(playerHandTotal);
 
 		} else if (currentTurn === "playerSplit") {
 			playerSplitHandTotal += hand[index].value;
 			cardImage.attr("id", "player-split-card-" + index);
-			$("#split-hand-total").text(playerSplitHandTotal);
+			$(".split-hand-total").text(playerSplitHandTotal);
 		}
 
 	} else if (currentTurn === "dealer") {
@@ -159,11 +159,11 @@ function reduceAcesValue(deck) {
 
 			if (currentTurn === "player") {
 				playerHandTotal -= 10;
-				$("#hand-total").text(playerHandTotal);
+				$(".hand-total").text(playerHandTotal);
 
 			} else if (currentTurn === "playerSplit") {
 				playerSplitHandTotal -= 10;
-				$("#split-hand-total").text(playerSplitHandTotal);
+				$(".split-hand-total").text(playerSplitHandTotal);
 			}
 
 			Materialize.toast("Your ace value changed from 11 to 1", 4000);
@@ -197,5 +197,3 @@ function dealerPlay() {
 		gameOver();
 	}
 } 
-
-

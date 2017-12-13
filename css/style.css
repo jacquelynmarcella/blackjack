@@ -44,7 +44,7 @@ h4 {
 	transition: all 3s;
 }
 
-#hand-total, #split-hand-total {
+.hand-total, .split-hand-total, .dealer-hand-total {
 	background: lightgrey;
 	overflow: auto;
 	padding: 10px 40px;
@@ -70,9 +70,17 @@ footer {
 	border: 2px solid lightgrey;
 }
 
-/* TO DO: */
-/* Rules to be visible at start, hidden during game play */
-#rules {
+.inactive, #split-hand-total.inactive {
 	display: none;
 }
 
+
+/* TO DO: */
+/* Rules to be visible at start, hidden during game play */
+#rules {
+
+}
+
+#game-board {
+
+}

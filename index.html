@@ -29,9 +29,13 @@
   </nav>
   	<div class="container">
   		<div class="row">
-			<div class="col s12" id="rules">
-				Rules section visible at start, hidden during gameplay but can be pulled back by nav.
-				<button id="select-wager">Start</button>
+			<div class="col s12  game-section" id="rules">
+				<h1>Blackjack</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae aliquam eros. Donec egestas elementum felis sed malesuada. Integer nec ex volutpat, faucibus felis sed, volutpat sapien. Morbi semper urna in eros fermentum, at volutpat mi vehicula. Donec tincidunt nibh eros, et eleifend metus dapibus non. 
+				<p>Fusce venenatis, lacus ut fringilla condimentum, diam lectus vulputate leo, quis eleifend dui magna at ipsum. Pellentesque tortor ante, dapibus id tempus quis, commodo ac enim. Proin diam ipsum, eleifend quis quam sit amet, feugiat vehicula eros. Aliquam iaculis laoreet ante, in semper leo lacinia vel. Suspendisse ut vehicula lorem. Ut at justo odio. Etiam tempus pulvinar tempor.</p>
+				<p>Suspendisse potenti. Duis ultrices ante id justo aliquet aliquet. Pellentesque dui sapien, fermentum id nulla eget, imperdiet blandit nisi. Aenean erat diam, interdum quis velit nec, pulvinar feugiat tellus. Nam vitae fringilla augue. Suspendisse vitae odio in felis interdum sodales. Ut blandit eros a enim tincidunt, at ultrices dolor varius. Pellentesque et condimentum purus. Duis varius porttitor libero. Pellentesque rutrum pellentesque lorem accumsan ultrices.</p>
+				<button id="select-wager-button">Start</button>
+				<button id="resume-game-button">Resume Game</button>
 			</div>
 		</div>
   		<div class="row">
@@ -46,7 +50,7 @@
 			</div>
   		</div>
   	</div>
-	<div class="container">
+	<div class="container" id="game-board">
         <div class="row">
 			<div class="col m12 s12 game-section">
 				<h4>Dealer's Hand</h4>
@@ -61,14 +65,13 @@
       		<div class="col s12 m9 game-section">
       			<h4>Your Hand</h4>
       			<div id="user-hand" class="game-section"></div>
-      			<p id="hand-total">0</p>
-      			<div id="user-split-hand" class="game-section"></div>
-      			<p id="split-hand-total">0</p>
+      			<p class="hand-total">0</p>
+      			<div id="user-split-hand" class="game-section inactive"></div>
+      			<p class="split-hand-total inactive">0</p>
 			</div>
 			<div class="col s12 m3 game-section" id="sidebar">
 				<p>You have bet <span id="current-wager">___</span> chips.</p>
-				<p>Chip balance <span id="current-chip-balance">___</span></p>
-	
+				<p>Chip balance <span class="current-chip-balance">___</span></p>
         		<button id="hit-button">Hit</button>
         		<button id="double-down-button">Double Down</button>
         		<button id="stand-button">Stand</button>
@@ -76,6 +79,17 @@
      	 	</div>
 		</div>
     </div>
+    <div class="container">
+    	<div class="row">
+			<div class="col s12 game-section" id="game-over">
+				<h4 id="game-outcome">You won/lost message here</h4>
+				<p>Dealer: <span class="dealer-hand-total"></span></p>
+				<p>Player: <span class="hand-total"></span> <span class="split-hand-total"></span></p>
+				<p>Chip balance: <span class="current-chip-balance"></span></p>
+				<button id="play-again-button">Play Again</button>
+			</div>
+  		</div>
+  	</div>
     <footer>
     	Footer content
     </footer>

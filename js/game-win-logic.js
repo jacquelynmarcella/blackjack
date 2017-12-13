@@ -54,6 +54,7 @@ function gameOver() {
 		}
 	}
 	updateChipBalance();
+	announceWinner();
 } 
 
 function updateChipBalance() {
@@ -84,5 +85,15 @@ function updateChipBalance() {
 }
 
 function announceWinner() {
-	console.log("Modal or other thing to popup with relevant info");
+
+	$(".dealer-hand-total").text(dealerHandTotal);
+
+	if (gameWinner === "player") {
+		$("#game-outcome").text("You won");
+	} else if (gameWinner === "dealer") {
+		$("#game-outcome").text("Dealer won");
+	} else if (gameWinner === "tie") {
+		$("#game-outcome").text("There was a tie");
+	}
+
 }
