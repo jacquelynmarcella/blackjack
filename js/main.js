@@ -1,8 +1,8 @@
 // Starting game board values
-var cardsInDeck = cards;
+var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible cards
 var currentTurn = "player";
 var currentWager = 0;
-var currentChipBalance = 500;
+var currentChipBalance = 500; //Subject to change based on local storage
 
 // Dealer hand and starting totals
 var dealerHand = [];
@@ -16,422 +16,47 @@ var playerHandTotal = 0;
 var playerGameBoard = $("#user-hand");
 var playerStatus = "start";  // Possible statuses are start (initial gameplay), stand, hit
 
-//Because aces can equal 1 or 11, need to quickly know if player has aces so we can
-// adjust value if they go over 21
-var playerAces = 0;  
+// Because aces can equal 1 or 11, need to quickly know if player has aces so we can
+// adjust value from 11 to 1 if they go over 21 (default value is 11)
+var playerHasAces = false;  
 
-// Player split game variables if the player splits their hand
+// Player split game variables only used if the player splits their hand
 var splitGame = false; // default value is false, must be turned true
-var playerSplitStatus;
 var playerSplitHand = [];
 var playerSplitHandTotal = 0;
 var playerSplitGameBoard = $("#user-split-hand");
+var playerSplitStatus;
 
-// Buttons
+// Buttons pulled from DOM
 var startButton = $("#start-game-button");
 var doubleDownButton = $("#double-down-button");
 var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $("#split-button");
 
-
-var gameOver = function() {
-
-	console.log("Game over");
-
-	// Make sure all key buttons disabled (may have already been depending on gameplay, but just to be sure)
-	disableButton(standButton);
-	disableButton(hitButton);
-	disableButton(splitButton);
-	disableButton(doubleDownButton);
-
-	// If dealer got 21 exactly
-	if (dealerHandTotal === 21) {
-		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
-			console.log("There was a draw");
-		} else {
-			console.log("Dealer wins");
-		}
-	}
-
-	// If dealer got over 21
-	if (dealerHandTotal > 21) {
-
-		if (playerHandTotal <= 21 || playerSplitHandTotal <= 21) {
-			console.log("Player wins");
-
-		} else if (playerHandTotal > 21) {
-			if (splitGame === true && playerSplitHandTotal > 21) {
-				console.log("There was a draw");
-			} else if (splitGame === false) {
-				console.log("There was a draw");
-			}	
-		}
-	}
-
-	// If the dealer got less than 21
-	if (dealerHandTotal < 21) {
-	
-		if (playerHandTotal === 21  || playerSplitHandTotal === 21) {
-			console.log("Player wins");
-		} else if (playerHandTotal < 21 && playerHandTotal > dealerHandTotal) {
-			console.log("Player wins with hand 1");
-		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal > dealerHandTotal) {
-			console.log("Dealer wins with hand 2");
-		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal === dealerHandTotal ||
-			playerHandTotal < 21 && playerHandTotal === dealerHandTotal) {
-			console.log("There was a draw");
-		} else {
-			console.log("Dealer wins");
-		}
-	}
-
-} 
-
-//TO DO: If there's a win remove event listeners and show some kind of game over screen
-
-var changeHand = function(currentDeckStatus) {
-
-	// Changes whatever deck was at play to now being in "stand" status
-	currentDeckStatus = "stand";
-
-	// Then, dependent on the type of game it figures out what should be moved
-	// to next if there has not been an obvious game over or if the
-	// deck was split, we need to move to the next deck before going full
-	// game over
-	if (currentTurn === "player") {
-
-		if (splitGame === true) {
-			currentTurn = "playerSplit";
-
-		} else if (splitGame === false) {
-			currentTurn = "dealer";
-			dealerStatus = "hit";
-			checkForWin(); 
-		}
-
-	} else if (currentTurn === "playerSplit") {
-		currentTurn = "dealer";
-		dealerStatus = "hit";
-		checkForWin();
-	}
-
-}
-
-// The purpose of this function is to review the active deck being
-// played (split or default player deck) and change aces value from 11 to 1.
-// This is only called when the player has gone over 21 in their current deck.
-var reduceAcesValue = function(deck) {
-
-	for (var i = 0; i < deck.length; i++) {
-	// Only focusing on aces that haven't been changed from 11 to 1 already
-		if (deck[i].name === "ace" && deck[i].value === 11) {
-			deck[i].value = 1;
-
-			if (currentTurn === "player") {
-				playerHandTotal -= 10;
-				$("#hand-total").text(playerHandTotal);
-
-			} else if (currentTurn === "playerSplit") {
-				playerSplitHandTotal -= 10;
-				$("#split-hand-total").text(playerSplitHandTotal);
-			}
-
-			Materialize.toast("Your ace value changed from 11 to 1", 4000);
-		}
-	}
-}
-
-// Possibly rename this - more of a next move analysis type of thing
-var checkForWin = function() {
-
-// The main purpose of this is determining when to automatically move on to the next player
-// BUT since the player can split a deck, we cant just go straight to game over
-// and we need to wait to check win conditions until the whole game is complete
-// for example, the ability for there to be a win on the split deck so we
-// wouldnt want to game over on the first deck
-
-	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
-
-	// Player can only do DD after first 2 cards drawn
-	if (playerHand.length === 3 || dealerStatus === "hit" || currentTurn === "playerSplit") {
-		disableButton(doubleDownButton);
-	}
-
-	if (currentTurn === "player" || currentTurn === "playerSplit") {
-
-		// First, if we went over 21 we need to check on a couple of parameters
-		if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
-		
-			// If they have greater than 21, first check if they have an ace 
-			// since we will want to change this value from 11 to 1
-			// Then, we will want to see if they are still over 21 after
-
-			if (playerAces > 0) {
-
-				if (currentTurn === "playerSplit") {
-					reduceAcesValue(playerSplitHand);
-
-				} else if (currentTurn ==="player") {
-					reduceAcesValue(playerHand);
-				}
-			}
-		
-			if (currentTurn === "player" && splitGame === true) {
-				changeHand(playerStatus);
-
-			} else if (currentTurn === "playerSplit" && splitGame === true) {
-				if (playerSplitHandTotal > 21) {
-					changeHand(playerSplitStatus); // Because this is checking both, we dont want to run this if just the first card deck is over 21
-				}
-			
-			} else if (currentTurn === "player" && splitGame === false) {
-				gameOver();
-			}
-
-		// See if the player got exactly 21
-		} else if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
-			
-			// If it's a splitgame, we need to move onto the next player deck before fully game over
-			if (currentTurn === "player" && splitGame === true) {
-				changeHand(playerStatus);
-
-			} else if (currentTurn === "playerSplit" && splitGame === true) {
-				if (playerSplitHandTotal === 21) {
-					gameOver();
-				}
-				// If we get 21, should finish up and see if a draw with dealer or if player wins
-				// on either one of their decks
-				// Game over function will tell us if dealer also got 21
-
-			} else if (currentTurn === "player" && splitGame === false) {
-				gameOver();
-				// If we get 21, should finish up and see if a draw with dealer or if player wins
-				// Game over function will tell us if dealer also got 21
-			}
-		}	
-	// If it's before we have seen the hidden dealer card (ie still player's turn), we don't want the below to run
-	} else if (currentTurn === "dealer" && dealerStatus === "hit") {
-		// Need this "hit" status otherwise this would run when cards still
-		// being dealt, which we dont want
-
-		// Deactivate buttons now
-		// May be able to do function to minimize code here, like buttton off and adding class..
-
-		disableButton(standButton);
-		disableButton(hitButton);
-		disableButton(splitButton);
-
-		// If it's just the initial round, first we need to flip the hidden card
-		// Turn this into a flipcard function
-		if (dealerHand.length === 2) {
-			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
-		} 
-
-		// Now, run through what the dealer should do next based on standard rules
-		if (dealerHandTotal < 17) {
-			dealCard(dealerHand, dealerGameBoard);
-
-		} else if (dealerHandTotal === 21) {
-			gameOver();
-
-		} else if (dealerHandTotal > 21) {
-			gameOver();
-
-		// If dealer's cards are 17 or above, must stand and then we will check final scores
-		} else if (dealerHandTotal >= 17) {
-			dealerStatus = "stand";
-			gameOver();
-		}
-
-	} 
-
-}
-
+// Function to toggle a button off dependent on gameplay stage
 var disableButton = function(buttonName) {
 	$(buttonName).off();
 	$(buttonName).addClass("disabled-button");
 }
 
-// Can put player or dealer into function to make this action work for both
-var dealCard = function(hand, location) {
+// PAGE/NON GAME INTERACTIONS:
+// Possible to do: Break out page transitional elements into separate JS file
+$(".button-collapse").sideNav();	// Materialize functionality
 
-	var cardDrawn = cardsInDeck.pop();
-	hand.push(cardDrawn);
-	var index = hand.length - 1;
-
-	// Change images
-	var cardImage = $("<img/>");
-	cardImage.attr("class", "card");
-	cardImage.attr("src", "img/" + hand[index].src);
-
-	// To Do: work on animations as they go from pile to appropriate location
-	cardImage.appendTo($(location));
-
-	// Update total count of cards in hand based on who is playing
-	if (currentTurn === "player") {
-
-		// First, we need to make note of if there's aces or not in the active deck
-		if (hand[index].name === "ace") {
-			playerAces++;
-		}
-
-		// Update scores and totals
-		playerHandTotal += hand[index].value;
-		cardImage.attr("id", "player-card-" + index);
-		$("#hand-total").text(playerHandTotal);
-
-	} else if (currentTurn === "playerSplit") {
-
-		// Check for aces
-		if (hand[index].name === "ace") {
-			playerAces++;
-		}
-
-		// Update scores and totals
-		playerSplitHandTotal += hand[index].value;
-		cardImage.attr("id", "player-split-card-" + index);
-		$("#split-hand-total").text(playerSplitHandTotal);
-
-	} else if (currentTurn === "dealer") {
-		dealerHandTotal += hand[index].value;
-		cardImage.attr("id", "dealer-card-" + index);
-
-		// Shows only the first card to mobile viewers in an abbreviated form
-		// To do: once or if dealer stands, then expand out full card view for the dealer
-		// as they make their next plays
-		if (index === 0) {
-			$("#dealer-condensed").text(hand[0].suit + " " + hand[0].name);
-		}
-		
-		// Second card only for dealer should show face down
-		if (dealerHand.length === 2) {
-			cardImage.attr("src", "img/card_back.png");
-		}
-	}
-	checkForWin();
-}
-
-var startGame = function() {
-
-	// Captures current wager
-	if (currentWager === 0) {
-		console.log("User must select a wager before beginning");
-
-	} else {
-		$("#current-wager").text(currentWager);
-		currentChipBalance -= currentWager;
-		$("#current-chip-balance").text(currentChipBalance);
-	
-		// Shuffles the card deck array
-		cardsInDeck.sort(function() 
-			{return 0.5 - Math.random()});
-
-		// Deals two cards to start, so loops through this twice
-		// In blackjack, 
-		for (var i=0; i < 2; i++) {
-			currentTurn = "player";
-			dealCard(playerHand, playerGameBoard);
-			currentTurn = "dealer";
-			dealCard(dealerHand, dealerGameBoard);
-		}
-
-	// Player starts game
-	currentTurn = "player";
-	}
-	// TO DO: Activate functionality to split game based on matching criteria of card
-}
-
-// Event listeners
-
-// Clicking the chip images allows for you to select your wager
-
-
-// Game initiation
+// EVENT LISTENERS:
+// Adjust wager based on chip clicked
 $("#chip-5").click(function(){currentWager = 5;});
 $("#chip-25").click(function(){currentWager = 25;});
 $("#chip-50").click(function(){currentWager = 50;});
 $("#chip-100").click(function(){currentWager = 100;});
 
 // Button activation
-$("#start-game-button").click(startGame);
-$("#hit-button").click(hit);
-$("#stand-button").click(stand);
-$("#split-button").click(split);  //may not want to call this right away?
-$("#double-down-button").click(doubleDown);  //may not want to call this right away?
-
-
-//Game play buttons
-var hit = function() {
-
-	console.log(currentTurn + " is requesting another card");
-
-	if (currentTurn === "player") {
-		dealCard(playerHand, playerGameBoard);
-
-	} else if (currentTurn === "playerSplit") {
-		playerSplitStatus = "hit";
-		dealCard(playerSplitHand, playerSplitGameBoard);
-	}
-
-}
-
-var stand = function() {
-	console.log("Player is standing");
-
-	if (currentTurn === "player") {
-		changeHand(playerStatus);
-
-	} else if (currentTurn === "playerSplit") {
-		changeHand(playerSplitStatus);
-	}
-
-}
-
-
-// If a certain criteria is reached, then we need to activate this button (it should not be
-// active at the start); only activates after initial dealing if applicable
-var split = function () {
-
-	splitGame = true; 
-
-	// Need to adjust scores and totals for each deck
-	playerHandTotal = playerHandTotal - playerHand[1].value;
-	$("#hand-total").text(playerHandTotal);
-
-	playerSplitHandTotal = playerHand[1].value;
-	$("#split-hand-total").text(playerSplitHandTotal);
-
-	// Now, move the item out of the array and into the split array
-	var splitCard = playerHand.pop();
-	playerSplitHand.push(splitCard);
-
-	// And move the image on the game board
-	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
-	cardImage.appendTo($(playerSplitGameBoard));
-
-	console.log("Split game. Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
-
-	disableButton(splitButton);
-
-	// TO DO: This button should de-activate after being clicked
-	// TO DO: Double down the bets/adjust bets accordingly when this is selected
-}
-
-$("#double-down-button").click(function(){
-	console.log("Player has doubled their bet");
-	currentChipBalance -= currentWager; //subtracts the same value again from current balance
-	currentWager = currentWager * 2;
-	$("#current-wager").text(currentWager);
-	$("#current-chip-balance").text(currentChipBalance);
-	disableButton(doubleDownButton);
-});
-
-
-
-// Navigation button on mobile
-// TO DO: Break out page transitional elements into separate JS file
-$(".button-collapse").sideNav();
+$(startButton).click(startGame);
+$(doubleDownButton).click(doubleDown);  //may not want to call this right away?
+$(hitButton).click(hit);
+$(standButton).click(stand);
+$(splitButton).click(split);  //may not want to call this right away?
 
 
 // TO DO:
@@ -443,8 +68,7 @@ $(".button-collapse").sideNav();
 // Reset game
 // Win logic impacts where the chips go
 // Animation toggling off and on rules and start game 
-
-// Set winner then run function for popup that inputs values and impacts
-//numbering based on winner
-
+// Set winner then run function for popup that inputs values and impacts numbering based on winner
 // Switch statement for win?
+// Toggle mobile view of full dealer cards once it is dealer's turn
+// Maybe have condensed/expandable view of this -- or show total and let them expand?
