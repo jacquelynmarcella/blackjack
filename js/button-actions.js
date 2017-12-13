@@ -21,7 +21,6 @@ var startGame = function() {
 			currentTurn = "dealer";
 			dealCard(dealerHand, dealerGameBoard);
 		}
-
 	// Player starts game
 	currentTurn = "player";
 	}

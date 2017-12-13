@@ -3,6 +3,7 @@ var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible c
 var currentTurn = "player";
 var currentWager = 0;
 var currentChipBalance = 500; //Subject to change based on local storage
+var gameWinner; // To be declared at end of game
 
 // Dealer hand and starting totals
 var dealerHand = [];
@@ -18,7 +19,7 @@ var playerStatus = "start";  // Possible statuses are start (initial gameplay), 
 
 // Because aces can equal 1 or 11, need to quickly know if player has aces so we can
 // adjust value from 11 to 1 if they go over 21 (default value is 11)
-var playerHasAces = false;  
+var playerHasAce = false;  
 
 // Player split game variables only used if the player splits their hand
 var splitGame = false; // default value is false, must be turned true
@@ -35,9 +36,20 @@ var standButton = $("#stand-button");
 var splitButton = $("#split-button");
 
 // Function to toggle a button off dependent on gameplay stage
-var disableButton = function(buttonName) {
+function disableButton(buttonName) {
 	$(buttonName).off();
 	$(buttonName).addClass("disabled-button");
+}
+
+function enableButton(buttonName) {
+	console.log("Will want to reactivate buttons on a new game");
+}
+
+function flipHiddenCard() {
+	// If it's just the initial round, first we need to flip/reveal the hidden dealer card when this is called
+	if (dealerHand.length === 2) {
+		$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
+	} 
 }
 
 // PAGE/NON GAME INTERACTIONS:
@@ -60,6 +72,8 @@ $(splitButton).click(split);  //may not want to call this right away?
 
 
 // TO DO:
+// Ace adjutments on last card not working, need to break out these steps more
+// Make dealer choose a wager between 5, 25, 50, 100 and display it
 // Add logic for WHEN they can split the game, should only appear on certain circumstances
 // Flip over card on gameover if it is not flipped yet
 // Animate flipcard function
@@ -72,3 +86,4 @@ $(splitButton).click(split);  //may not want to call this right away?
 // Switch statement for win?
 // Toggle mobile view of full dealer cards once it is dealer's turn
 // Maybe have condensed/expandable view of this -- or show total and let them expand?
+// New round/play again button that starts game
