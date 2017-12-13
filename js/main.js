@@ -2,6 +2,7 @@
 var cardsInDeck = cards;
 var currentTurn = "player";
 var currentWager = 0;
+var currentChipBalance = 500;
 
 // Dealer hand and starting totals
 var dealerHand = [];
@@ -38,6 +39,12 @@ var gameOver = function() {
 
 	console.log("Game over");
 
+	// Make sure all key buttons disabled (may have already been depending on gameplay, but just to be sure)
+	disableButton(standButton);
+	disableButton(hitButton);
+	disableButton(splitButton);
+	disableButton(doubleDownButton);
+
 	// If dealer got 21 exactly
 	if (dealerHandTotal === 21) {
 		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
@@ -71,6 +78,9 @@ var gameOver = function() {
 			console.log("Player wins with hand 1");
 		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal > dealerHandTotal) {
 			console.log("Dealer wins with hand 2");
+		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal === dealerHandTotal ||
+			playerHandTotal < 21 && playerHandTotal === dealerHandTotal) {
+			console.log("There was a draw");
 		} else {
 			console.log("Dealer wins");
 		}
@@ -134,6 +144,12 @@ var reduceAcesValue = function(deck) {
 
 // Possibly rename this - more of a next move analysis type of thing
 var checkForWin = function() {
+
+// The main purpose of this is determining when to automatically move on to the next player
+// BUT since the player can split a deck, we cant just go straight to game over
+// and we need to wait to check win conditions until the whole game is complete
+// for example, the ability for there to be a win on the split deck so we
+// wouldnt want to game over on the first deck
 
 	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
@@ -297,55 +313,57 @@ var dealCard = function(hand, location) {
 }
 
 var startGame = function() {
-	// Shuffles the card deck array
-	cardsInDeck.sort(function() 
-		{return 0.5 - Math.random()});
 
-	// Deals two cards to start, so loops through this twice
-	// In blackjack, 
-	for (var i=0; i < 2; i++) {
-		currentTurn = "player";
-		dealCard(playerHand, playerGameBoard);
-		currentTurn = "dealer";
-		dealCard(dealerHand, dealerGameBoard);
-	}
+	// Captures current wager
+	if (currentWager === 0) {
+		console.log("User must select a wager before beginning");
+
+	} else {
+		$("#current-wager").text(currentWager);
+		currentChipBalance -= currentWager;
+		$("#current-chip-balance").text(currentChipBalance);
+	
+		// Shuffles the card deck array
+		cardsInDeck.sort(function() 
+			{return 0.5 - Math.random()});
+
+		// Deals two cards to start, so loops through this twice
+		// In blackjack, 
+		for (var i=0; i < 2; i++) {
+			currentTurn = "player";
+			dealCard(playerHand, playerGameBoard);
+			currentTurn = "dealer";
+			dealCard(dealerHand, dealerGameBoard);
+		}
 
 	// Player starts game
 	currentTurn = "player";
-	
+	}
 	// TO DO: Activate functionality to split game based on matching criteria of card
 }
 
 // Event listeners
 
-$("#start-game-button").click(function(){
-	if (currentWager === 0) {
-		console.log("User must select a wager before beginning");
-	} else {
-		$("#current-wager").text(currentWager);
-		startGame();
-	}
-});
-
 // Clicking the chip images allows for you to select your wager
-$("#chip-5").click(function(){
-	currentWager = 5;
-});
-
-$("#chip-25").click(function(){
-	currentWager = 25;
-});
-
-$("#chip-50").click(function(){
-	currentWager = 50;
-});
-
-$("#chip-100").click(function(){
-	currentWager = 100;
-});
 
 
-$("#hit-button").click(function(){
+// Game initiation
+$("#chip-5").click(function(){currentWager = 5;});
+$("#chip-25").click(function(){currentWager = 25;});
+$("#chip-50").click(function(){currentWager = 50;});
+$("#chip-100").click(function(){currentWager = 100;});
+
+// Button activation
+$("#start-game-button").click(startGame);
+$("#hit-button").click(hit);
+$("#stand-button").click(stand);
+$("#split-button").click(split);  //may not want to call this right away?
+$("#double-down-button").click(doubleDown);  //may not want to call this right away?
+
+
+//Game play buttons
+var hit = function() {
+
 	console.log(currentTurn + " is requesting another card");
 
 	if (currentTurn === "player") {
@@ -356,9 +374,9 @@ $("#hit-button").click(function(){
 		dealCard(playerSplitHand, playerSplitGameBoard);
 	}
 
-});
+}
 
-$("#stand-button").click(function(){
+var stand = function() {
 	console.log("Player is standing");
 
 	if (currentTurn === "player") {
@@ -368,12 +386,13 @@ $("#stand-button").click(function(){
 		changeHand(playerSplitStatus);
 	}
 
-});
+}
 
 
 // If a certain criteria is reached, then we need to activate this button (it should not be
 // active at the start); only activates after initial dealing if applicable
-$("#split-button").click(function(){
+var split = function () {
+
 	splitGame = true; 
 
 	// Need to adjust scores and totals for each deck
@@ -383,7 +402,7 @@ $("#split-button").click(function(){
 	playerSplitHandTotal = playerHand[1].value;
 	$("#split-hand-total").text(playerSplitHandTotal);
 
-	// Now, move the item out of the array
+	// Now, move the item out of the array and into the split array
 	var splitCard = playerHand.pop();
 	playerSplitHand.push(splitCard);
 
@@ -397,13 +416,14 @@ $("#split-button").click(function(){
 
 	// TO DO: This button should de-activate after being clicked
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
-
-});
+}
 
 $("#double-down-button").click(function(){
 	console.log("Player has doubled their bet");
+	currentChipBalance -= currentWager; //subtracts the same value again from current balance
 	currentWager = currentWager * 2;
 	$("#current-wager").text(currentWager);
+	$("#current-chip-balance").text(currentChipBalance);
 	disableButton(doubleDownButton);
 });
 
@@ -412,3 +432,19 @@ $("#double-down-button").click(function(){
 // Navigation button on mobile
 // TO DO: Break out page transitional elements into separate JS file
 $(".button-collapse").sideNav();
+
+
+// TO DO:
+// Add logic for WHEN they can split the game, should only appear on certain circumstances
+// Flip over card on gameover if it is not flipped yet
+// Animate flipcard function
+// Local storage for chip balance
+// Prompt user for name?
+// Reset game
+// Win logic impacts where the chips go
+// Animation toggling off and on rules and start game 
+
+// Set winner then run function for popup that inputs values and impacts
+//numbering based on winner
+
+// Switch statement for win?
