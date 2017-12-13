@@ -35,39 +35,50 @@ var splitButton = $("#split-button");
 
 
 var gameOver = function() {
+
 	console.log("Game over");
 
-	// Checking final scores
-
-	// Dealer && Player < 21
-			//dealer > player - dealer wins
-			// and if dealer > player split, dealer wins
-			// player > dealer || playersplit > dealer - player wins
-			// If Dealer & player = same value - draw
-			// and if dealer & playerspplit = same value - draw
-
-
-
-	if (dealerStatus === "stand" && playerStatus =="stand") {
-
-		// Need to check if above or over 21 here and do more robust logic
-
-		if (playerHandTotal > dealerHandTotal) {
-			console.log("Player wins with deck 1");
-
-		} else if (playerHandTotal < dealerHandTotal) {
-			console.log("Dealer wins");
-
-		// This needs to factor in if both are over 21, both lose.
-		} else if (playerHandTotal === dealerHandTotal) {
+	// If dealer got 21 exactly
+	if (dealerHandTotal === 21) {
+		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
 			console.log("There was a draw");
+		} else {
+			console.log("Dealer wins");
 		}
 	}
 
+	// If dealer got over 21
+	if (dealerHandTotal > 21) {
+
+		if (playerHandTotal <= 21 || playerSplitHandTotal <= 21) {
+			console.log("Player wins");
+
+		} else if (playerHandTotal > 21) {
+			if (splitGame === true && playerSplitHandTotal > 21) {
+				console.log("There was a draw");
+			} else if (splitGame === false) {
+				console.log("There was a draw");
+			}	
+		}
+	}
+
+	// If the dealer got less than 21
+	if (dealerHandTotal < 21) {
+	
+		if (playerHandTotal === 21  || playerSplitHandTotal === 21) {
+			console.log("Player wins");
+		} else if (playerHandTotal < 21 && playerHandTotal > dealerHandTotal) {
+			console.log("Player wins with hand 1");
+		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal > dealerHandTotal) {
+			console.log("Dealer wins with hand 2");
+		} else {
+			console.log("Dealer wins");
+		}
+	}
+
+} 
 
 //TO DO: If there's a win remove event listeners and show some kind of game over screen
-
-}
 
 var changeHand = function(currentDeckStatus) {
 
@@ -170,7 +181,9 @@ var checkForWin = function() {
 				changeHand(playerStatus);
 
 			} else if (currentTurn === "playerSplit" && splitGame === true) {
-				gameOver();
+				if (playerSplitHandTotal === 21) {
+					gameOver();
+				}
 				// If we get 21, should finish up and see if a draw with dealer or if player wins
 				// on either one of their decks
 				// Game over function will tell us if dealer also got 21
