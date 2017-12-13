@@ -23,6 +23,7 @@ function dealCard(hand, location) {
 		}
 
 		// TO DO: Can this be more dry?
+		// Put into the correct player's hand deck dependent on if deck was split
 		if (currentTurn === "player") {
 			playerHandTotal += hand[index].value;
 			cardImage.attr("id", "player-card-" + index);
@@ -70,6 +71,7 @@ function dealCard(hand, location) {
 // 		isPlayerDone(currentTurn, playerHandTotal, playerStatus);  --status may not work..
 // 		isPlayerDone(currentTurn, playerSplitHandTotal, playerSplitStatus);
 
+// If has aces, can only hit once on that hand if it's been split
 // 	Or might need to:
 // 	isPlayerSplitDone();
 
@@ -93,7 +95,10 @@ function checkForWin() {
 	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
 	// Player can only do double down after first 2 cards drawn
-	if (playerHand.length === 3 || dealerStatus === "hit" || currentTurn === "playerSplit") {
+	// But in a split game, want to give them a chance after the deck is split right?
+	if (splitGame === true && playerHand.length === 3) {
+		disableButton(doubleDownButton);
+	} else if (splitGame === false && playerHand.length === 3 || dealerStatus === "hit") {
 		disableButton(doubleDownButton);
 	}
 

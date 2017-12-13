@@ -41,8 +41,9 @@ function disableButton(buttonName) {
 	$(buttonName).addClass("disabled-button");
 }
 
-function enableButton(buttonName) {
-	console.log("Will want to reactivate buttons on a new game");
+function enableButton(buttonName, event) {
+	$(buttonName).click(event);
+	$(buttonName).removeClass("disabled-button");
 }
 
 function flipHiddenCard() {
@@ -52,13 +53,18 @@ function flipHiddenCard() {
 	} 
 }
 
+function updateVisibleChipBalances() {
+	$("#current-wager").text(currentWager);
+	$("#current-chip-balance").text(currentChipBalance);
+}
+
 // PAGE/NON GAME INTERACTIONS:
 // Possible to do: Break out page transitional elements into separate JS file
 $(".button-collapse").sideNav();	// Materialize functionality
 
 // EVENT LISTENERS:
 // Adjust wager based on chip clicked
-$("#chip-5").click(function(){currentWager = 5;});
+$("#chip-10").click(function(){currentWager = 10;});
 $("#chip-25").click(function(){currentWager = 25;});
 $("#chip-50").click(function(){currentWager = 50;});
 $("#chip-100").click(function(){currentWager = 100;});
@@ -68,7 +74,7 @@ $(startButton).click(startGame);
 $(doubleDownButton).click(doubleDown);  //may not want to call this right away?
 $(hitButton).click(hit);
 $(standButton).click(stand);
-$(splitButton).click(split);  //may not want to call this right away?
+// Not calling split button at beginning since it should only be activated in certain situations
 
 
 // TO DO:

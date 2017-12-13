@@ -62,18 +62,17 @@ function gameOver() {
 			console.log("Dealer wins");
 		}
 	}
-	adjustChipBalance();
+	updateChipBalance();
 } 
 
-
-function adjustChipBalance() {
+function updateChipBalance() {
 
 	if (gameWinner === "player") {
 
 		// Check for blackjack scenario for 3:2 payout (requires 1 ace, 1 10pt card)
-		if (playerHasAce === true && playerHandTotal === 21 && playerHand.length === 2) {
-			currentChipBalance += currentWager * (3/2);
-		} else if (playerHasAce === true && playerSplitHandTotal === 21 && playerSplitHand.length === 2) {
+		// Noting that typical rules do not give bonuses if the hand has been split,
+		// it would be normal payout
+		if (splitGame === false && playerHasAce === true && playerHandTotal === 21 && playerHand.length === 2) {
 			currentChipBalance += currentWager * (3/2);
 		// Otherwise it's a 1:1 payout
 		} else {
@@ -88,7 +87,9 @@ function adjustChipBalance() {
 		currentChipBalance += currentWager;		
 	}
 	console.log("New chip balance is " + currentChipBalance);
-	$("#current-chip-balance").text(currentChipBalance);
+
+	// To update on the screen
+	updateVisibleChipBalances();
 }
 
 function announceWinner() {

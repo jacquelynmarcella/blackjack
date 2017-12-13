@@ -3,28 +3,32 @@ var startGame = function() {
 	// Captures current wager
 	if (currentWager === 0) {
 		console.log("User must select a wager before beginning");
-
 	} else {
-		$("#current-wager").text(currentWager);
 		currentChipBalance -= currentWager;
+		$("#current-wager").text(currentWager);
 		$("#current-chip-balance").text(currentChipBalance);
 	
-		// Shuffles the card deck array
+		// Then shuffles the card deck array
 		cardsInDeck.sort(function() 
 			{return 0.5 - Math.random()});
 
-		// Deals two cards to start, so loops through this twice
-		// In blackjack, 
+		// Deals two cards to start, so loops through this twice (should alternate who is 
+		// being shuffled to (player, dealer, player, dealer)
 		for (var i=0; i < 2; i++) {
 			currentTurn = "player";
 			dealCard(playerHand, playerGameBoard);
 			currentTurn = "dealer";
 			dealCard(dealerHand, dealerGameBoard);
 		}
-	// Player starts game
-	currentTurn = "player";
+
+		// Player starts game
+		currentTurn = "player";
 	}
-	// TO DO: Activate functionality to split game based on matching criteria of card
+
+	// In only certain circumstances (equal value pairs), enable split hand button
+	if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
+		enableButton(splitButton, split);
+	}
 }
 
 var hit = function() {
@@ -61,9 +65,8 @@ var split = function() {
 
 	// Need to adjust scores and totals for each deck
 	playerHandTotal = playerHandTotal - playerHand[1].value;
-	$("#hand-total").text(playerHandTotal);
-
 	playerSplitHandTotal = playerHand[1].value;
+	$("#hand-total").text(playerHandTotal);
 	$("#split-hand-total").text(playerSplitHandTotal);
 
 	// Now, move the item out of the array and into the split array
@@ -74,11 +77,26 @@ var split = function() {
 	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
 	cardImage.appendTo($(playerSplitGameBoard));
 
+	// Double original wager when they split
+	// How to address double down here?
+	currentChipBalance -= currentWager;
+	currentWager = currentWager * 2;
+	updateVisibleChipBalances();
+
+	// Then, deal 1 new card for each split deck
+	currentTurn = "player";
+	dealCard(playerHand, playerGameBoard);
+	currentTurn = "playerSplit";
+	dealCard(playerSplitHand, playerSplitGameBoard);
+
 	console.log("Split game. Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 
+	// Make split button no longer clickable as in this game you can only split once
 	disableButton(splitButton);
 
-	// TO DO: This button should de-activate after being clicked
+	//May need to reconfigure this depending on how second drawn hands go?
+	currentTurn = "player"; 
+
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
 }
 
@@ -86,7 +104,6 @@ var doubleDown = function() {
 	console.log("Player has doubled their bet");
 	currentChipBalance -= currentWager; //subtracts the same value again from current balance
 	currentWager = currentWager * 2;
-	$("#current-wager").text(currentWager);
-	$("#current-chip-balance").text(currentChipBalance);
+	updateVisibleChipBalances();
 	disableButton(doubleDownButton);
 }
