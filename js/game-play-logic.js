@@ -8,9 +8,8 @@ function dealCard(hand, location) {
 	var index = hand.length - 1;
 
 	// Create card image for card drawn and place in player/dealer's card section
-	var cardImage = $("<img/>").hide(); //So it doesnt show abruptly
-	cardImage.attr("class", "card");
-	cardImage.attr("src", "img/" + hand[index].src);
+	// Hide it initially so it doesn't show right away and we can control the transition
+	var cardImage = $("<img>").hide().attr("class", "card").attr("src", "img/" + hand[index].src);
 
 	// To create stacked card effect
 	// May need to adjust sizing after new deck input

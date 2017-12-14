@@ -95,7 +95,7 @@ function announceWinner() {
 	$("#game-board").hide();
 	$("#wager-options").appendTo($("#game-over")); // moves betting options to gameover screen to improve gameplay
 	$(playAgainButton).appendTo($("#game-over")); // to move to bottom
-	$("#game-over").show("drop", 1000);
+	$("#game-over").show("drop", 500);
 
 	if (gameWinner === "player") {
 		$("#game-outcome").text("You won");

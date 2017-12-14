@@ -62,6 +62,12 @@ function updateVisibleChipBalances() {
 function updateVisibleHandTotals() {
 	$(".hand-total").text(playerHandTotal);
 	$(".split-hand-total").text(playerSplitHandTotal);
+	// only if current turn dealer, we dont want to reveal full total too early
+
+	// If current player is player and dealer length < 2
+	// If currentturn is dealer
+	// else if gamewinner has a value?
+	// If shorter, keep it as -= second item in array for hiding those secrets
 	$(".dealer-hand-total").text(dealerHandTotal);
 }
 
@@ -105,6 +111,7 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Show dealer card total, but dont update until dealer turn
 // Get new deck that works scaled way down
 // Figure out if I can show dealer cards/totals after all
 // Local storage detects first time visit, displays more robust rules/welcome message?
