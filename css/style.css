@@ -1,14 +1,58 @@
+body {
+	background: #1f513b;
+	background: linear-gradient(to bottom right, #1f513b, #0F2725);
+	text-align: center;
+	color: white;
+}
+
+
+h1, h2, h3, h4, .brand-logo {
+	font-family: 'Arvo', serif;
+	text-transform: lowercase;
+}
+
+h1 {
+	letter-spacing: 0px;
+	padding-top: .5em;
+	font-size: 4em;
+}
+
 h4 {
+	font-size: 2em;
+	color: white;
+}
+
+p {
 	font-size: 1.25em;
 }
 
-/* General styilng for all major sections*/
+#welcome p {
+	padding: 5px 70px;
+}
+
+/* Make section for white bg vs green? */
+#rules {
+	border: 2px solid white;
+	border-radius: 30px;
+	padding: 20px;
+	margin: 20px auto;
+}
+
+/* General styilng for all major sections */
 /* May delete once I am done but using to organize for now */
 .game-section {
-	border: 2px solid lightgrey;
 	padding: 20px;
 	text-align: center;
+	background: white;
+	border-radius: 30px;
+	margin: 10px auto;
+	width: 75%;
 }
+
+.game-section h4, .game-section p {
+	color: black;
+}
+
 
 .row {
 	margin: 0 auto;
@@ -101,42 +145,57 @@ h4 {
 } 
 
 .wager {
-	height: 100px;
-	width: 100px;
-	margin: 5px;
+	height: 60px;
+	width: 60px;
+	margin: 2px;
 	display: inline-block;
 }
 
+#wager-options {
+	padding: 20px 0px;
+}
+
 #user-hand, #user-split-hand {
-	animation: 1s;
-	transition: all 3s;
 	position: relative;
 }
 
 .hand-total, .split-hand-total, .dealer-hand-total {
-	background: lightgrey;
-	overflow: auto;
+	background: black;
 	padding: 10px 40px;
 	margin: 10px;
 	display: inline-block;
 }
 
-#dealer-condensed {
-	text-transform: capitalize;
-}
-
 button {
 	margin: 5px;
-	padding: 10px;
+	padding: 20px;
+	background: #99200d;
+	color: white;
+	border: 0;
+	font-size: 1.10em;
+	font-weight: 400;
+	display: inline-block;
+	letter-spacing: 1px;
+}
+
+#sidebar button {
+	width: 75px;
+	height: 75px;
+	padding: 0;
 }
 
 .disabled-button {
-	border: 1px solid red;
+	background: lightgrey;
+}
+
+button:focus {
+	background: black;
 }
 
 footer {
 	padding: 20px;
-	border: 2px solid lightgrey;
+	background: #0F2725;
+	color: white;
 }
 
 .rules-column {
@@ -149,17 +208,41 @@ footer {
 }
 
 
+/* Materialize style overrides*/
+
+.nav-wrapper{
+	background-color: black !important;
+ 	text-align: left !important;
+}
+
 .modal { 
 	width: 75% !important; 
 	height: 75% !important;
 	opacity: .90 !important;
 } 
 
-/* TO DO: */
+.brand-logo {
+	padding-left: 20px !important;
+}
+
+.rules-nav {
+	padding-right: 20px !important;
+}
+
 /* Rules to be visible at start, hidden during game play */
 #rules {
 	display: none;
 }
 
-#game-board {
+/* Resposive adjustments*/
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+	.game-section {
+	padding: 5px;
+	margin: 5px auto;
+	width: 90%;
+	}
+
+
 }

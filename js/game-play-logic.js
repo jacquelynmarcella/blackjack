@@ -54,12 +54,6 @@ function dealCard(hand, location) {
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
 		cardImage.attr("id", "dealer-card-" + index);
-
-		// Mobile view has an abbreviated display for dealer only, so update that text
-		// but only for the first card as that's all the player can see initially
-		if (index === 0) {
-			$("#dealer-condensed").text(hand[0].suit + " " + hand[0].name);
-		}
 		
 		// Second card only for dealer should show face down, so need to do just this one as the card back
 		if (dealerHand.length === 2) {
@@ -75,7 +69,7 @@ function dealCard(hand, location) {
 
 function evaluateGameStatus() {
 
-	// console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
+	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 	// Player can only do double down after first 2 cards drawn
 	// But in a split game, want to give them a chance after the deck is split right?
 	if (splitGame === true && playerHand.length === 3) {
@@ -213,14 +207,20 @@ function dealerPlay() {
 		}, 1000);
 
 	} else if (dealerHandTotal === 21) {
-		gameOver();
+		setTimeout(function(){
+			gameOver();
+		}, 1100);
 
 	} else if (dealerHandTotal > 21) {
-		gameOver();
+		setTimeout(function(){
+			gameOver();
+		}, 1100);	
 
 	// If dealer's cards are 17 or above, dealer must stand and then we will check final scores
 	} else if (dealerHandTotal >= 17) {
-		dealerStatus = "stand";
-		gameOver();
+		setTimeout(function(){
+			dealerStatus = "stand";
+			gameOver();
+		}, 1100);
 	}
 } 

@@ -8,45 +8,46 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div class="navbar-fixed">
+<div class="navbar-fixed z-depth-0">
 	<nav>
 		<div class="nav-wrapper">
-			<a href="#" class="left brand-logo">blackjack</a>
+			<a href="#" class="left brand-logo">B</a>
 			<ul id="nav-mobile" class="right">
-			<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
+				<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
 			</ul>
 	    </div>
 	</nav>
 </div>
 <div class="container" id="rules">
   	<div class="row">
-		<div class="col s12 game-section">
+		<div class="col s12">
 			<h4>Game Rules</h4>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m6 game-section">
+		<div class="col s12 m6">
 			<p>Goal: Beat the dealer by getting a count as close to 21 as possible, without going over 21. A blackjack occurs when the player gets one ace and one 10 point card, without having split the deck first.</p>
 			<p>Gameplay: The dealer will give 2 cards to themself and 2 cards to you. The dealer's second card will be played face down. You can choose to either hit (receive more cards) or stand (move on to the next hand). You can hit as many times as you choose so long as your deck is under 21.</p>
 			<p>Card Values: Queens, Kings, and Jacks are worth 10, pip cards are worth their face value, but Aces can be worth either 11 or 1. In this game, Aces have a default value is 11 unless the player goes over 21 on the hand.</p>
 		</div>
-		<div class="col s12 m6 game-section">
+		<div class="col s12 m6">
 			<p>Splitting Pairs: If you receive 2 cards of the same face value, you may choose to split your pairs and play each hand separately. At this table, you can only split once. After you split, one new card will be dealt to each hand then you can choose to either hit or stand for each hand accordingly.</p>
 			<p>Bettig: Bets must be placed prior to playing. After recieving your first 2 cards, you can choose to double down, or double your original bet. After your next move, you can no longer choose to double down.</p>
 			<p>Payout: Payout is 1:1 unless the player gets a blackjack. For a blackjack, payout is 3:2.</p>
+			<button id="rules-close">Close</button>
 		</div>
 	</div>
-	<button id="rules-close">Close</button>
 </div>
 <div class="container">
   	<div class="row">
-		<div class="col s12 game-section" id="welcome">
+		<div class="col s12" id="welcome">
 			<h1>Blackjack</h1>
-			<p>Welcome message goes here! Will only be visible on page load</p>
-			<div id="wager-options">
+			<p>Start playing by selecting your bet below. To view the rules at any time, click the <i class="material-icons">help</i> in the top right.</p>
+			<div id="wager-options" class="game-section">
 				<h4>Select your bet</h4>
 				<!-- Add alt tags -->
 				<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager"></a>
@@ -55,37 +56,36 @@
 				<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager"></a>
 				<p>Betting: <span class="current-wager">0</span></p>
 				<p>Available Balance: <span class="current-chip-balance">500</span></p>
-			</div>
-			<button id="start-game-button">Play</button>
+				<button id="start-game-button">Play</button>
+			</div>	
 			</div>
 		</div>
   	</div>
 </div>
 <div class="container inactive" id="game-board">
 	<div class="row">
-		<div class="col m9 s12 game-section">
+		<div class="col m9 s12">
 			<h4>Dealer's Hand</h4>
-			<div id="deck-pile" class="game-section hide-on-small-only">
+			<div id="deck-pile" class="hide-on-small-only">
 				<img src="img/card_back.png" class="card pile">
 			</div>
-			<div id="dealer" class="game-section"></div>
-			<div id="dealer-condensed" class="s12 hide-on-med-and-up game-section"></div>
+			<div id="dealer"></div>
 			<div class="dealer-hand-total"></div>
 		</div>
-		<div class="col s12 m3 game-section">
+		<div class="col s12 m3">
 			<p>You have bet <span class="current-wager">___</span> chips.</p>
 			<p>Chip balance <span class="current-chip-balance">___</span></p>
 		</div>
 	</div>
 	<div class="row">
-      	<div class="col s12 m9 game-section">
+      	<div class="col s12 m9">
       		<h4>Your Hand</h4>
-      		<div id="user-hand" class="game-section"></div>
+      		<div id="user-hand"></div>
       			<p class="hand-total">0</p>
-      		<div id="user-split-hand" class="game-section inactive"></div>
+      		<div id="user-split-hand" class="inactive"></div>
       			<p class="split-hand-total inactive">0</p>
 			</div>
-		<div class="col s12 m3 game-section" id="sidebar">
+		<div class="col s12 m3" id="sidebar">
         	<button id="hit-button">Hit</button>
         	<button id="double-down-button">Double Down</button>
         	<button id="stand-button">Stand</button>
@@ -93,13 +93,9 @@
      	</div>
 	</div>
 </div>
-
-  <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
 		<h4>You drew two aces</h4>
 		<p>Please select what you would like to do next:</p>
 		<button class="split-button modal-action modal-close">Split</button>
@@ -107,11 +103,10 @@
 		<button class="split-button modal-action modal-close">Split</button>
 		<p>Dealer's first card value is: <span class="dealer-hand-total"></span></p>
     </div>
-  </div>
-
+</div>
 <div class="container">
 	<div class="row">
-		<div class="col s12 game-section inactive" id="game-over">
+		<div class="col s12 inactive" id="game-over">
 			<h4 id="game-outcome"></h4>
 			<p>Dealer: <span class="dealer-hand-total"></span></p>
 			<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
@@ -122,10 +117,13 @@
 <footer>
 	Footer content
 </footer>
+
+<!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
 <script type="text/javascript" src="js/cards.js"></script>
 <script type="text/javascript" src="js/game-play-logic.js"></script>
 <script type="text/javascript" src="js/game-win-logic.js"></script>

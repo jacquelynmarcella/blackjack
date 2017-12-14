@@ -17,8 +17,7 @@ var startGame = function() {
 			{return 0.5 - Math.random()});
 
 		// Deals two cards to start, so loops through this twice (should alternate who is 
-		// being shuffled to (player, dealer, player, dealer)
-		
+		// being shuffled to (player, dealer, player, dealer)	
 		for (let i = 0; i <= 1; i++) {
 
 			setTimeout(function(){
@@ -29,7 +28,8 @@ var startGame = function() {
 			}, i*1000);
 		}
 
-		// Player starts game
+		// Player starts game, timeout to adjust this until the initial card
+		// dealing is complete
 		setTimeout(function(){
 			currentTurn = "player";
 		}, 2100);

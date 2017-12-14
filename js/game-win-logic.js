@@ -61,7 +61,7 @@ function gameOver() {
 	}
 	updateChipBalance();
 
-	setTimeout(announceWinner, 3000);
+	setTimeout(announceWinner, 2000);
 } 
 
 function updateChipBalance() {
@@ -100,7 +100,8 @@ function announceWinner() {
 
 	$("#game-board").hide();
 	$("#wager-options").appendTo($("#game-over")); // moves betting options to gameover screen to improve gameplay
-	$(playAgainButton).appendTo($("#game-over")); // to move to bottom
+	$(playAgainButton).appendTo($("#wager-options")); // to move to bottom of container
+	$(startButton).hide(); //since it wouldnt clear it all
 	$("#game-over").show("drop", 500);
 
 	if (gameWinner === "player") {
