@@ -9,8 +9,8 @@ var startGame = function() {
 	
 		// Hide wager section
 		$("#welcome").hide();
-		$("#game-over").hide("drop", 500);
-		$("#game-board").show("fade", 1000);
+		$("#game-over").hide();
+		$("#game-board").show("fade", 500);
 
 		// Then shuffles the card deck array
 		cardsInDeck.sort(function() 

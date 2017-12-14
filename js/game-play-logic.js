@@ -5,7 +5,17 @@ function dealCard(hand, location) {
 	// Take the card out of the main array and add to the player or dealer's card deck array
 	var cardDrawn = cardsInDeck.pop();
 	hand.push(cardDrawn);
-	var index = hand.length - 1;
+
+	// Sometimes it claims this is undefined, so needed to set more parameters
+	// though they may seem redundant
+	var index;
+	if (hand.length === 1) {
+		index = 0;
+	} else if (hand.length > 1) {
+		index = hand.length - 1;
+	}
+
+	console.log(hand);
 
 	console.log("Card selected is " + hand[index].src + " " + hand[index].name + " " + hand[index].suit);
 

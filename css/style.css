@@ -26,6 +26,57 @@ h4 {
 	display: inline-block;
 }
 
+
+/* Animations for card dealing based on location */
+
+@keyframes deal-player {
+	0% {
+		transform: translate(-150px, -150px);
+	}
+	50% {
+		transform: translate(-50px, -50px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+@keyframes deal-player-split {
+	0% {
+		transform: translate(-150px, -450px);
+	}
+	50% {
+		transform: translate(-50px, -150px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+@keyframes deal-dealer {
+	0% {
+		transform: translate(-150px, 0px);
+	}
+	50% {
+		transform: translate(-50px, 0px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+#dealer .card {
+	animation: deal-dealer .25s linear;
+}
+
+#user-hand .card {
+	animation: deal-player .5s linear;
+}
+
+#user-split-hand .card {
+	animation: deal-player-split .5s linear;
+}
+
 .card:hover {
 	z-index: 100;
 }
