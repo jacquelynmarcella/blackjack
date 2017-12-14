@@ -80,8 +80,12 @@ var split = function() {
 	playerSplitHand.push(splitCard);
 
 	// And move the image on the game board
+	// Reset original offset for positoning
+	// Showing then hiding prevents some weird animations from happening during this
 	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
-	cardImage.appendTo($(playerSplitGameBoard));
+	cardImage.hide();
+	cardImage.appendTo($(playerSplitGameBoard)).offset({left: 50}).css("margin-right", "auto");
+	cardImage.show();
 
 	// Double original wager when they split
 	// How to address double down here?

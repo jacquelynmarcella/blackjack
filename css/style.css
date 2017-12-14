@@ -23,37 +23,21 @@ h4 {
 	height: 130px;
 	width: 85px;
 	transition: all 3s;
-	position: relative;
-	left: 0px;
 	display: inline-block;
-}
-
-
-/* Some kind of loop to iterate through and assign based on index */
-/* if index = 2, it's -50 * 2 */
-.card:nth-of-type(2) {
-	left: -50px;
-	z-index: 50;
-}
-
-.card:nth-of-type(3) {
-	left: -100px;
-	z-index: 50;
 }
 
 .card:hover {
 	z-index: 100;
-	transform: scale(1.05);
 }
 
 .wager {
-	height: 50px;
-	width: 50px;
+	height: 100px;
+	width: 100px;
 	margin: 5px;
 	display: inline-block;
 }
 
-#user-hand {
+#user-hand, #user-split-hand {
 	animation: 1s;
 	transition: all 3s;
 	position: relative;
@@ -85,7 +69,7 @@ footer {
 	border: 2px solid lightgrey;
 }
 
-.inactive, #split-hand-total.inactive {
+.inactive {
 	display: none;
 }
 

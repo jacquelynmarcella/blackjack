@@ -105,6 +105,8 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Get new deck that works scaled way down
+// Figure out if I can show dealer cards/totals after all
 // Local storage detects first time visit, displays more robust rules/welcome message?
 // Nav a question mark instead of a hamburger
 // Animate flipcard function

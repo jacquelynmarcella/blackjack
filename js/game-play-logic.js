@@ -12,9 +12,16 @@ function dealCard(hand, location) {
 	cardImage.attr("class", "card");
 	cardImage.attr("src", "img/" + hand[index].src);
 
-	cardImage.appendTo($(location));
-	cardImage.show("fade", 2000);
+	// To create stacked card effect
+	// May need to adjust sizing after new deck input
+	if (index === 0) {
+		cardImage.appendTo($(location));
+	} else if (index > 0) {
+		cardImage.appendTo($(location)).offset({left: -50}).css("margin-right", -50);	
+	} 
 
+	cardImage.show();
+	
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
 
@@ -150,6 +157,8 @@ function reviewAcesValue() {
 // played (split or default player deck) and change aces value from 11 to 1.
 // This is only called when the player has gone over 21 in their current deck.
 function reduceAcesValue(deck) {
+
+// to do: if somehow 2 on first turn, prompt to split??
 
 	for (var i = 0; i < deck.length; i++) {
 	// Only focusing on aces that haven't been changed from 11 to 1 already
