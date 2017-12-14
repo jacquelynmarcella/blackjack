@@ -16,12 +16,34 @@ h4 {
 
 #deck-pile, #dealer {
 	display: inline-block;
+	clear: all;
 }
 
 .card {
 	height: 130px;
 	width: 85px;
 	transition: all 3s;
+	position: relative;
+	left: 0px;
+	display: inline-block;
+}
+
+
+/* Some kind of loop to iterate through and assign based on index */
+/* if index = 2, it's -50 * 2 */
+.card:nth-of-type(2) {
+	left: -50px;
+	z-index: 50;
+}
+
+.card:nth-of-type(3) {
+	left: -100px;
+	z-index: 50;
+}
+
+.card:hover {
+	z-index: 100;
+	transform: scale(1.05);
 }
 
 .wager {
@@ -34,6 +56,7 @@ h4 {
 #user-hand {
 	animation: 1s;
 	transition: all 3s;
+	position: relative;
 }
 
 .hand-total, .split-hand-total, .dealer-hand-total {

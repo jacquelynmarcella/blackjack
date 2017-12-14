@@ -11,14 +11,16 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<nav>
-	<div class="nav-wrapper">
-		<a href="#" class="left brand-logo">blackjack</a>
-		<ul id="nav-mobile" class="right">
-		<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
-		</ul>
-    </div>
-</nav>
+<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#" class="left brand-logo">blackjack</a>
+			<ul id="nav-mobile" class="right">
+			<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
+			</ul>
+	    </div>
+	</nav>
+</div>
 <div class="container">
   	<div class="row">
 		<div class="col s12  game-section" id="rules">
@@ -27,29 +29,37 @@
 		</div>
 	</div>
   	<div class="row">
-		<div class="col s12 game-section" id="wager-options">
+		<div class="col s12 game-section" id="welcome">
 			<h1>Blackjack</h1>
-			<h4>Select your bet</h4>
-			<!-- Add alt tags -->
-			<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager">10</a>
-			<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager">25</a>
-			<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager">50</a>
-			<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager">100</a>
-			<p>Current Wager: <span class="current-wager">0</span></p>
-			<p>Chip balance <span class="current-chip-balance">500</span></p>
-			<button id="start-game-button">Start</button>
+			<p>Welcome message goes here! Will only be visible on page load</p>
+			<div id="wager-options">
+				<h4>Select your bet</h4>
+				<!-- Add alt tags -->
+				<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager">10</a>
+				<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager">25</a>
+				<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager">50</a>
+				<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager">100</a>
+				<p>Current Wager: <span class="current-wager">0</span></p>
+				<p>Chip balance <span class="current-chip-balance">500</span></p>
+			</div>
+			<button id="start-game-button">Play</button>
+			</div>
 		</div>
   	</div>
 </div>
 <div class="container inactive" id="game-board">
 	<div class="row">
-		<div class="col m12 s12 game-section">
+		<div class="col m9 s12 game-section">
 			<h4>Dealer's Hand</h4>
 			<div id="deck-pile" class="game-section hide-on-small-only">
 				<img src="img/card_back.png" class="card pile">
 			</div>
 			<div id="dealer" class="game-section hide-on-small-only"></div>
 			<div id="dealer-condensed" class="s12 hide-on-med-and-up game-section"></div>
+		</div>
+		<div class="col s12 m3 game-section">
+			<p>You have bet <span class="current-wager">___</span> chips.</p>
+			<p>Chip balance <span class="current-chip-balance">___</span></p>
 		</div>
 	</div>
 	<div class="row">
@@ -61,8 +71,6 @@
       			<p class="split-hand-total inactive">0</p>
 			</div>
 		<div class="col s12 m3 game-section" id="sidebar">
-			<p>You have bet <span class="current-wager">___</span> chips.</p>
-			<p>Chip balance <span class="current-chip-balance">___</span></p>
         	<button id="hit-button">Hit</button>
         	<button id="double-down-button">Double Down</button>
         	<button id="stand-button">Stand</button>
@@ -73,10 +81,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col s12 game-section inactive" id="game-over">
-			<h4 id="game-outcome">You won/lost message here</h4>
+			<h4 id="game-outcome"></h4>
 			<p>Dealer: <span class="dealer-hand-total"></span></p>
 			<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
-			<p>Chip balance: <span class="current-chip-balance"></span></p>
 			<button class="new-game-button">Play Again</button>
 		</div>
   	</div>

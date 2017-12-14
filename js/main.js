@@ -35,8 +35,6 @@ var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $("#split-button");
 var playAgainButton = $(".new-game-button"); 
-var displayWagerOptionsButton = $("#display-wager-options-button"); // need EL
-var resumeGameButton = $("#resume-game-button"); // need EL
 
 // Function to toggle a button off dependent on gameplay stage
 function disableButton(buttonName) {
@@ -107,6 +105,7 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Local storage detects first time visit, displays more robust rules/welcome message?
 // Nav a question mark instead of a hamburger
 // Animate flipcard function
 // Local storage for chip balance

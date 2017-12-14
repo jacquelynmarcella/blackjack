@@ -8,8 +8,8 @@ var startGame = function() {
 		updateVisibleChipBalances();
 	
 		// Hide wager section
-		$("#wager-options").hide();
-		$("#game-over").hide();
+		$("#welcome").hide();
+		$("#game-over").hide("drop", 500);
 		$("#game-board").show("fade", 1000);
 
 		// Then shuffles the card deck array
@@ -120,7 +120,6 @@ function newGame() {
 
 	cardsInDeck = cards;	
 	currentTurn = "player";
-	currentWager = 0;
 	gameWinner; 
 
 	dealerHand = [];
@@ -138,35 +137,29 @@ function newGame() {
 	playerSplitHandTotal = 0;
 	playerSplitStatus;
 
-	updateVisibleChipBalances();
-	updateVisibleHandTotals();
+	// Cleared initial data, but need to make sure a wager is selected before
+	// we leave this screen and update any further values
+	if (currentWager === 0) { 
+		Materialize.toast("You must select a bet to play", 1000);
+	} else {
+		updateVisibleHandTotals();
 
-	// Function to deactive a section and reactivate perhaps?
-	$(playerSplitGameBoard).hide();
-	$(".split-hand-total").hide();
-	$("#game-over").hide("drop", 500);
-	$("#wager-options").show();
-	
-	// Return buttons to active
-	enableButton(standButton, stand);
-	enableButton(hitButton, hit);
-	enableButton(doubleDownButton, doubleDown);
+		// Hiding any prior split game data 
+		$(playerSplitGameBoard).hide();
+		$(".split-hand-total").hide();
+			
+		// Return buttons to active
+		enableButton(standButton, stand);
+		enableButton(hitButton, hit);
+		enableButton(doubleDownButton, doubleDown);
 
-	// Clear out game board images
-	dealerGameBoard.empty();
-	playerGameBoard.empty();
-	playerSplitGameBoard.empty();
+		// Clear out game board images
+		dealerGameBoard.empty();
+		playerGameBoard.empty();
+		playerSplitGameBoard.empty();
 
-	//Toggle the chip selection menu back in and hide gameplay
+		startGame(); 
+	}
 }
 
-function resetGame() {
-	// For a full reset that actually impacts chip balance
-
-	newGame();
-	var currentChipBalance = 500;
-	updateVisibleChipBalances();
-	// Clear local storage out too?
-
-}
 

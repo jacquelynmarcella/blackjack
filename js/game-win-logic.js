@@ -87,8 +87,14 @@ function updateChipBalance() {
 function announceWinner() {
 
 	updateVisibleHandTotals();
-	$("#game-board").hide("fade");
-	$("#game-over").show("drop", 700);
+
+	currentWager = 0;
+	updateVisibleChipBalances();
+
+	$("#game-board").hide();
+	$("#wager-options").appendTo($("#game-over")); // moves betting options to gameover screen to improve gameplay
+	$(playAgainButton).appendTo($("#game-over")); // to move to bottom
+	$("#game-over").show("drop", 1000);
 
 	if (gameWinner === "player") {
 		$("#game-outcome").text("You won");
