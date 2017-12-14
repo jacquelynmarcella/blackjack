@@ -8,10 +8,12 @@ function dealCard(hand, location) {
 	var index = hand.length - 1;
 
 	// Create card image for card drawn and place in player/dealer's card section
-	var cardImage = $("<img/>");
+	var cardImage = $("<img/>").hide(); //So it doesnt show abruptly
 	cardImage.attr("class", "card");
 	cardImage.attr("src", "img/" + hand[index].src);
+
 	cardImage.appendTo($(location));
+	cardImage.show("fade", 2000);
 
 	// Update total count of cards in hand based on who is playing
 	if (currentTurn === "player" || currentTurn === "playerSplit") {
@@ -20,7 +22,7 @@ function dealCard(hand, location) {
 		if (hand[index].name === "ace") {
 			playerHasAce = true;
 		}
-		
+
 		// Put into the correct player's hand deck dependent on if deck was split
 		if (currentTurn === "player") {
 			playerHandTotal += hand[index].value;
@@ -66,7 +68,7 @@ function evaluateGameStatus() {
 
 	// First, if the player has gone over 21 check if they have aces and adjust to
 	// from 11 to 1 if we need to
-	if (playerHasAce === true) {
+	if (playerHasAce === true && currentTurn === "player" || currentTurn === "playerSplit") {
 		reviewAcesValue();
 	}
 

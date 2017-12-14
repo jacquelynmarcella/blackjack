@@ -2,14 +2,15 @@ var startGame = function() {
 
 	// Captures current wager
 	if (currentWager === 0) {
-		console.log("User must select a wager before beginning");
+		Materialize.toast("You must select a bet to play", 1000);
 	} else {
 		currentChipBalance -= currentWager;
 		updateVisibleChipBalances();
 	
 		// Hide wager section
-		$("#wager-options").addClass("inactive");
-		$("#game-board").removeClass("inactive");
+		$("#wager-options").hide();
+		$("#game-over").hide();
+		$("#game-board").show("fade", 1000);
 
 		// Then shuffles the card deck array
 		cardsInDeck.sort(function() 
@@ -35,10 +36,10 @@ var startGame = function() {
 }
 
 var hit = function() {
-
 	console.log(currentTurn + " is requesting another card");
 
 	if (currentTurn === "player") {
+		playerStatus = "hit";
 		dealCard(playerHand, playerGameBoard);
 
 	} else if (currentTurn === "playerSplit") {
@@ -70,8 +71,8 @@ var split = function() {
 	// As well as activate the viewing for the split deck
 	playerHandTotal = playerHandTotal - playerHand[1].value;
 	playerSplitHandTotal = playerHand[1].value;
-	$(playerSplitGameBoard).removeClass("inactive");
-	$(".split-hand-total").removeClass("inactive");
+	$(playerSplitGameBoard).show();
+	$(".split-hand-total").show();
 	updateVisibleHandTotals();
 
 	// Now, move the item out of the array and into the split array
@@ -141,11 +142,10 @@ function newGame() {
 	updateVisibleHandTotals();
 
 	// Function to deactive a section and reactivate perhaps?
-	// Look into jquery toggling
-	$(playerSplitGameBoard).addClass("inactive");
-	$("#game-over").addClass("inactive");
-	$(".split-hand-total").addClass("inactive");
-	$("#wager-options").removeClass("inactive");
+	$(playerSplitGameBoard).hide();
+	$(".split-hand-total").hide();
+	$("#game-over").hide("drop", 500);
+	$("#wager-options").show();
 	
 	// Return buttons to active
 	enableButton(standButton, stand);
@@ -165,6 +165,7 @@ function resetGame() {
 
 	newGame();
 	var currentChipBalance = 500;
+	updateVisibleChipBalances();
 	// Clear local storage out too?
 
 }

@@ -12,92 +12,82 @@
 </head>
 <body>
 <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">blackjack</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Rules</a></li>
-        <li><a href="#">New Game</a></li>
-        <li><a href="#">Quit Game</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li><a href="#">Rules</a></li>
-        <li><a href="#" class="new-game">New Game</a></li>
-        <li><a href="#">Quit Game</a></li>
-      </ul>
+	<div class="nav-wrapper">
+		<a href="#" class="left brand-logo">blackjack</a>
+		<ul id="nav-mobile" class="right">
+		<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
+		</ul>
     </div>
-  </nav>
-  	<div class="container">
-  		<div class="row">
-			<div class="col s12  game-section" id="rules">
-				<h1>Blackjack</h1>
-				<p>Possibly add a toggling type thing here to outline key areas?</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae aliquam eros. Donec egestas elementum felis sed malesuada. Integer nec ex volutpat, faucibus felis sed, volutpat sapien. Morbi semper urna in eros fermentum, at volutpat mi vehicula. Donec tincidunt nibh eros, et eleifend metus dapibus non. 
-				<p>Fusce venenatis, lacus ut fringilla condimentum, diam lectus vulputate leo, quis eleifend dui magna at ipsum. Pellentesque tortor ante, dapibus id tempus quis, commodo ac enim. Proin diam ipsum, eleifend quis quam sit amet, feugiat vehicula eros. Aliquam iaculis laoreet ante, in semper leo lacinia vel. Suspendisse ut vehicula lorem. Ut at justo odio. Etiam tempus pulvinar tempor.</p>
-				<p>Suspendisse potenti. Duis ultrices ante id justo aliquet aliquet. Pellentesque dui sapien, fermentum id nulla eget, imperdiet blandit nisi. Aenean erat diam, interdum quis velit nec, pulvinar feugiat tellus. Nam vitae fringilla augue. Suspendisse vitae odio in felis interdum sodales. Ut blandit eros a enim tincidunt, at ultrices dolor varius. Pellentesque et condimentum purus. Duis varius porttitor libero. Pellentesque rutrum pellentesque lorem accumsan ultrices.</p>
-				<button id="display-wager-options-button">Start</button>
-				<button id="resume-game-button">Resume Game</button>
-			</div>
+</nav>
+<div class="container">
+  	<div class="row">
+		<div class="col s12  game-section" id="rules">
+			<p>Rules go here</p>
+			<button id="rules-close">X</button>
 		</div>
-  		<div class="row">
-			<div class="col s12 game-section" id="wager-options">
-				<h4>Select your bet</h4>
-				<!-- Add alt tags -->
-				<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager">10</a>
-				<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager">25</a>
-				<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager">50</a>
-				<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager">100</a>
-				<p>Current Wager: <span class="current-wager">0</span></p>
-				<button id="start-game-button">Start</button>
-			</div>
-  		</div>
+	</div>
+  	<div class="row">
+		<div class="col s12 game-section" id="wager-options">
+			<h1>Blackjack</h1>
+			<h4>Select your bet</h4>
+			<!-- Add alt tags -->
+			<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager">10</a>
+			<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager">25</a>
+			<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager">50</a>
+			<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager">100</a>
+			<p>Current Wager: <span class="current-wager">0</span></p>
+			<p>Chip balance <span class="current-chip-balance">500</span></p>
+			<button id="start-game-button">Start</button>
+		</div>
   	</div>
-	<div class="container inactive" id="game-board">
-        <div class="row">
-			<div class="col m12 s12 game-section">
-				<h4>Dealer's Hand</h4>
-				<div id="deck-pile" class="game-section hide-on-small-only">
-					<img src="img/card_back.png" class="card pile">
-				</div>
-				<div id="dealer" class="game-section hide-on-small-only"></div>
-				<div id="dealer-condensed" class="s12 hide-on-med-and-up game-section"></div>
+</div>
+<div class="container inactive" id="game-board">
+	<div class="row">
+		<div class="col m12 s12 game-section">
+			<h4>Dealer's Hand</h4>
+			<div id="deck-pile" class="game-section hide-on-small-only">
+				<img src="img/card_back.png" class="card pile">
 			</div>
+			<div id="dealer" class="game-section hide-on-small-only"></div>
+			<div id="dealer-condensed" class="s12 hide-on-med-and-up game-section"></div>
 		</div>
-		<div class="row">
-      		<div class="col s12 m9 game-section">
-      			<h4>Your Hand</h4>
-      			<div id="user-hand" class="game-section"></div>
+	</div>
+	<div class="row">
+      	<div class="col s12 m9 game-section">
+      		<h4>Your Hand</h4>
+      		<div id="user-hand" class="game-section"></div>
       			<p class="hand-total">0</p>
-      			<div id="user-split-hand" class="game-section inactive"></div>
+      		<div id="user-split-hand" class="game-section inactive"></div>
       			<p class="split-hand-total inactive">0</p>
 			</div>
-			<div class="col s12 m3 game-section" id="sidebar">
-				<p>You have bet <span class="current-wager">___</span> chips.</p>
-				<p>Chip balance <span class="current-chip-balance">___</span></p>
-        		<button id="hit-button">Hit</button>
-        		<button id="double-down-button">Double Down</button>
-        		<button id="stand-button">Stand</button>
-				<button id="split-button" class="disabled-button">Split</button>
-     	 	</div>
+		<div class="col s12 m3 game-section" id="sidebar">
+			<p>You have bet <span class="current-wager">___</span> chips.</p>
+			<p>Chip balance <span class="current-chip-balance">___</span></p>
+        	<button id="hit-button">Hit</button>
+        	<button id="double-down-button">Double Down</button>
+        	<button id="stand-button">Stand</button>
+			<button id="split-button" class="disabled-button">Split</button>
+     	</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col s12 game-section inactive" id="game-over">
+			<h4 id="game-outcome">You won/lost message here</h4>
+			<p>Dealer: <span class="dealer-hand-total"></span></p>
+			<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
+			<p>Chip balance: <span class="current-chip-balance"></span></p>
+			<button class="new-game-button">Play Again</button>
 		</div>
-    </div>
-    <div class="container">
-    	<div class="row">
-			<div class="col s12 game-section inactive" id="game-over">
-				<h4 id="game-outcome">You won/lost message here</h4>
-				<p>Dealer: <span class="dealer-hand-total"></span></p>
-				<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
-				<p>Chip balance: <span class="current-chip-balance"></span></p>
-				<button id="play-again-button">Play Again</button>
-			</div>
-  		</div>
   	</div>
-    <footer>
-    	Footer content
-    </footer>
+  </div>
+<footer>
+	Footer content
+</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <script type="text/javascript" src="js/cards.js"></script>
 <script type="text/javascript" src="js/game-play-logic.js"></script>
 <script type="text/javascript" src="js/game-win-logic.js"></script>

@@ -34,7 +34,7 @@ var doubleDownButton = $("#double-down-button");
 var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $("#split-button");
-var playAgainButton = $("#play-again-button"); 
+var playAgainButton = $(".new-game-button"); 
 var displayWagerOptionsButton = $("#display-wager-options-button"); // need EL
 var resumeGameButton = $("#resume-game-button"); // need EL
 
@@ -78,6 +78,19 @@ function selectWager(amount){
 // Possible to do: Break out page transitional elements into separate JS file
 $(".button-collapse").sideNav();	// Materialize functionality
 
+$(function() {
+	$("#rules-tabs").tabs();
+});
+
+$(".rules-nav").click(function(){
+	$("#rules").toggle("blind", 500);
+	$('.button-collapse').sideNav('hide');
+});
+
+$("#rules-close").click(function(){
+	$("#rules").hide("blind", 500);
+});
+
 // EVENT LISTENERS:
 // Adjust wager based on chip clicked
 $("#chip-10").click(function(){selectWager(10)});
@@ -94,13 +107,12 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Nav a question mark instead of a hamburger
 // Animate flipcard function
 // Local storage for chip balance
 // Prompt user for name?
 // Reset game
 // Animation toggling off and on rules and start game 
-// Set winner then run function for popup that inputs values and impacts numbering based on winner
 // Switch statement for win?
 // Toggle mobile view of full dealer cards once it is dealer's turn
 // Maybe have condensed/expandable view of this -- or show total and let them expand?
-// New round/play again button that starts game

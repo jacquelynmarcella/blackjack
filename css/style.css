@@ -1,8 +1,3 @@
-* {
-	margin: 0 auto;
-	text-align: center;
-}
-
 h4 {
 	font-size: 1.25em;
 }
@@ -12,6 +7,7 @@ h4 {
 .game-section {
 	border: 2px solid lightgrey;
 	padding: 20px;
+	text-align: center;
 }
 
 .row {
@@ -33,10 +29,6 @@ h4 {
 	width: 50px;
 	margin: 5px;
 	display: inline-block;
-}
-
-.wager:active {
-	border: 1px solid red;
 }
 
 #user-hand {
