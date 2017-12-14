@@ -136,6 +136,7 @@ function newGame() {
 
 	playerHasAce = false;  
 	splitGame = false; 
+	isGameOver = false;
 
 	playerSplitHand = [];
 	playerSplitHandTotal = 0;
@@ -165,5 +166,3 @@ function newGame() {
 		startGame(); 
 	}
 }
-
-

@@ -7,9 +7,11 @@ function dealCard(hand, location) {
 	hand.push(cardDrawn);
 	var index = hand.length - 1;
 
+	console.log("Card selected is " + hand[index].src + " " + hand[index].name + " " + hand[index].suit);
+
 	// Create card image for card drawn and place in player/dealer's card section
 	// Hide it initially so it doesn't show right away and we can control the transition
-	var cardImage = $("<img>").hide().attr("class", "card").attr("src", "img/" + hand[index].src);
+	var cardImage = $("<img>").attr("class", "card").attr("src", "img/" + hand[index].src).hide();
 
 	// To create stacked card effect
 	// May need to adjust sizing after new deck input
@@ -63,7 +65,7 @@ function dealCard(hand, location) {
 
 function evaluateGameStatus() {
 
-	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
+	// console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 	// Player can only do double down after first 2 cards drawn
 	// But in a split game, want to give them a chance after the deck is split right?
 	if (splitGame === true && playerHand.length === 3) {
@@ -75,7 +77,11 @@ function evaluateGameStatus() {
 	// First, if the player has gone over 21 check if they have aces and adjust to
 	// from 11 to 1 if we need to
 	if (playerHasAce === true && currentTurn === "player" || currentTurn === "playerSplit") {
-		reviewAcesValue();
+		if (currentTurn === "player") {
+			reviewAcesValue(playerHand, playerHandTotal);
+		} else if (currentTurn === "playerSplit") {
+			reviewAcesValue(playerSplitHand, playerSplitHandTotal);
+		}		
 	}
 
 	if (currentTurn === "player" || "playerSplit") {
@@ -141,13 +147,16 @@ function changeHand(currentDeckStatus) {
 	}
 }
 
-function reviewAcesValue() {
+function reviewAcesValue(hand, total) {
+// Hand should be playerHand or playerSplitHand
 
-	if (playerHandTotal > 21 || playerSplitHandTotal > 21) {
-		if (currentTurn === "playerSplit") {
-			reduceAcesValue(playerSplitHand);
-		} else if (currentTurn === "player") {
-			reduceAcesValue(playerHand);
+	// If they have exactly 2 aces in the first draw, prompt them to choose
+	// Otherwise, default action is to reset value to 1
+	if (total > 21) {
+		if (hand.length === 2) {
+			console.log("Prompt user to split, reduce both, reduce just 1");
+		} else if (hand.length > 2) {
+			reduceAcesValue(hand);
 		}
 	}
 }

@@ -69,10 +69,21 @@ footer {
 	border: 2px solid lightgrey;
 }
 
+.rules-column {
+	display: inline-block; 
+	width: 40%;
+}
+
 .inactive {
 	display: none;
 }
 
+
+.modal { 
+	width: 75% !important; 
+	height: 75% !important;
+	opacity: .90 !important;
+} 
 
 /* TO DO: */
 /* Rules to be visible at start, hidden during game play */

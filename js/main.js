@@ -4,6 +4,7 @@ var currentTurn = "player";
 var currentWager = 0;
 var currentChipBalance = 500; //Subject to change based on local storage
 var gameWinner; // To be declared at end of game
+var isGameOver = false;
 
 // Dealer hand and starting totals
 var dealerHand = [];
@@ -33,7 +34,7 @@ var startButton = $("#start-game-button");
 var doubleDownButton = $("#double-down-button");
 var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
-var splitButton = $("#split-button");
+var splitButton = $(".split-button");
 var playAgainButton = $(".new-game-button"); 
 
 // Function to toggle a button off dependent on gameplay stage
@@ -62,13 +63,19 @@ function updateVisibleChipBalances() {
 function updateVisibleHandTotals() {
 	$(".hand-total").text(playerHandTotal);
 	$(".split-hand-total").text(playerSplitHandTotal);
-	// only if current turn dealer, we dont want to reveal full total too early
 
-	// If current player is player and dealer length < 2
-	// If currentturn is dealer
-	// else if gamewinner has a value?
-	// If shorter, keep it as -= second item in array for hiding those secrets
-	$(".dealer-hand-total").text(dealerHandTotal);
+	// If the dealer has not played yet or game is not over, only show value of 1st card
+	// as the player is still making their initial moves
+	if (dealerHand.length === 2) {
+		if (isGameOver === false && dealerStatus === "start") {
+			$(".dealer-hand-total").text(dealerHandTotal - dealerHand[1].value);
+		} else {
+			$(".dealer-hand-total").text(dealerHandTotal);
+		}
+	} else {
+		$(".dealer-hand-total").text(dealerHandTotal);
+	}
+
 }
 
 function selectWager(amount){
@@ -94,6 +101,22 @@ $(".rules-nav").click(function(){
 $("#rules-close").click(function(){
 	$("#rules").hide("blind", 500);
 });
+
+$('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .40, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '30%', // Starting top style attribute
+      endingTop: '20%', // Ending top style attribute
+      ready: function(modal, trigger) { 
+      	// Callback for Modal open. Modal and trigger parameters available.
+      },
+      complete: function() {
+      	// Callback for Modal close
+      } 
+    }
+  );
 
 // EVENT LISTENERS:
 // Adjust wager based on chip clicked

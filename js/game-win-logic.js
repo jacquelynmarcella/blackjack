@@ -3,10 +3,14 @@
 
 function gameOver() {
 
+	isGameOver = true;
 	console.log("Game over");
 
 	// Flip hidden dealer card if applicable (function checks for this)
 	flipHiddenCard();
+
+	// Update any totals (show the hidden card value now if they hadn't played yet)
+	updateVisibleHandTotals();
 
 	// Make sure all key buttons disabled (may have already been depending on prior gameplay)
 	disableButton(standButton);
