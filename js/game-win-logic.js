@@ -7,7 +7,9 @@ function gameOver() {
 	console.log("Game over");
 
 	// Flip hidden dealer card if applicable (function checks for this)
-	flipHiddenCard();
+	setTimeout(function(){
+		flipHiddenCard();
+	}, 750);
 
 	// Update any totals (show the hidden card value now if they hadn't played yet)
 	updateVisibleHandTotals();

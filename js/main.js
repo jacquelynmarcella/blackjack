@@ -51,7 +51,10 @@ function enableButton(buttonName, event) {
 function flipHiddenCard() {
 	// If it's just the initial round, first we need to flip/reveal the hidden dealer card when this is called
 	if (dealerHand.length === 2) {
-		$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
+		$("#dealer-card-1").addClass("flipped")
+		setTimeout(function(){
+			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
+		}, 250);	
 	} 
 }
 

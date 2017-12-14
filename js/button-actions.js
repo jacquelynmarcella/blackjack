@@ -18,20 +18,26 @@ var startGame = function() {
 
 		// Deals two cards to start, so loops through this twice (should alternate who is 
 		// being shuffled to (player, dealer, player, dealer)
-		for (var i=0; i < 2; i++) {
-			currentTurn = "player";
-			dealCard(playerHand, playerGameBoard);
-			currentTurn = "dealer";
-			dealCard(dealerHand, dealerGameBoard);
+		
+		for (let i = 0; i <= 1; i++) {
+
+			setTimeout(function(){
+				currentTurn = "player";
+				dealCard(playerHand, playerGameBoard);
+				currentTurn = "dealer";
+				dealCard(dealerHand, dealerGameBoard);
+			}, i*1000);
 		}
 
 		// Player starts game
-		currentTurn = "player";
-	}
+		setTimeout(function(){
+			currentTurn = "player";
+		}, 2100);
 
-	// In only certain circumstances (equal value pairs), enable split hand button
-	if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
-		enableButton(splitButton, split);
+		// In only certain circumstances (equal value pairs), enable split hand button
+		if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
+			enableButton(splitButton, split);
+		}
 	}
 }
 

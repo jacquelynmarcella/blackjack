@@ -208,7 +208,9 @@ function dealerPlay() {
 
 	// Now, run through what the dealer should do next based on standard blackjack house rules
 	if (dealerHandTotal < 17) {
-		dealCard(dealerHand, dealerGameBoard);
+		setTimeout(function(){
+			dealCard(dealerHand, dealerGameBoard);
+		}, 1000);
 
 	} else if (dealerHandTotal === 21) {
 		gameOver();

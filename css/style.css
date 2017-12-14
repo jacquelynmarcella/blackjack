@@ -28,6 +28,7 @@ h4 {
 
 
 /* Animations for card dealing based on location */
+/* TO DO: Add webkit keyframes also */
 
 @keyframes deal-player {
 	0% {
@@ -65,21 +66,39 @@ h4 {
   	}
 }
 
-#dealer .card {
-	animation: deal-dealer .25s linear;
-}
-
-#user-hand .card {
-	animation: deal-player .5s linear;
-}
-
-#user-split-hand .card {
-	animation: deal-player-split .5s linear;
+@keyframes dealer-cardflip {
+	0% {
+		transform: rotateY(25deg);
+	}
+	50% {
+		transform: rotateY(100deg);
+	}
+	100% {
+		transform: none;
+  	}
 }
 
 .card:hover {
 	z-index: 100;
 }
+
+#dealer .card {
+	animation: deal-dealer .25s ease-in;
+}
+
+#user-hand .card {
+	animation: deal-player .5s ease-in;
+}
+
+#user-split-hand .card {
+	animation: deal-player-split .5s ease-in;
+}
+
+/* For when dealer card is flipped*/
+
+#dealer .card.flipped {
+	animation: dealer-cardflip .25s ease-in;
+} 
 
 .wager {
 	height: 100px;
