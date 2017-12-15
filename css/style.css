@@ -1,8 +1,7 @@
-/* General body styles */
-
+/* Broad site-wide styles */
 body {
 	background: #1f513b;
-	background: linear-gradient(to top right, #1f513b, #0F2725);
+	background: linear-gradient(to top right, #1f513b, #0F2725) fixed;
 	text-align: center;
 	font-family: 'Lato', sans-serif;
 	color: white;
@@ -27,10 +26,10 @@ p {
 
 button, button:focus {
 	margin: 5px;
-	padding: 10px;
+	padding: 10px 20px;
 	background: #d60438;
 	color: white;
-	font-size: 1.10em;
+	font-size: 1.25em;
 	font-weight: 400;
 	letter-spacing: 1px;
 	border: 0;
@@ -44,21 +43,13 @@ button:active {
 	background: #0F2725;
 }
 
-footer {
-	padding: 20px;
-	background: white;
-	color: black;
-}
-
 /* Welcome screen */
-
 #welcome p {
 	width: 50%;
 	margin: 10px auto;
 }
 
 /* Rules section hidden at start and can toggle in from above */
-
 #rules {
 	padding: 20px;
 	margin: 20px auto 30px auto;
@@ -76,7 +67,13 @@ footer {
 	text-align: center;
 }
 
+footer {
+	background: #0F2725;
+	padding: 0;
+}
+
 /* Card decks during gameplay */
+
 #deck-pile, #dealer, #user-hand, #user-split-hand {
 	display: inline-block;
 	position: relative;
@@ -109,25 +106,40 @@ footer {
 	display: inline-block;
 }
 
+.wager-clickable {
+	margin: 15px 2px;
+}
+
 .wager-clickable:hover {
 	transform: translate(0, 10px);
 }
 
+/* For bet screen where the supporting icons don't need to be full size */
 .wager-small {
-	margin-left: 10px;
+	margin-left: 30px;
+	margin-right: 10px;
 	height: 40px;
 	width: 40px;
 }
 
 #wager-options {
-	margin: 20px auto;
+	margin: 15px auto 5px auto;
 }
 
+#wager-options span {
+	display: inline-block;
+	margin: 20px auto;
+	font-size: 2em;
+	line-height: 1.5em;
+	position: relative;
+	bottom: 10px;
+}
 
 /* Gameover scoreboard table */
 table {
 	width: 50%;
 	margin: 0 auto;
+	padding: 0;
 }
 
 .total-label {
@@ -150,7 +162,7 @@ table {
 	width: 50px;
 }
 
-/* On the gameboard, these get positioned differently */
+/* On the gameboard, these totals get positioned differently over the decks*/
 .game-board-totals {
 	position: relative;
 	left: -15px;
@@ -158,17 +170,11 @@ table {
 	margin-right: -15px;
 }
 
-
-.current-wager, .current-chip-balance {
-	display: inline-block;
-}
-
 #user-split-hand {
 	margin-left: 20px;
 }
 
-/* For whenever split hand state is engaged */
-
+/* For whenever split hand state is engaged, we will scale decks up and down */
 .splithand-scaledown {
 	transition: all 1s;
 	transform: scale(.75);
@@ -182,8 +188,7 @@ table {
 	margin-right: -30px;
 }
 
-/* Game button action items */
-
+/* Game button action items are styled bigger than the other buttons */
 #sidebar button {
 	width: 100%;
 	height: 70px;
@@ -221,13 +226,18 @@ table {
 .modal { 
 	padding: 40px 0 !important;
 	width: 75% !important; 
-	height: 50% !important;
+	height: 75% !important;
 	opacity: .90 !important;
-	overflow: hidden;
+	overflow: hidden !important;
+	max-height: 100% !important;
 } 
 
 .modal-content {
 	color: black;
+}
+
+.modal-body {
+	max-height: 600px;
 }
 
 .row {
@@ -235,7 +245,6 @@ table {
 }
 
 /* Resposive adjustments*/
-
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
 	.navbar-fixed {
@@ -259,11 +268,6 @@ table {
 	.card {
 		width: 77px;
 		height: 103.5px;
-	}
-
-	.wager {
-		height: 50px;
-		width: 50px;
 	}
 
 	#sidebar button {

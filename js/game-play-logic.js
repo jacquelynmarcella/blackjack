@@ -78,6 +78,7 @@ function evaluateGameStatus() {
 		disableButton(doubleDownButton);
 	} else if (splitGame === false && playerHand.length === 3 || dealerStatus === "hit") {
 		disableButton(doubleDownButton);
+		disableButton(splitButton);
 	}
 
 	// First, if the player has gone over 21 check if they have aces and adjust to
@@ -164,7 +165,12 @@ function reviewAcesValue(hand, total) {
 	// Otherwise, default action is to reset value to 1
 	if (total > 21) {
 		if (hand.length === 2) {
-			console.log("Prompt user to split, reduce both, reduce just 1");
+
+			// If the hand length is exactly 2, then they have 2 aces
+			// Prompt them if they want to split or not before automatically reducing value
+			enableButton(splitButton, split);
+			$("#two-aces-prompt").modal("open");
+
 		} else if (hand.length > 2) {
 			reduceAcesValue(hand);
 		}
@@ -175,8 +181,6 @@ function reviewAcesValue(hand, total) {
 // played (split or default player deck) and change aces value from 11 to 1.
 // This is only called when the player has gone over 21 in their current deck.
 function reduceAcesValue(deck) {
-
-// to do: if somehow 2 on first turn, prompt to split??
 
 	for (var i = 0; i < deck.length; i++) {
 	// Only focusing on aces that haven't been changed from 11 to 1 already

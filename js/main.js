@@ -115,19 +115,13 @@ $("#rules-close").click(function(){
 	$("#rules").hide("blind", 500);
 });
 
-$('.modal').modal({
-      dismissible: false, // Modal can be dismissed by clicking outside of the modal
-      opacity: .40, // Opacity of modal background
-      inDuration: 300, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '30%', // Starting top style attribute
-      endingTop: '20%', // Ending top style attribute
-      ready: function(modal, trigger) { 
-      	// Callback for Modal open. Modal and trigger parameters available.
-      },
-      complete: function() {
-      	// Callback for Modal close
-      } 
+$(".modal").modal({ //Materialize modal
+      dismissible: false, 
+      opacity: .40, 
+      inDuration: 300, 
+      outDuration: 200, 
+      startingTop: "10%", // Starting top style attribute
+      endingTop: "10%", // Ending top style attribute
     }
   );
 
@@ -144,6 +138,12 @@ $(doubleDownButton).click(doubleDown);  //may not want to call this right away?
 $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
+$(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, would only be reducing in 1st deck
+	function(){
+		reduceAcesValue(playerHand);
+}); 
+
+
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
@@ -152,4 +152,5 @@ $(playAgainButton).click(newGame);
 // Local storage detects first time visit, displays more robust rules/welcome message?
 // Local storage for chip balance
 // Prompt user for name?
+// Way to turn off split button if they dont split
 // Switch statement for win?
