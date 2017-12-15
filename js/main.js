@@ -58,6 +58,10 @@ function flipHiddenCard() {
 	} 
 }
 
+function scaleDeck(deck) {
+	
+}
+
 function updateVisibleChipBalances() {
 	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
@@ -137,17 +141,12 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
-// Split button not working
 // Finish ace modal
 // Icons for bank, chips
-// Dealer type of icon?
-// Card images
-// Adjust position of titles on dealer/player decks accordingly
-
-// Get new deck that works scaled way down
 // Local storage detects first time visit, displays more robust rules/welcome message?
 // Local storage for chip balance
 // Prompt user for name?
 // Switch statement for win?
+// Some way to denote which hand they are playing if split
 // Split game -- card deck collapses on each turn?? Click to expand back??
 //   --For each array, loop through ids and change offset to way less?

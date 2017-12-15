@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Arvo:400,700|Lato" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/keyframes.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -47,55 +48,67 @@
 		<div class="col s12" id="welcome">
 			<h1>blackjack</h1>
 			<p>Start playing by selecting your bet below. To view the rules at any time, click the icon in the top right.</p>
-			<div id="wager-options" class="game-section">
-				<h4 class="hide-on-small-only">Select your bet</h4>
-				<!-- Add alt tags -->
-				<a href="#" id="chip-10"><img src="img/10-chip.png" class="wager"></a>
-				<a href="#" id="chip-25"><img src="img/25-chip.png" class="wager"></a>
-				<a href="#" id="chip-50"><img src="img/50-chip.png" class="wager"></a>
-				<a href="#" id="chip-100"><img src="img/100-chip.png" class="wager"></a>
-				<p>Current bet: <span class="current-wager">0</span></p>
-				<p>Bank: <span class="current-chip-balance">500</span></p>
+			<div id="wager-options">
+				<a href="#" id="chip-10"><img src="img/10-chip.png" class="wager wager-clickable"></a>
+				<a href="#" id="chip-25"><img src="img/25-chip.png" class="wager wager-clickable"></a>
+				<a href="#" id="chip-50"><img src="img/50-chip.png" class="wager wager-clickable"></a>
+				<a href="#" id="chip-100"><img src="img/100-chip.png" class="wager wager-clickable"></a>
+				<br>
+				<span class="current-wager">0</span>
+				<img src="img/pile-chip.png" class="wager-small">
+				<span class="current-chip-balance">500</span>
+				<br>
 				<button id="start-game-button">Play</button>
 			</div>	
-			</div>
 		</div>
-  	</div>
+	</div>
 </div>
 <div class="container inactive" id="game-board">
 	<div class="row">
 		<div class="col m8 s12">
-			<h4>dealer</h4>
+			<h4>Dealer</h4>
 			<div id="deck-pile" class="hide-on-small-only">
 				<img src="img/card_back.png" class="card pile">
 			</div>
 			<div id="dealer"></div>
-			<span class="dealer-hand-total"></span>
+			<span class="dealer-hand-total game-board-totals"></span>
 		</div>
-		<div class="col s12 m4 game-section">
-			<div>
+		<div class="col s12 m4">
+			<div class="row">
+				<div class="col m4 s6">
 				<img src="img/blank-chip.png" class="wager">
-				<span class="current-wager">___</span></p>
+				<span class="current-wager">___</span>
 			</div>
-			<div>
+			<div class="col m4 s6">
 				<img src="img/pile-chip.png" class="wager">
 				<span class="current-chip-balance">___</span>
+			</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
       	<div class="col s12 m8">
-      		<h4>player</h4>
+      		<h4>Player</h4>
 	      		<div id="user-hand"></div>
-	      		<span class="hand-total">0</span>
+	      		<span class="hand-total game-board-totals">0</span>
 	      		<div id="user-split-hand" class="inactive"></div>
-	      		<span class="split-hand-total inactive">0</span>
+	      		<span class="split-hand-total game-board-totals inactive">0</span>
 		</div>
 		<div class="col s12 m4" id="sidebar">
-        	<button id="hit-button">Hit</button>
-        	<button id="double-down-button">Double</button>
-        	<button id="stand-button">Stand</button>
-			<button class="disabled-button split-button">Split</button>
+			<div class="row">
+				<div class="col m6 s3">
+        			<button id="hit-button">Hit</button>
+        		</div>
+        		<div class="col m6 s3">
+        			<button id="double-down-button">Double</button>
+        		</div>
+        		<div class="col m6 s3">
+        			<button id="stand-button">Stand</button>
+        		</div>
+        		<div class="col m6 s3">
+					<button class="disabled-button split-button">Split</button>
+				</div>
+			</div>
      	</div>
 	</div>
 </div>
@@ -107,19 +120,27 @@
 		<button class="split-button modal-action modal-close">Split</button>
 		<button class="split-button modal-action modal-close">Split</button>
 		<button class="split-button modal-action modal-close">Split</button>
-		<p>Dealer's first card value is: <span class="dealer-hand-total"></span></p>
+		<p>Dealer: <span class="dealer-hand-total"></span></p>
     </div>
 </div>
 <div class="container">
 	<div class="row">
 		<div class="col s12 inactive" id="game-over">
-			<h3 id="game-outcome">Win message here</h4>
-			<p>Dealer: <span class="dealer-hand-total"></span></p>
-			<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
+			<h3 id="game-outcome">Win message here</h3>
+			<table>
+ 			 <tr>
+				<td class="total-label"><h5>Dealer</h5></td>
+				<td class="total-output"><span class="dealer-hand-total"></span></td> 
+			</tr>
+			<tr>
+				<td class="total-label"><h5>Player</h5></td>
+				<td class="total-output"><span class="hand-total"></span> <span class="split-hand-total inactive"></span></td>
+			</tr>
+			</table>
 			<button class="new-game-button">Play Again</button>
 		</div>
   	</div>
-  </div>
+</div>
 <footer>
 	Footer content
 </footer>

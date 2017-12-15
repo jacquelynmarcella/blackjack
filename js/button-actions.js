@@ -7,10 +7,10 @@ var startGame = function() {
 		currentChipBalance -= currentWager;
 		updateVisibleChipBalances();
 	
-		// Hide wager section
+		// Hide initial sections or game over screen, then open up game board
 		$("#welcome").hide();
 		$("#game-over").hide();
-		$(".brand-logo").text("blackjack"); //Adds text to title bar once off title
+		$(".brand-logo").text("blackjack"); //Adds title to nav once off welcome screen
 		$("#game-board").show("fade", 1000);
 
 		// Then shuffles the card deck array
@@ -114,6 +114,14 @@ var split = function() {
 
 	//May need to reconfigure this depending on how second drawn hands go?
 	currentTurn = "player"; 
+	console.log("Shrink the split card deck now");
+
+	// Shrink the inactive deck to both signal what deck they are playing
+	// and to make room on the board
+	setTimeout(function(){
+		$(playerSplitGameBoard, ".split-hand-total").addClass("splithand-scaledown");
+	}, 1000);
+
 
 	// TO DO: Double down the bets/adjust bets accordingly when this is selected
 }

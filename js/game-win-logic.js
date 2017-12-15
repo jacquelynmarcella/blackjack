@@ -99,6 +99,13 @@ function announceWinner() {
 	updateVisibleChipBalances();
 
 	$("#game-board").hide();
+
+	// If game was split, scale everything back to normal size
+	$(".split-hand-total").removeClass("splithand-scaledown");
+	$(playerSplitGameBoard).removeClass("splithand-scaledown");
+	$(".hand-total").removeClass("splithand-scaledown");
+	$(playerGameBoard).removeClass("splithand-scaledown");
+
 	$("#wager-options").appendTo($("#game-over")); // moves betting options to gameover screen to improve gameplay
 	$(playAgainButton).appendTo($("#wager-options")); // to move to bottom of container
 	$(startButton).hide(); //since it wouldnt clear it all

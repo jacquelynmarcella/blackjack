@@ -1,0 +1,50 @@
+/* Animations for card dealing based on location */
+/* TO DO: Add webkit keyframes also */
+
+@keyframes deal-player {
+	0% {
+		transform: translate(-90px, -150px);
+	}
+	50% {
+		transform: translate(-50px, -50px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+@keyframes deal-player-split {
+	0% {
+		transform: translate(-90px, -450px);
+	}
+	50% {
+		transform: translate(-50px, -150px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+@keyframes deal-dealer {
+	0% {
+		transform: translate(-100px, 0px);
+	}
+	50% {
+		transform: translate(-50px, 0px);
+	}
+	100% {
+		transform: translate(0, 0);
+  	}
+}
+
+@keyframes dealer-cardflip {
+	0% {
+		transform: rotateY(25deg);
+	}
+	50% {
+		transform: rotateY(100deg);
+	}
+	100% {
+		transform: none;
+  	}
+}

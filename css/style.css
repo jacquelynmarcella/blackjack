@@ -1,3 +1,5 @@
+/* General body styles */
+
 body {
 	background: #1f513b;
 	background: linear-gradient(to top right, #1f513b, #0F2725);
@@ -6,19 +8,16 @@ body {
 	color: white;
 }
 
-
 h1, h2, h3, h4, .brand-logo {
 	font-family: 'Arvo', serif;
 }
 
 h1 {
-	letter-spacing: 0px;
 	font-size: 4em;
 }
 
 h4 {
 	font-size: 1.75em;
-	color: white;
 }
 
 p {
@@ -26,30 +25,46 @@ p {
 	line-height: 1.75em;
 }
 
+button, button:focus {
+	margin: 5px;
+	padding: 10px;
+	background: #d60438;
+	color: white;
+	font-size: 1.10em;
+	font-weight: 400;
+	letter-spacing: 1px;
+	border: 0;
+}
+
+button:active {
+	background: black;
+}
+
+.disabled-button {
+	background: #0F2725;
+}
+
+footer {
+	padding: 20px;
+	background: white;
+	color: black;
+}
+
+/* Welcome screen */
+
 #welcome p {
 	width: 50%;
 	margin: 10px auto;
 }
 
-/* Make section for white bg vs green? */
+/* Rules section hidden at start and can toggle in from above */
+
 #rules {
 	padding: 20px;
 	margin: 20px auto 30px auto;
 	text-align: left;
-	display: none;
+	display: none; 
 	background: #0F2725;
-	/* Hidden at start */
-}
-
-/* General styilng for all major sections */
-/* May delete once I am done but using to organize for now */
-.game-section {
-	padding: 20px;
-	text-align: center;
-	background: white;
-	border-radius: 40px;
-	margin: 20px auto 40px auto;
-	width: 70%;
 }
 
 #rules button {
@@ -61,18 +76,10 @@ p {
 	text-align: center;
 }
 
-.game-section h4, .game-section p {
-	color: black;
-}
-
-
-.row {
-	margin: 0 auto;
-}
-
-/* Class for all of these? */
+/* Card decks during gameplay */
 #deck-pile, #dealer, #user-hand, #user-split-hand {
 	display: inline-block;
+	position: relative;
 }
 
 #user-split-hand {
@@ -89,82 +96,33 @@ p {
 	box-shadow: -3px 4px rgba(15, 39, 37, .25);
 }
 
-.pile {
-	margin-right: 30px;
-}
-
-/* Animations for card dealing based on location */
-/* TO DO: Add webkit keyframes also */
-
-@keyframes deal-player {
-	0% {
-		transform: translate(-90px, -150px);
-	}
-	50% {
-		transform: translate(-50px, -50px);
-	}
-	100% {
-		transform: translate(0, 0);
-  	}
-}
-
-@keyframes deal-player-split {
-	0% {
-		transform: translate(-90px, -450px);
-	}
-	50% {
-		transform: translate(-50px, -150px);
-	}
-	100% {
-		transform: translate(0, 0);
-  	}
-}
-
-@keyframes deal-dealer {
-	0% {
-		transform: translate(-100px, 0px);
-	}
-	50% {
-		transform: translate(-50px, 0px);
-	}
-	100% {
-		transform: translate(0, 0);
-  	}
-}
-
-@keyframes dealer-cardflip {
-	0% {
-		transform: rotateY(25deg);
-	}
-	50% {
-		transform: rotateY(100deg);
-	}
-	100% {
-		transform: none;
-  	}
-}
-
 .card:hover {
 	z-index: 100;
 }
 
+.pile {
+	margin-right: 30px;
+}
+
+/* Card animations called using keyframes */
+/* Animation angle different for each */
 #dealer .card {
-	animation: deal-dealer .25s ease-in;
+	animation: deal-dealer .25s linear;
 }
 
 #user-hand .card {
-	animation: deal-player .5s ease-in;
+	animation: deal-player .5s linear;
 }
 
 #user-split-hand .card {
-	animation: deal-player-split .5s ease-in;
+	animation: deal-player-split .5s linear;
 }
 
-/* For when dealer card is flipped*/
-
 #dealer .card.flipped {
-	animation: dealer-cardflip .25s ease-in;
+	animation: dealer-cardflip .25s linear;
 } 
+
+/* Chips and wagers */
 
 .wager {
 	height: 60px;
@@ -173,80 +131,90 @@ p {
 	display: inline-block;
 }
 
-.wager:hover {
+.wager-clickable:hover {
 	transform: translate(0, 10px);
 }
 
+.wager-small {
+	margin-left: 10px;
+	height: 40px;
+	width: 40px;
+}
+
 #wager-options {
-	padding: 20px 0;
+	margin: 20px auto;
 }
 
 .current-wager, .current-chip-balance {
-	color: black;
-	font-size: 3em;
+	display: inline-block;
 }
 
+
+
+/* Gameover scoreboard table */
+table {
+	width: 30%;
+	margin: 0 auto;
+}
+
+.total-label {
+	text-align: right;
+	padding-right: 20px;
+}
+
+.total-output {
+	text-align: left;
+}
+
+/* Card totals */
 .hand-total, .split-hand-total, .dealer-hand-total {
 	background: black;
 	padding: 10px 0;
-	margin: 10px auto;
+	margin: 2px;
 	display: inline-block;
 	font-size: 1.25em;
 	text-align: center;
 	width: 50px;
 }
 
-#game-board .hand-total, #game-board .split-hand-total, #game-board .dealer-hand-total {
+/* On the gameboard, these get positioned differently */
+.game-board-totals {
 	position: relative;
 	left: -15px;
 	bottom: 40px;
 	margin-right: -15px;
 }
 
-button, button:focus {
-	margin: 5px;
-	padding: 20px;
-	background: #d60438;
-	color: white;
-	border: 0;
-	font-size: 1.10em;
-	font-weight: 400;
-	letter-spacing: 1px;
+/* For whenever split hand state is engaged */
+
+.splithand-scaledown {
+	transition: all 1s;
+	left: -35px;
+	margin-right: -35px;
 }
 
-.current-wager, .current-chip-balance {
-	display: inline-block;
+#user-hand.splithand-scaledown, #user-split-hand.splithand-scaledown {
+	transform: scale(.4);
 }
+
+/* Game button action items */
 
 #sidebar button {
-	width: 100px;
-	height: 75px;
+	width: 100%;
+	height: 70px;
+	margin: 5px 0 10px 0;
 	overflow: none;
 	padding: 0;
 }
 
-.disabled-button {
-	background: #0F2725;
-}
-
-button:active {
-	background: black;
-}
-
-footer {
-	padding: 20px;
-	background: #0F2725;
-	color: white;
-}
-
+/* For any items invisible at start that we will toggle/show later */
 .inactive {
 	display: none;
 }
 
 
-/* Materialize style overrides*/
-
-.nav-wrapper{
+/* Materialize framework style overrides*/
+.nav-wrapper {
 	background-color: black !important;
  	text-align: left !important;
 	box-shadow: 0 !important;
@@ -256,35 +224,37 @@ footer {
 	margin-bottom: 30px !important;
 }
 
+.brand-logo { /* Text in nav bar */
+	padding-left: 20px !important;
+	font-size: 1.5em !important;
+}
+
+.rules-nav { /* Icon to toggle rules */
+	padding-right: 20px !important;
+}
+
 .modal { 
 	width: 75% !important; 
 	height: 75% !important;
 	opacity: .90 !important;
 } 
 
-.brand-logo {
-	padding-left: 20px !important;
-	font-size: 1.5em !important;
+.row {
+	margin: 0 auto;
 }
-
-.rules-nav {
-	padding-right: 20px !important;
-}
-
 
 /* Resposive adjustments*/
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
-	.game-section {
-	padding: 5px;
-	margin: 20px auto;
-	width: 95%;
+	.navbar-fixed {
+		margin-bottom: 20px !important;
 	}
 
-	.card {
-		width: 77px;
-		height: 103.5px;
+	.game-section {
+		padding: 5px;
+		margin: 20px auto;
+		width: 95%;
 	}
 
 	p {
@@ -295,16 +265,31 @@ footer {
 		width: 80%;
 	}
 
-	.navbar-fixed {
-		margin-bottom: 15px !important;
+	.card {
+		width: 77px;
+		height: 103.5px;
+	}
+
+	.wager {
+		height: 50px;
+		width: 50px;
 	}
 
 	#sidebar button {
 		width: 70px;
 		height: 50px;
-		overflow: none;
-		padding: 0;
+	}
+
+	table {
+		width: 100%;
+	}
+
+	.total-label {
+		padding-right: 0;
+	}
+
+	.total-output {
+		padding-left: 10px;
 	}
 
 }
-
