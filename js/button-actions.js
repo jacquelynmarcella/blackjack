@@ -33,12 +33,13 @@ var startGame = function() {
 		// dealing is complete
 		setTimeout(function(){
 			currentTurn = "player";
-		}, 2100);
 
-		// In only certain circumstances (equal value pairs), enable split hand button
-		if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
-			enableButton(splitButton, split);
-		}
+			// In only certain circumstances (equal value pairs), enable split hand button
+			if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
+				enableButton(splitButton, split);
+			}
+
+		}, 2100);
 	}
 }
 

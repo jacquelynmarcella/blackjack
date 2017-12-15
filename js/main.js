@@ -54,7 +54,7 @@ function flipHiddenCard() {
 		$("#dealer-card-1").addClass("flipped");
 		setTimeout(function(){
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
-		}, 500);	
+		}, 250);	
 	} 
 }
 
@@ -137,6 +137,8 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Split button not working
+// Finish ace modal
 // Icons for bank, chips
 // Dealer type of icon?
 // Card images
@@ -147,3 +149,5 @@ $(playAgainButton).click(newGame);
 // Local storage for chip balance
 // Prompt user for name?
 // Switch statement for win?
+// Split game -- card deck collapses on each turn?? Click to expand back??
+//   --For each array, loop through ids and change offset to way less?

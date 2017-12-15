@@ -75,6 +75,10 @@ p {
 	display: inline-block;
 }
 
+#user-split-hand {
+	margin-left: 20px;
+}
+
 .card {
 	transition: all 3s;
 	display: inline-block;
@@ -140,18 +144,6 @@ p {
   	}
 }
 
-@keyframes chip-spinning {
-	0% {
-		transform: rotateY(0deg);
-	}
-	50% {
-		transform: rotateY(180deg);
-	}
-	100% {
-		transform: rotateY(360deg);
-  	}
-}
-
 .card:hover {
 	z-index: 100;
 }
@@ -182,12 +174,16 @@ p {
 }
 
 .wager:hover {
-	animation: chip-spinning 1.5s ease-out;
-		width: 60px;
+	transform: translate(0, 10px);
 }
 
 #wager-options {
 	padding: 20px 0;
+}
+
+.current-wager, .current-chip-balance {
+	color: black;
+	font-size: 3em;
 }
 
 .hand-total, .split-hand-total, .dealer-hand-total {
@@ -218,9 +214,12 @@ button, button:focus {
 	letter-spacing: 1px;
 }
 
+.current-wager, .current-chip-balance {
+	display: inline-block;
+}
 
 #sidebar button {
-	width: 75px;
+	width: 100px;
 	height: 75px;
 	overflow: none;
 	padding: 0;
@@ -299,5 +298,13 @@ footer {
 	.navbar-fixed {
 		margin-bottom: 15px !important;
 	}
+
+	#sidebar button {
+		width: 70px;
+		height: 50px;
+		overflow: none;
+		padding: 0;
+	}
+
 }
 

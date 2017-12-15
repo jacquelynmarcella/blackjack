@@ -50,10 +50,10 @@
 			<div id="wager-options" class="game-section">
 				<h4 class="hide-on-small-only">Select your bet</h4>
 				<!-- Add alt tags -->
-				<a href="#" id="chip-10"><img src="img/chip_yellow_top.png" class="wager"></a>
-				<a href="#" id="chip-25"><img src="img/chip_red_top.png" class="wager"></a>
-				<a href="#" id="chip-50"><img src="img/chip_yellow_top.png" class="wager"></a>
-				<a href="#" id="chip-100"><img src="img/chip_red_top.png" class="wager"></a>
+				<a href="#" id="chip-10"><img src="img/10-chip.png" class="wager"></a>
+				<a href="#" id="chip-25"><img src="img/25-chip.png" class="wager"></a>
+				<a href="#" id="chip-50"><img src="img/50-chip.png" class="wager"></a>
+				<a href="#" id="chip-100"><img src="img/100-chip.png" class="wager"></a>
 				<p>Current bet: <span class="current-wager">0</span></p>
 				<p>Bank: <span class="current-chip-balance">500</span></p>
 				<button id="start-game-button">Play</button>
@@ -72,28 +72,30 @@
 			<div id="dealer"></div>
 			<span class="dealer-hand-total"></span>
 		</div>
-		<div class="col s12 m4">
-			<p>Current bet <span class="current-wager">___</span> chips.</p>
-			<p>Bank <span class="current-chip-balance">___</span></p>
+		<div class="col s12 m4 game-section">
+			<div>
+				<img src="img/blank-chip.png" class="wager">
+				<span class="current-wager">___</span></p>
+			</div>
+			<div>
+				<img src="img/pile-chip.png" class="wager">
+				<span class="current-chip-balance">___</span>
+			</div>
 		</div>
 	</div>
 	<div class="row">
       	<div class="col s12 m8">
       		<h4>player</h4>
-      		<div>
 	      		<div id="user-hand"></div>
 	      		<span class="hand-total">0</span>
-	      	</div>
-	      	<div>
 	      		<div id="user-split-hand" class="inactive"></div>
 	      		<span class="split-hand-total inactive">0</span>
-			</div>
 		</div>
 		<div class="col s12 m4" id="sidebar">
         	<button id="hit-button">Hit</button>
         	<button id="double-down-button">Double</button>
         	<button id="stand-button">Stand</button>
-			<button id="split-button" class="disabled-button">Split</button>
+			<button class="disabled-button split-button">Split</button>
      	</div>
 	</div>
 </div>

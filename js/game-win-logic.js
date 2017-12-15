@@ -72,10 +72,10 @@ function updateChipBalance() {
 		// Noting that typical rules do not give bonuses if the hand has been split,
 		// it would be normal payout
 		if (splitGame === false && playerHasAce === true && playerHandTotal === 21 && playerHand.length === 2) {
-			currentChipBalance += currentWager * (3/2);
+			currentChipBalance += currentWager + currentWager*(3/2);
 		// Otherwise it's a 1:1 payout
 		} else {
-			currentChipBalance += currentWager;
+			currentChipBalance += currentWager*2;
 		}
 
 	} else if (gameWinner === "dealer") {
