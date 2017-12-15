@@ -10,6 +10,7 @@ var startGame = function() {
 		// Hide wager section
 		$("#welcome").hide();
 		$("#game-over").hide();
+		$(".brand-logo").text("blackjack"); //Adds text to title bar once off title
 		$("#game-board").show("fade", 1000);
 
 		// Then shuffles the card deck array

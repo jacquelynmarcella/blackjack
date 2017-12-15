@@ -8,14 +8,14 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Arvo:400,700|Lato" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <div class="navbar-fixed z-depth-0">
 	<nav>
 		<div class="nav-wrapper">
-			<span class="left brand-logo">b</span>
+			<span class="left brand-logo"></span>
 			<ul id="nav-mobile" class="right">
 				<li><a href="#" class="rules-nav"><i class="material-icons">help</i></a></li>
 			</ul>
@@ -45,8 +45,8 @@
 <div class="container">
   	<div class="row">
 		<div class="col s12" id="welcome">
-			<h1>Blackjack</h1>
-			<p>Start playing by selecting your bet below. To view the rules at any time, click the <i class="material-icons">help</i> in the top right.</p>
+			<h1>blackjack</h1>
+			<p>Start playing by selecting your bet below. To view the rules at any time, click the icon in the top right.</p>
 			<div id="wager-options" class="game-section">
 				<h4 class="hide-on-small-only">Select your bet</h4>
 				<!-- Add alt tags -->
@@ -65,7 +65,7 @@
 <div class="container inactive" id="game-board">
 	<div class="row">
 		<div class="col m8 s12">
-			<h4>Dealer's Hand</h4>
+			<h4>dealer</h4>
 			<div id="deck-pile" class="hide-on-small-only">
 				<img src="img/card_back.png" class="card pile">
 			</div>
@@ -79,7 +79,7 @@
 	</div>
 	<div class="row">
       	<div class="col s12 m8">
-      		<h4>Your Hand</h4>
+      		<h4>player</h4>
       		<div>
 	      		<div id="user-hand"></div>
 	      		<span class="hand-total">0</span>
@@ -111,7 +111,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col s12 inactive" id="game-over">
-			<h4 id="game-outcome"></h4>
+			<h3 id="game-outcome">Win message here</h4>
 			<p>Dealer: <span class="dealer-hand-total"></span></p>
 			<p>Player: <span class="hand-total"></span> <span class="split-hand-total inactive"></span></p>
 			<button class="new-game-button">Play Again</button>

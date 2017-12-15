@@ -2,23 +2,22 @@ body {
 	background: #1f513b;
 	background: linear-gradient(to top right, #1f513b, #0F2725);
 	text-align: center;
+	font-family: 'Lato', sans-serif;
 	color: white;
 }
 
 
 h1, h2, h3, h4, .brand-logo {
 	font-family: 'Arvo', serif;
-	text-transform: lowercase;
 }
 
 h1 {
 	letter-spacing: 0px;
-	padding-top: .15em;
 	font-size: 4em;
 }
 
 h4 {
-	font-size: 2em;
+	font-size: 1.75em;
 	color: white;
 }
 
@@ -34,17 +33,12 @@ p {
 
 /* Make section for white bg vs green? */
 #rules {
-	background: #0F2725;
 	padding: 20px;
 	margin: 20px auto 30px auto;
 	text-align: left;
-	display: none; 
+	display: none;
+	background: #0F2725;
 	/* Hidden at start */
-}
-
-.rules-column {
-	display: inline-block; 
-	width: 40%;
 }
 
 /* General styilng for all major sections */
@@ -82,12 +76,18 @@ p {
 }
 
 .card {
-	height: 130px;
-	width: 85px;
 	transition: all 3s;
 	display: inline-block;
+	background-color: none !important;
+	border-radius: 12.5px;
+	outline-offset: -6px;
+	outline: 6px solid white;
+	box-shadow: -3px 4px rgba(15, 39, 37, .25);
 }
 
+.pile {
+	margin-right: 30px;
+}
 
 /* Animations for card dealing based on location */
 /* TO DO: Add webkit keyframes also */
@@ -183,6 +183,7 @@ p {
 
 .wager:hover {
 	animation: chip-spinning 1.5s ease-out;
+		width: 60px;
 }
 
 #wager-options {
@@ -209,7 +210,7 @@ p {
 button, button:focus {
 	margin: 5px;
 	padding: 20px;
-	background: #99200d;
+	background: #d60438;
 	color: white;
 	border: 0;
 	font-size: 1.10em;
@@ -249,6 +250,11 @@ footer {
 .nav-wrapper{
 	background-color: black !important;
  	text-align: left !important;
+	box-shadow: 0 !important;
+}
+
+.navbar-fixed {
+	margin-bottom: 30px !important;
 }
 
 .modal { 
@@ -259,6 +265,7 @@ footer {
 
 .brand-logo {
 	padding-left: 20px !important;
+	font-size: 1.5em !important;
 }
 
 .rules-nav {
@@ -276,12 +283,21 @@ footer {
 	width: 95%;
 	}
 
+	.card {
+		width: 77px;
+		height: 103.5px;
+	}
+
 	p {
 		font-size: 1.4em;
 	}
 
 	#welcome p {
-	width: 80%;
+		width: 80%;
 	}
 
+	.navbar-fixed {
+		margin-bottom: 15px !important;
+	}
 }
+
