@@ -1,6 +1,6 @@
 body {
 	background: #1f513b;
-	background: linear-gradient(to bottom right, #1f513b, #0F2725);
+	background: linear-gradient(to top right, #1f513b, #0F2725);
 	text-align: center;
 	color: white;
 }
@@ -36,10 +36,15 @@ p {
 #rules {
 	background: #0F2725;
 	padding: 20px;
-	margin: 20px auto;
+	margin: 20px auto 30px auto;
 	text-align: left;
 	display: none; 
 	/* Hidden at start */
+}
+
+.rules-column {
+	display: inline-block; 
+	width: 40%;
 }
 
 /* General styilng for all major sections */
@@ -48,7 +53,7 @@ p {
 	padding: 20px;
 	text-align: center;
 	background: white;
-	border-radius: 30px;
+	border-radius: 40px;
 	margin: 20px auto 40px auto;
 	width: 70%;
 }
@@ -89,7 +94,7 @@ p {
 
 @keyframes deal-player {
 	0% {
-		transform: translate(-150px, -150px);
+		transform: translate(-90px, -150px);
 	}
 	50% {
 		transform: translate(-50px, -50px);
@@ -101,7 +106,7 @@ p {
 
 @keyframes deal-player-split {
 	0% {
-		transform: translate(-150px, -450px);
+		transform: translate(-90px, -450px);
 	}
 	50% {
 		transform: translate(-50px, -150px);
@@ -113,7 +118,7 @@ p {
 
 @keyframes deal-dealer {
 	0% {
-		transform: translate(-150px, 0px);
+		transform: translate(-100px, 0px);
 	}
 	50% {
 		transform: translate(-50px, 0px);
@@ -132,6 +137,18 @@ p {
 	}
 	100% {
 		transform: none;
+  	}
+}
+
+@keyframes chip-spinning {
+	0% {
+		transform: rotateY(0deg);
+	}
+	50% {
+		transform: rotateY(180deg);
+	}
+	100% {
+		transform: rotateY(360deg);
   	}
 }
 
@@ -164,6 +181,10 @@ p {
 	display: inline-block;
 }
 
+.wager:hover {
+	animation: chip-spinning 1.5s ease-out;
+}
+
 #wager-options {
 	padding: 20px 0;
 }
@@ -176,12 +197,16 @@ p {
 	font-size: 1.25em;
 	text-align: center;
 	width: 50px;
+}
+
+#game-board .hand-total, #game-board .split-hand-total, #game-board .dealer-hand-total {
 	position: relative;
 	left: -15px;
 	bottom: 40px;
+	margin-right: -15px;
 }
 
-button {
+button, button:focus {
 	margin: 5px;
 	padding: 20px;
 	background: #99200d;
@@ -191,6 +216,7 @@ button {
 	font-weight: 400;
 	letter-spacing: 1px;
 }
+
 
 #sidebar button {
 	width: 75px;
@@ -203,7 +229,7 @@ button {
 	background: #0F2725;
 }
 
-button:focus, button:active {
+button:active {
 	background: black;
 }
 
@@ -211,11 +237,6 @@ footer {
 	padding: 20px;
 	background: #0F2725;
 	color: white;
-}
-
-.rules-column {
-	display: inline-block; 
-	width: 40%;
 }
 
 .inactive {

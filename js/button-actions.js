@@ -10,7 +10,7 @@ var startGame = function() {
 		// Hide wager section
 		$("#welcome").hide();
 		$("#game-over").hide();
-		$("#game-board").show("fade", 500);
+		$("#game-board").show("fade", 1000);
 
 		// Then shuffles the card deck array
 		cardsInDeck.sort(function() 
@@ -25,7 +25,7 @@ var startGame = function() {
 				dealCard(playerHand, playerGameBoard);
 				currentTurn = "dealer";
 				dealCard(dealerHand, dealerGameBoard);
-			}, i*1000);
+			}, i*1500);
 		}
 
 		// Player starts game, timeout to adjust this until the initial card

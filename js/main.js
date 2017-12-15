@@ -106,7 +106,7 @@ $("#rules-close").click(function(){
 });
 
 $('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      dismissible: false, // Modal can be dismissed by clicking outside of the modal
       opacity: .40, // Opacity of modal background
       inDuration: 300, // Transition in duration
       outDuration: 200, // Transition out duration
@@ -137,6 +137,11 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
+// Icons for bank, chips
+// Dealer type of icon?
+// Card images
+// Adjust position of titles on dealer/player decks accordingly
+
 // Get new deck that works scaled way down
 // Local storage detects first time visit, displays more robust rules/welcome message?
 // Local storage for chip balance
