@@ -74,9 +74,7 @@ function evaluateGameStatus() {
 	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 	// Player can only do double down after first 2 cards drawn
 	// But in a split game, want to give them a chance after the deck is split right?
-	if (splitGame === true && playerHand.length === 3) {
-		disableButton(doubleDownButton);
-	} else if (splitGame === false && playerHand.length === 3 || dealerStatus === "hit") {
+	if (playerHand.length === 3 || dealerStatus === "hit") {
 		disableButton(doubleDownButton);
 		disableButton(splitButton);
 	}
@@ -170,7 +168,9 @@ function reviewAcesValue(hand, total) {
 			// Prompt them if they want to split or not before automatically reducing value
 			enableButton(splitButton, split);
 			$("#two-aces-prompt").modal("open");
-
+			return;
+			
+			// Can I pass total through here to simplify reduce aces further??
 		} else if (hand.length > 2) {
 			reduceAcesValue(hand);
 		}

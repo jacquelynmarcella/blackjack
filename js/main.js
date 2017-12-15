@@ -147,10 +147,9 @@ $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, w
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
-// Finish ace modal
 // Icons for bank, chips
-// Local storage detects first time visit, displays more robust rules/welcome message?
-// Local storage for chip balance
 // Prompt user for name?
-// Way to turn off split button if they dont split
 // Switch statement for win?
+// Scale down reduce aces function possibly?
+// Read me
+// Rules
