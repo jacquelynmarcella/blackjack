@@ -16,6 +16,7 @@ var dealerStatus = "start"; // Possible statuses are start (initial gameplay), s
 var playerHand = [];
 var playerHandTotal = 0;
 var playerGameBoard = $("#user-hand");
+var playerHandTotalDisplay = $(".hand-total");
 var playerStatus = "start";  // Possible statuses are start (initial gameplay), stand, hit
 
 // Because aces can equal 1 or 11, need to quickly know if player has aces so we can
@@ -27,6 +28,7 @@ var splitGame = false; // default value is false, must be turned true
 var playerSplitHand = [];
 var playerSplitHandTotal = 0;
 var playerSplitGameBoard = $("#user-split-hand");
+var playerSplitHandTotalDisplay = $(".split-hand-total");
 var playerSplitStatus;
 
 // Buttons pulled from DOM
@@ -48,28 +50,15 @@ function enableButton(buttonName, event) {
 	$(buttonName).removeClass("disabled-button");
 }
 
-function flipHiddenCard() {
-	// If it's just the initial round, first we need to flip/reveal the hidden dealer card when this is called
-	if (dealerHand.length === 2) {
-		$("#dealer-card-1").addClass("flipped");
-		setTimeout(function(){
-			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
-		}, 250);	
-	} 
-}
-
-function scaleDeck(deck) {
-	
-}
-
+// To update chip and hand totals throughout the game
 function updateVisibleChipBalances() {
 	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
 }
 
 function updateVisibleHandTotals() {
-	$(".hand-total").text(playerHandTotal);
-	$(".split-hand-total").text(playerSplitHandTotal);
+	$(playerHandTotalDisplay).text(playerHandTotal);
+	$(playerSplitHandTotalDisplay).text(playerSplitHandTotal);
 
 	// If the dealer has not played yet or game is not over, only show value of 1st card
 	// as the player is still making their initial moves
@@ -90,15 +79,32 @@ function selectWager(amount){
 	updateVisibleChipBalances();
 }
 
-// Update visible hand totals?? Then can call it for all at once easily
 
-// PAGE/NON GAME INTERACTIONS:
-// Possible to do: Break out page transitional elements into separate JS file
+// 	ANIMATIONS/INTERACTIVITY:
+function flipHiddenCard() {
+	// If it's just the initial round, first we need to flip/reveal the hidden dealer card when this is called
+	if (dealerHand.length === 2) {
+		$("#dealer-card-1").addClass("flipped");
+		setTimeout(function(){
+			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
+		}, 250);	
+	} 
+}
+
+// Used in split game mode, shrinks the inactive deck and totals
+function scaleDownDeck(deck, totalDisplay) {
+	$(totalDisplay).addClass("splithand-scaledown");
+	$(deck).addClass("splithand-scaledown");
+}
+
+// Used in split game mode, enlarges the deck and totals when turn active or when
+// dome with gameplay
+function enlargeDeck(deck, totalDisplay) {
+	$(totalDisplay).removeClass("splithand-scaledown");
+	$(deck).removeClass("splithand-scaledown");
+}
+
 $(".button-collapse").sideNav();	// Materialize functionality
-
-$(function() {
-	$("#rules-tabs").tabs();
-});
 
 $(".rules-nav").click(function(){
 	$("#rules").toggle("blind", 500);
@@ -147,6 +153,3 @@ $(playAgainButton).click(newGame);
 // Local storage for chip balance
 // Prompt user for name?
 // Switch statement for win?
-// Some way to denote which hand they are playing if split
-// Split game -- card deck collapses on each turn?? Click to expand back??
-//   --For each array, loop through ids and change offset to way less?

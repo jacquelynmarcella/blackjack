@@ -82,10 +82,6 @@ footer {
 	position: relative;
 }
 
-#user-split-hand {
-	margin-left: 20px;
-}
-
 .card {
 	transition: all 3s;
 	display: inline-block;
@@ -102,24 +98,6 @@ footer {
 
 .pile {
 	margin-right: 30px;
-}
-
-/* Card animations called using keyframes */
-/* Animation angle different for each */
-#dealer .card {
-	animation: deal-dealer .25s linear;
-}
-
-#user-hand .card {
-	animation: deal-player .5s linear;
-}
-
-#user-split-hand .card {
-	animation: deal-player-split .5s linear;
-}
-
-#dealer .card.flipped {
-	animation: dealer-cardflip .25s linear;
 } 
 
 /* Chips and wagers */
@@ -145,15 +123,10 @@ footer {
 	margin: 20px auto;
 }
 
-.current-wager, .current-chip-balance {
-	display: inline-block;
-}
-
-
 
 /* Gameover scoreboard table */
 table {
-	width: 30%;
+	width: 50%;
 	margin: 0 auto;
 }
 
@@ -185,16 +158,28 @@ table {
 	margin-right: -15px;
 }
 
+
+.current-wager, .current-chip-balance {
+	display: inline-block;
+}
+
+#user-split-hand {
+	margin-left: 20px;
+}
+
 /* For whenever split hand state is engaged */
 
 .splithand-scaledown {
 	transition: all 1s;
-	left: -35px;
-	margin-right: -35px;
+	transform: scale(.75);
+	left: -80px;
+	margin-right: -40px;
 }
 
 #user-hand.splithand-scaledown, #user-split-hand.splithand-scaledown {
 	transform: scale(.4);
+	left: 0;
+	margin-right: -30px;
 }
 
 /* Game button action items */
@@ -234,10 +219,16 @@ table {
 }
 
 .modal { 
+	padding: 40px 0 !important;
 	width: 75% !important; 
-	height: 75% !important;
+	height: 50% !important;
 	opacity: .90 !important;
+	overflow: hidden;
 } 
+
+.modal-content {
+	color: black;
+}
 
 .row {
 	margin: 0 auto;

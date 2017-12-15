@@ -28,7 +28,7 @@ function dealCard(hand, location) {
 	if (index === 0) {
 		cardImage.appendTo($(location));
 	} else if (index > 0) {
-		cardImage.appendTo($(location)).offset({left: -50}).css("margin-right", -50);	
+		cardImage.appendTo($(location)).offset({left: -60}).css("margin-right", -60);	
 	} 
 
 	cardImage.show();
@@ -141,13 +141,8 @@ function changeHand(currentDeckStatus) {
 			currentTurn = "playerSplit";
 
 			// Scale down the player deck as we change turns, but only on split hand
-
-			setTimeout(function(){
-				$(".split-hand-total").removeClass("splithand-scaledown");
-				$(playerSplitGameBoard).removeClass("splithand-scaledown");
-				$(".hand-total").addClass("splithand-scaledown");
-				$(playerGameBoard).addClass("splithand-scaledown");
-				}, 1000);
+			scaleDownDeck(playerGameBoard, playerHandTotalDisplay);
+			enlargeDeck(playerSplitGameBoard, playerSplitHandTotalDisplay);
 
 		} else if (splitGame === false) {
 			currentTurn = "dealer";

@@ -48,3 +48,37 @@
 		transform: none;
   	}
 }
+
+/* For whenever split hand state is engaged */
+
+.splithand-scaledown {
+	transition: all 1s;
+	transform: scale(.75);
+	left: -80px;
+	margin-right: -40px;
+}
+
+#user-hand.splithand-scaledown, #user-split-hand.splithand-scaledown {
+	transform: scale(.4);
+	left: 0;
+	margin-right: -30px;
+}
+
+
+/* Card animations called using keyframes */
+/* Animation angle different for each */
+#dealer .card {
+	animation: deal-dealer .25s linear;
+}
+
+#user-hand .card {
+	animation: deal-player .5s linear;
+}
+
+#user-split-hand .card {
+	animation: deal-player-split .5s linear;
+}
+
+#dealer .card.flipped {
+	animation: dealer-cardflip .25s linear;
+}

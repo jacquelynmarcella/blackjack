@@ -119,7 +119,7 @@ var split = function() {
 	// Shrink the inactive deck to both signal what deck they are playing
 	// and to make room on the board
 	setTimeout(function(){
-		$(playerSplitGameBoard, ".split-hand-total").addClass("splithand-scaledown");
+		scaleDownDeck(playerSplitGameBoard, playerSplitHandTotalDisplay);
 	}, 1000);
 
 
