@@ -15,3 +15,12 @@
 // game-win-logic.js:6 Game over
 // game-win-logic.js:62 Dealer wins
 // Break out aces into further functionality vs next steps
+
+
+
+// When split
+Uncaught TypeError: Cannot read property 'src' of undefined
+    at dealCard (game-play-logic.js:14)
+    at HTMLButtonElement.split (button-actions.js:93)
+    at HTMLButtonElement.dispatch (jquery.min.js:3)
+    at HTMLButtonElement.q.handle (jquery.min.js:3)

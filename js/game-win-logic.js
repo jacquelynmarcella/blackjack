@@ -61,7 +61,7 @@ function gameOver() {
 	}
 	updateChipBalance();
 
-	setTimeout(announceWinner, 2000);
+	setTimeout(announceWinner, 2500);
 } 
 
 function updateChipBalance() {

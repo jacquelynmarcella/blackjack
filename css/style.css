@@ -13,7 +13,7 @@ h1, h2, h3, h4, .brand-logo {
 
 h1 {
 	letter-spacing: 0px;
-	padding-top: .5em;
+	padding-top: .15em;
 	font-size: 4em;
 }
 
@@ -24,18 +24,22 @@ h4 {
 
 p {
 	font-size: 1.25em;
+	line-height: 1.75em;
 }
 
 #welcome p {
-	padding: 5px 70px;
+	width: 50%;
+	margin: 10px auto;
 }
 
 /* Make section for white bg vs green? */
 #rules {
-	border: 2px solid white;
-	border-radius: 30px;
+	background: #0F2725;
 	padding: 20px;
 	margin: 20px auto;
+	text-align: left;
+	display: none; 
+	/* Hidden at start */
 }
 
 /* General styilng for all major sections */
@@ -45,8 +49,17 @@ p {
 	text-align: center;
 	background: white;
 	border-radius: 30px;
-	margin: 10px auto;
-	width: 75%;
+	margin: 20px auto 40px auto;
+	width: 70%;
+}
+
+#rules button {
+	float: right;
+	margin-right: 20px;
+}
+
+#rules h4 {
+	text-align: center;
 }
 
 .game-section h4, .game-section p {
@@ -58,9 +71,9 @@ p {
 	margin: 0 auto;
 }
 
-#deck-pile, #dealer {
+/* Class for all of these? */
+#deck-pile, #dealer, #user-hand, #user-split-hand {
 	display: inline-block;
-	clear: all;
 }
 
 .card {
@@ -152,18 +165,20 @@ p {
 }
 
 #wager-options {
-	padding: 20px 0px;
-}
-
-#user-hand, #user-split-hand {
-	position: relative;
+	padding: 20px 0;
 }
 
 .hand-total, .split-hand-total, .dealer-hand-total {
 	background: black;
-	padding: 10px 40px;
-	margin: 10px;
+	padding: 10px 0;
+	margin: 10px auto;
 	display: inline-block;
+	font-size: 1.25em;
+	text-align: center;
+	width: 50px;
+	position: relative;
+	left: -15px;
+	bottom: 40px;
 }
 
 button {
@@ -174,21 +189,21 @@ button {
 	border: 0;
 	font-size: 1.10em;
 	font-weight: 400;
-	display: inline-block;
 	letter-spacing: 1px;
 }
 
 #sidebar button {
 	width: 75px;
 	height: 75px;
+	overflow: none;
 	padding: 0;
 }
 
 .disabled-button {
-	background: lightgrey;
+	background: #0F2725;
 }
 
-button:focus {
+button:focus, button:active {
 	background: black;
 }
 
@@ -229,10 +244,6 @@ footer {
 	padding-right: 20px !important;
 }
 
-/* Rules to be visible at start, hidden during game play */
-#rules {
-	display: none;
-}
 
 /* Resposive adjustments*/
 
@@ -240,9 +251,16 @@ footer {
 
 	.game-section {
 	padding: 5px;
-	margin: 5px auto;
-	width: 90%;
+	margin: 20px auto;
+	width: 95%;
 	}
 
+	p {
+		font-size: 1.4em;
+	}
+
+	#welcome p {
+	width: 80%;
+	}
 
 }

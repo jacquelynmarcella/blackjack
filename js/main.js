@@ -51,10 +51,10 @@ function enableButton(buttonName, event) {
 function flipHiddenCard() {
 	// If it's just the initial round, first we need to flip/reveal the hidden dealer card when this is called
 	if (dealerHand.length === 2) {
-		$("#dealer-card-1").addClass("flipped")
+		$("#dealer-card-1").addClass("flipped");
 		setTimeout(function(){
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
-		}, 250);	
+		}, 500);	
 	} 
 }
 
@@ -137,16 +137,8 @@ $(playAgainButton).click(newGame);
 // Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
-// Show dealer card total, but dont update until dealer turn
 // Get new deck that works scaled way down
-// Figure out if I can show dealer cards/totals after all
 // Local storage detects first time visit, displays more robust rules/welcome message?
-// Nav a question mark instead of a hamburger
-// Animate flipcard function
 // Local storage for chip balance
 // Prompt user for name?
-// Reset game
-// Animation toggling off and on rules and start game 
 // Switch statement for win?
-// Toggle mobile view of full dealer cards once it is dealer's turn
-// Maybe have condensed/expandable view of this -- or show total and let them expand?

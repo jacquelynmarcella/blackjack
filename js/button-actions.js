@@ -77,8 +77,8 @@ var split = function() {
 	// As well as activate the viewing for the split deck
 	playerHandTotal = playerHandTotal - playerHand[1].value;
 	playerSplitHandTotal = playerHand[1].value;
-	$(playerSplitGameBoard).show();
-	$(".split-hand-total").show();
+	$(".split-hand-total").removeClass("inactive").show(); 
+	$(playerSplitGameBoard).removeClass("inactive").show();
 	updateVisibleHandTotals();
 
 	// Now, move the item out of the array and into the split array
