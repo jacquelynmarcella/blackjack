@@ -86,7 +86,7 @@ function evaluateGameStatus() {
 			reviewAcesValue(playerHand, playerHandTotal);
 		} else if (currentTurn === "playerSplit") {
 			reviewAcesValue(playerSplitHand, playerSplitHandTotal);
-		}		
+		}	
 	}
 
 	if (currentTurn === "player" || "playerSplit") {
@@ -163,13 +163,11 @@ function reviewAcesValue(hand, total) {
 	// Otherwise, default action is to reset value to 1
 	if (total > 21) {
 		if (hand.length === 2) {
-
 			// If the hand length is exactly 2, then they have 2 aces
 			// Prompt them if they want to split or not before automatically reducing value
 			enableButton(splitButton, split);
 			$("#two-aces-prompt").modal("open");
-			return;
-			
+
 			// Can I pass total through here to simplify reduce aces further??
 		} else if (hand.length > 2) {
 			reduceAcesValue(hand);

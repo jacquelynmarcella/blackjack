@@ -122,6 +122,7 @@ footer {
 	width: 40px;
 }
 
+/*For when user is choosing what their bet is */
 #wager-options {
 	margin: 15px auto 5px auto;
 }
@@ -133,6 +134,17 @@ footer {
 	line-height: 1.5em;
 	position: relative;
 	bottom: 10px;
+}
+
+/* For displaying during the game */
+.wager-gameplay {
+	font-size: 2.5em;
+	position: relative;
+	top: 50px;
+}
+
+.wager-gameplay span { 
+	display: block;
 }
 
 /* Gameover scoreboard table */
@@ -211,7 +223,7 @@ table {
 }
 
 .navbar-fixed {
-	margin-bottom: 30px !important;
+	margin-bottom: 25px !important;
 }
 
 .brand-logo { /* Text in nav bar */
@@ -232,7 +244,7 @@ table {
 	max-height: 100% !important;
 } 
 
-.modal-content {
+.modal-content h4, .modal-content p {
 	color: black;
 }
 
@@ -245,6 +257,7 @@ table {
 }
 
 /* Resposive adjustments*/
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
 	.navbar-fixed {
@@ -285,6 +298,26 @@ table {
 
 	.total-output {
 		padding-left: 10px;
+	}
+
+	.wager-gameplay {
+		font-size: 1.75em;
+		position: relative;
+		top: 0;
+		margin: 10px auto;
+	}
+
+	/* Make images smaller on mobile during gameplay */
+	.wager-gameplay .wager {
+		height: 30px;
+		width: 30px;
+	}
+
+	.wager-gameplay span {
+		display: inline-block;
+		position: relative;
+		bottom: 10px
+		margin-left: 20px;
 	}
 
 }
