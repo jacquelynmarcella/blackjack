@@ -1,12 +1,10 @@
-// This file contains the key actions that happen once it has been determined
-// that the game has ended
+// This file contains logic for what happens after the round is determined to be over
 
 function gameOver() {
 
 	isGameOver = true;
-	console.log("Game over");
 
-	// Flip hidden dealer card if applicable (function checks for this)
+	// Flip hidden dealer card if applicable
 	setTimeout(function(){
 		flipHiddenCard();
 	}, 750);
@@ -23,10 +21,8 @@ function gameOver() {
 	// If dealer got 21 exactly
 	if (dealerHandTotal === 21) {
 		if (playerHandTotal === 21 || playerSplitHandTotal === 21) {
-			console.log("There was a draw");
 			gameWinner = "tie";
 		} else {
-			console.log("Dealer wins");
 			gameWinner = "dealer";
 		}
 
@@ -34,58 +30,50 @@ function gameOver() {
 	} else if (dealerHandTotal > 21) {
 
 		if (playerHandTotal <= 21 || playerSplitHandTotal <= 21) {
-			console.log("Player wins");
 			gameWinner = "player";
+		} else {
+			gameWinner = "tie";
 		}
+		// If players both hands are over 21?
 
 	// If the dealer got less than 21
 	} else if (dealerHandTotal < 21) {
 	
 		if (playerHandTotal === 21  || playerSplitHandTotal === 21) {
-			console.log("Player wins");
 			gameWinner = "player";
 		} else if (playerHandTotal < 21 && playerHandTotal > dealerHandTotal) {
-			console.log("Player wins with hand 1");
 			gameWinner = "player";
 		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal > dealerHandTotal) {
-			console.log("Player wins with hand 2");
 			gameWinner = "player";
 		} else if (playerSplitHandTotal < 21 && playerSplitHandTotal === dealerHandTotal ||
 			playerHandTotal < 21 && playerHandTotal === dealerHandTotal) {
 			gameWinner = "tie";
-			console.log("There was a draw");
 		} else {
 			gameWinner = "dealer";
-			console.log("Dealer wins");
 		}
 	}
 	updateChipBalance();
-
-	setTimeout(announceWinner, 2500);
+	setTimeout(announceWinner, 2500); // Slight delay to give time to see the final cards play out
 } 
 
 function updateChipBalance() {
 
 	if (gameWinner === "player") {
 
-		// Check for blackjack scenario for 3:2 payout (requires 1 ace, 1 10pt card)
-		// Noting that typical rules do not give bonuses if the hand has been split,
-		// it would be normal payout
+		// Blackjack is 3:2 payout (and cannot occur on a split deck):
 		if (splitGame === false && playerHasAce === true && playerHandTotal === 21 && playerHand.length === 2) {
-			currentChipBalance += currentWager + currentWager*(3/2);
-		// Otherwise it's a 1:1 payout
+			currentChipBalance += currentWager*(3/2) + currentWager;
+		// Otherwise it's a 1:1 payout:
 		} else {
 			currentChipBalance += currentWager*2;
 		}
 
-	} else if (gameWinner === "dealer") {
-		console.log("No action needed here, dealer gets yo money");
-
-	// Net neutral, you get your money back (I think?)
+	// If you tie, get just original wager back (no win or loss)
 	} else if (gameWinner === "tie") {
 		currentChipBalance += currentWager;		
 	}
-	console.log("New chip balance is " + currentChipBalance);
+
+	// Note: if dealer wins, nothing happens to player chip balance as their wager was already removed from it
 
 	// To update on the screen
 	updateVisibleChipBalances();
@@ -96,17 +84,18 @@ function announceWinner() {
 	updateVisibleHandTotals();
 
 	currentWager = 0;
-	updateVisibleChipBalances();
+	updateVisibleChipBalances(); // Run this again since we want to show wager as back to 0 now for the next round
 
 	$("#game-board").hide();
 
-	// If game was split, scale everything back to normal size
+	// If game was split, will need to scale everything back to normal size
 	enlargeDeck(playerSplitGameBoard, playerSplitHandTotalDisplay);
 	enlargeDeck(playerGameBoard, playerHandTotalDisplay);
 
-	$("#wager-options").appendTo($("#game-over")); // moves betting options to gameover screen to improve gameplay
+	// Move betting options from welcome screen to game over screen to play again
+	$("#wager-options").appendTo($("#game-over")); 
 	$(playAgainButton).appendTo($("#wager-options")); // to move to bottom of container
-	$(startButton).hide(); //since it wouldnt clear it all
+	$(startButton).hide(); // This should only be visible at the very beginning of the game, as it wont clear the board
 	$("#game-over").show("drop", 500);
 
 	if (gameWinner === "player") {
@@ -114,7 +103,7 @@ function announceWinner() {
 	} else if (gameWinner === "dealer") {
 		$("#game-outcome").text("Dealer won");
 	} else if (gameWinner === "tie") {
-		$("#game-outcome").text("There was a tie");
+		$("#game-outcome").text("You tied");
 	}
 
 }

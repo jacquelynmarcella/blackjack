@@ -2,7 +2,7 @@
 var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible cards
 var currentTurn = "player";
 var currentWager = 0;
-var currentChipBalance = 500; //Subject to change based on local storage
+var currentChipBalance = 500; 
 var gameWinner; // To be declared at end of game
 var isGameOver = false;
 
@@ -39,46 +39,44 @@ var standButton = $("#stand-button");
 var splitButton = $(".split-button");
 var playAgainButton = $(".new-game-button"); 
 
-// Function to toggle a button off dependent on gameplay stage
+// Deactivates a button (both event listener and appearance)
 function disableButton(buttonName) {
 	$(buttonName).off();
 	$(buttonName).addClass("disabled-button");
 }
 
+// Activates a button (both event listener and appearance)
 function enableButton(buttonName, event) {
 	$(buttonName).click(event);
 	$(buttonName).removeClass("disabled-button");
 }
 
-// To update chip and hand totals throughout the game
+// Update chip totals displayed to user throughout the game
 function updateVisibleChipBalances() {
 	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
 }
 
+// Update card hand totals displayed to user throughout the game
 function updateVisibleHandTotals() {
 	$(playerHandTotalDisplay).text(playerHandTotal);
 	$(playerSplitHandTotalDisplay).text(playerSplitHandTotal);
 
 	// If the dealer has not played yet or game is not over, only show value of 1st card
 	// as the player is still making their initial moves
-	if (dealerHand.length === 2) {
-		if (isGameOver === false && dealerStatus === "start") {
-			$(".dealer-hand-total").text(dealerHandTotal - dealerHand[1].value);
-		} else {
-			$(".dealer-hand-total").text(dealerHandTotal);
-		}
+	if (dealerHand.length === 2 && isGameOver === false && dealerStatus === "start") {
+		$(".dealer-hand-total").text(dealerHandTotal - dealerHand[1].value);
 	} else {
 		$(".dealer-hand-total").text(dealerHandTotal);
 	}
 
 }
 
+// Called when player clicks on a chip
 function selectWager(amount){
 	currentWager = amount;
 	updateVisibleChipBalances();
 }
-
 
 // 	ANIMATIONS/INTERACTIVITY:
 function flipHiddenCard() {
@@ -104,15 +102,12 @@ function enlargeDeck(deck, totalDisplay) {
 	$(deck).removeClass("splithand-scaledown");
 }
 
-$(".button-collapse").sideNav();	// Materialize functionality
-
 $(".rules-nav").click(function(){
 	$("#rules").toggle("blind", 500);
-	$('.button-collapse').sideNav('hide');
 });
 
 $("#rules-close").click(function(){
-	$("#rules").hide("blind", 500);
+	$("#rules").hide();
 });
 
 $(".modal").modal({ //Materialize modal
@@ -134,7 +129,7 @@ $("#chip-100").click(function(){selectWager(100)});
 
 // Button activation
 $(startButton).click(startGame);
-$(doubleDownButton).click(doubleDown);  //may not want to call this right away?
+$(doubleDownButton).click(doubleDown); 
 $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
@@ -142,9 +137,8 @@ $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, w
 	function(){
 		reduceAcesValue(playerHand);
 }); 
+// Note: split button not included here as it shouldn't be activated automatically
 
-
-// Not calling split button at beginning since it should only be activated in certain situations
 
 // TO DO:
 // Icons for bank, chips

@@ -7,7 +7,7 @@ body {
 	color: white;
 }
 
-h1, h2, h3, h4, .brand-logo {
+h1, h2, h3, h4, h5, .brand-logo {
 	font-family: 'Arvo', serif;
 }
 
@@ -23,6 +23,14 @@ p {
 	font-size: 1.25em;
 	line-height: 1.75em;
 }
+
+strong {
+	font-family: 'Arvo', serif;
+	padding: 4px 0;
+	display: block;
+	font-size: 1.10em;
+}
+
 
 button, button:focus {
 	margin: 5px;
@@ -67,11 +75,6 @@ button:active {
 	text-align: center;
 }
 
-footer {
-	background: #0F2725;
-	padding: 0;
-}
-
 /* Card decks during gameplay */
 
 #deck-pile, #dealer, #user-hand, #user-split-hand {
@@ -111,7 +114,7 @@ footer {
 }
 
 .wager-clickable:hover {
-	transform: translate(0, 10px);
+	transform: scale(1.10);
 }
 
 /* For bet screen where the supporting icons don't need to be full size */
@@ -261,12 +264,12 @@ table {
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
 	.navbar-fixed {
-		margin-bottom: 20px !important;
+		margin-bottom: 10px !important;
 	}
 
 	.game-section {
 		padding: 5px;
-		margin: 20px auto;
+		margin: 10px auto;
 		width: 95%;
 	}
 
@@ -274,8 +277,13 @@ table {
 		font-size: 1.4em;
 	}
 
+
+	table {
+		width: 100%;
+	}
+
 	#welcome p {
-		width: 80%;
+		width: 100%;
 	}
 
 	.card {
@@ -286,10 +294,7 @@ table {
 	#sidebar button {
 		width: 70px;
 		height: 50px;
-	}
-
-	table {
-		width: 100%;
+		font-size: .80em;
 	}
 
 	.total-label {

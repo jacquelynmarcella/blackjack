@@ -1,4 +1,4 @@
-// This file contains the main logic utilized during active gameplay
+// This file contains the main logic utilized during active gameplay, before the game is declared over
 
 // Can put player or dealer into function to make this action work for both
 function dealCard(hand, location) {
@@ -8,16 +8,17 @@ function dealCard(hand, location) {
 
 	// Sometimes it claims this is undefined, so needed to set more parameters
 	// though they may seem redundant
-	var index;
-	if (hand.length === 1) {
-		index = 0;
-	} else if (hand.length > 1) {
-		index = hand.length - 1;
-	}
+	var index = hand.length - 1;
 
-	console.log(hand);
+	// if (hand.length === 1) {
+	// 	index = 0;
+	// } else if (hand.length > 1) {
+	// 	index = 
+	// }
 
-	console.log("Card selected is " + hand[index].src + " " + hand[index].name + " " + hand[index].suit);
+	// console.log(hand);
+
+	// console.log("Card selected is " + hand[index].src + " " + hand[index].name + " " + hand[index].suit);
 
 	// Create card image for card drawn and place in player/dealer's card section
 	// Hide it initially so it doesn't show right away and we can control the transition
@@ -34,10 +35,24 @@ function dealCard(hand, location) {
 	cardImage.show();
 	
 	// Update total count of cards in hand based on who is playing
-	if (currentTurn === "player" || currentTurn === "playerSplit") {
+
+	// Add total into params
+	// dealCard(hand, location, total)
+
+	// NEW CODE IDEA:
+	// total += hand[index].value;
+	// cardImage.attr("id", currentTurn + "-card-" + index);
+
+	// if (currentTurn === "dealer" && hand.length === 2) {
+	// 	cardImage.attr("src", "img/card_back.png");
+	// }
+
+	// if (hand[index].name === "ace" && currentTurn != "dealer") {
+	// 	playerHasAce = true;
+	// }
 
 		// Make note of if there's aces or not in the active deck
-		if (hand[index].name === "ace") {
+		if (hand[index].name === "ace" && currentTurn != "dealer") {
 			playerHasAce = true;
 		}
 
@@ -51,7 +66,6 @@ function dealCard(hand, location) {
 		} else if (currentTurn === "playerSplit") {
 			playerSplitHandTotal += hand[index].value;
 			cardImage.attr("id", "player-split-card-" + index);
-		}
 
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
@@ -71,9 +85,9 @@ function dealCard(hand, location) {
 
 function evaluateGameStatus() {
 
-	console.log("Dealer: " + dealerHandTotal + " | Player : " + playerHandTotal + " | Split Player: " + playerSplitHandTotal);
 	// Player can only do double down after first 2 cards drawn
 	// But in a split game, want to give them a chance after the deck is split right?
+	// Can this move up to deal card??
 	if (playerHand.length === 3 || dealerStatus === "hit") {
 		disableButton(doubleDownButton);
 		disableButton(splitButton);
@@ -81,6 +95,29 @@ function evaluateGameStatus() {
 
 	// First, if the player has gone over 21 check if they have aces and adjust to
 	// from 11 to 1 if we need to
+
+	// NEW CODE IDEA:
+	// // pass in playerhand, playerhandtotal values, playerstatus?
+	// if (currentTurn != "dealer" && playerHasAce === true && hand.total > 21) {
+
+		// if (hand.length === 2) {
+
+		// 	enableButton(splitButton, split);
+		// 	$("#two-aces-prompt").modal("open");
+
+		// } else if (hand.length > 2) {
+		// 	reduceAcesValue(playerhand, playerhandtotal);
+		// }
+
+	// 	return;
+	// } else if (currentTurn != "dealer" && playerhasAce === false) {
+	// 	isPlayerDone();
+	// } else if (currentTurn === "dealer" && dealerStatus === "hit") {
+	// 	dealerPlay();
+	// }
+
+
+
 	if (playerHasAce === true && currentTurn === "player" || currentTurn === "playerSplit") {
 		if (currentTurn === "player") {
 			reviewAcesValue(playerHand, playerHandTotal);
@@ -99,6 +136,18 @@ function evaluateGameStatus() {
 }
 
 function isPlayerDone() {
+
+
+	// NEW CODE:
+	// pass in playerhand, playerhandtotal values, playerstatus...
+	// if (hand.total >= 21) {
+	// 	if (splitGame === false) {
+	// 		gameOver();
+	// 	} else if (splitgame === true) {
+
+	// 	}
+	// }
+
 
 	if (splitGame === false && playerHandTotal >= 21) {
 		gameOver();
@@ -171,6 +220,7 @@ function reviewAcesValue(hand, total) {
 			// Can I pass total through here to simplify reduce aces further??
 		} else if (hand.length > 2) {
 			reduceAcesValue(hand);
+			//evaluateGameStatus(pluginvalues);
 		}
 	}
 }
@@ -193,6 +243,7 @@ function reduceAcesValue(deck) {
 			}
 
 			updateVisibleHandTotals();
+			//evaluategameStatus again
 			Materialize.toast("Your ace value changed from 11 to 1", 4000);
 		}
 	}
