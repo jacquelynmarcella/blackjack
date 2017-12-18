@@ -26,7 +26,9 @@ function gameOver() {
 	// If dealer got over 21
 	} else if (dealerHandTotal > 21) {
 
-		if (playerHandTotal <= 21 || playerSplitHandTotal <= 21) {
+		if (playerHandTotal <= 21) {
+			gameWinner = "player";
+		} else if (splitGame === true && playerSplitHandTotal <= 21) {
 			gameWinner = "player";
 		} else {
 			gameWinner = "tie";
