@@ -22,7 +22,7 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
 ## :diamonds: Process
 1. Stubbed out overall game board structure and integrated initial card data.
     * Plotted out rules, dealer/player decks, hand totals, and key action buttons.
-    * Installed Materialize framework and created grid system to scale for smaller screen sizes as I went.
+    * Installed Materialize framework and created grid system, which I utilized throughout the whole project to routinely check for how the integrated content was scaling smaller screen sizes.
     * Created cards.js file to store full deck of cards including images, value, and name.
 1. Generated start game functionality to get the cards on the board.
     * Randomly sort the array to "shuffle" the deck.
@@ -36,6 +36,7 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
     * Default value for aces is 11, however, if the user goes over 21 the aces will reduce to 1.
     * Got initial working win logic up, which was adjusted several times.
 1. Added in chip betting functionality and ongoing chip balance total tracking.
+   * Added in double down functionality once the betting process was up and running.
 1. Added split card functionality (required a lot of reworking of win logic and player interactions since there are now 2 decks).
 1. Worked through automated turn switching functionality to keeps the game moving if the player goes over 21 on their current deck (without them needing to press "stand").
 1. Added toggling in/out of rules functionality using jQuery UI plugin.
