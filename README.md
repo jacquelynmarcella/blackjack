@@ -35,15 +35,15 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
 1. Added in chip betting functionality and ongoing chip balance total tracking.
    * Added in double down functionality once the betting process was up and running.
 1. Added split card functionality (required a lot of reworking of win logic and player interactions since there are now 2 decks).
-1. Worked through automated turn switching functionality to keeps the game moving if the player goes over 21 on their current deck (without them needing to press "stand").
+1. Worked through automated turn switching functionality to keep the game moving if the player goes over 21 on their current deck (without them needing to press "stand").
 1. Worked on an announce winner screen that shows who won, current chip balance, and final hand totals.
    * Implemented play again button to reset card deck values and start a new game.
-1. Added toggling in/out of rules functionality using jQuery UI plugin.
-1. Implemented CSS animations and transitions using keyframes to add more engaging animations to the game.
+1. Added ability to toggle in/out rules section using jQuery UI plugin.
+1. Implemented CSS animations and transitions using keyframes to make the card game feel more interactive.
    * Dealer's second card appears to flip over when it is eventually displayed.
    * Cards move in on the screen and appear to be coming out of the deck.
    * Got cards to dynamically stack using offset properties as they are added in the JavaScript.
-   * If the deck is split, the inactive deck scales down to both signify to the user what deck they are currently on, as well as make room on the page to fit both decks. When the user moves onto the second deck, the prior deck scales down and the new deck scales up.
+   * If the deck is split, the inactive deck scales down to both signify to the user what deck they are currently on, as well as make room on the page to fit both decks. When the user moves onto the second deck, the first deck scales down and the second deck scales up.
    * Set timeouts regularly to give a chance for these animations to complete before moving on to the next move.
 1. Added modal for the rare chance that a player draws 2 aces - they need to be able to choose to split or not before the game automatically reduces their aces to value 1.
 1. Further adjusted and tested layout for responsiveness using the Materialize framework. Currently working decently on mobile, but tablet may be iffy.
@@ -55,6 +55,7 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
 * Finish responsive scaling for tablet size devices, as the mobile preview works but tablet could use some work.
 
 ## :diamonds: Resources Used
+* CSS Framework: http://materializecss.com/
 * Card Deck Graphics: https://opengameart.org/content/cards-set
 * Chip Icons: 
    * https://thenounproject.com/dorxela/
