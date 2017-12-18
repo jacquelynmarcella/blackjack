@@ -4,13 +4,10 @@ function gameOver() {
 
 	isGameOver = true;
 
-	// Flip hidden dealer card if applicable
+	// Flip hidden dealer card and update total if needed
 	setTimeout(function(){
 		flipHiddenCard();
 	}, 750);
-
-	// Update any totals (show the hidden card value now if they hadn't played yet)
-	updateVisibleHandTotals();
 
 	// Make sure all key buttons disabled (may have already been depending on prior gameplay)
 	disableButton(standButton);
@@ -34,7 +31,6 @@ function gameOver() {
 		} else {
 			gameWinner = "tie";
 		}
-		// If players both hands are over 21?
 
 	// If the dealer got less than 21
 	} else if (dealerHandTotal < 21) {
@@ -75,7 +71,6 @@ function updateChipBalance() {
 
 	// Note: if dealer wins, nothing happens to player chip balance as their wager was already removed from it
 
-	// To update on the screen
 	updateVisibleChipBalances();
 }
 
@@ -88,7 +83,7 @@ function announceWinner() {
 
 	$("#game-board").hide();
 
-	// If game was split, will need to scale everything back to normal size
+	// If game was split, will need to make sure everything is scaled back to normal size
 	enlargeDeck(playerSplitGameBoard, playerSplitHandTotalDisplay);
 	enlargeDeck(playerGameBoard, playerHandTotalDisplay);
 

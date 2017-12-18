@@ -85,6 +85,7 @@ function flipHiddenCard() {
 		$("#dealer-card-1").addClass("flipped");
 		setTimeout(function(){
 			$("#dealer-card-1").attr("src", "img/" + dealerHand[1].src);
+			updateVisibleHandTotals();
 		}, 250);	
 	} 
 }
@@ -112,7 +113,7 @@ $("#rules-close").click(function(){
 	$("#rules").hide();
 });
 
-//Materialize modal
+// Materialize modal
 $(".modal").modal({ 
       dismissible: false, 
       opacity: .40, 
@@ -143,10 +144,3 @@ $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, w
 		reduceAcesValue(playerHand);
 		disableButton(splitButton, split);
 }); 
-
-
-
-// TO DO:
-// Icons for bank, chips
-// Switch statement for win?
-// Read me

@@ -177,7 +177,7 @@ table {
 	width: 50px;
 }
 
-/* On the gameboard, these totals get positioned differently over the decks*/
+/* On the gameboard, these totals get positioned differently over the decks */
 .game-board-totals {
 	position: relative;
 	left: -15px;
@@ -299,16 +299,17 @@ table {
 		padding-left: 10px;
 	}
 
+	.wager-gameplay {
+		font-size: 1.75em;
+		position: relative;
+		top: 0;
+		margin: 10px auto;
+	}
+
+	/* Make images smaller on mobile during gameplay */
 	.wager-gameplay .wager {
 		height: 30px;
 		width: 30px;
-	}
-
-	.wager-gameplay {
-		font-size: 1.5em;
-		position: relative;
-		top: 0;
-		margin: 5px auto;
 	}
 
 	.wager-gameplay span {
@@ -316,16 +317,6 @@ table {
 		margin-left: 20px;
 		position: relative;
 		bottom: 10px;
-	}
-
-	#wager-options span {
-		margin: 7px auto;
-		font-size: 1.5em;
-		line-height: 1em;
-	}
-
-	.wager-clickable {
-		margin: 5px 2px;
 	}
 
 }
