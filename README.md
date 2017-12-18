@@ -2,13 +2,10 @@
 A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 without going over.
 
 ## :diamonds: Requirements
-* Game is playable    
-* Game is two-player (or AI)
-* Game is winnable    
-* Winner is displayed 
-* Has directions on how to play    
-* Appropriate Use of GitHub   
-* Deployed on Github Pages    
+* Game is playable as either two player or AI
+* Game is winnable and winner is displayed 
+* Game has directions on how to play    
+* Appropriate Use of GitHub and deployed on Github Pages    
 * Long files appropriately split up   
 * Appropriate use of functions
 * DRY Code    
