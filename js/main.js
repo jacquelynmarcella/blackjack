@@ -1,5 +1,5 @@
 // Starting game board values
-var cardsInDeck; // Will be pulling from cards.js file of full list of possible cards
+var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible cards
 var currentTurn = "player";
 var currentWager = 0;
 var currentChipBalance = 500; 

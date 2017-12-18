@@ -17,7 +17,7 @@ var startGame = function() {
 		$(".brand-logo").text("blackjack"); //Adds title to nav once off welcome screen
 		$("#game-board").show("fade", 1000);
 
-		// Pull in cards, then shuffles the card deck array
+		// Then shuffles the card deck array
 		cardsInDeck = cards;
 		cardsInDeck.sort(function() 
 			{return 0.5 - Math.random()});
@@ -28,9 +28,9 @@ var startGame = function() {
 
 			setTimeout(function(){
 				currentTurn = "player";
-				dealCard(playerHand, playerGameBoard, playerHandTotal);
+				dealCard(playerHand, playerGameBoard);
 				currentTurn = "dealer";
-				dealCard(dealerHand, dealerGameBoard, dealerHandTotal);
+				dealCard(dealerHand, dealerGameBoard);
 			}, i*1500);
 		}
 
@@ -87,7 +87,7 @@ var split = function() {
 	playerSplitHand.push(splitCard);
 
 	// And move the image on the game board
-	var cardImage = $("#player-card-1").attr("id", "player-split-card-0");
+	var cardImage = $("#player-card-1").attr("id", "playerSplit-card-0");
 	cardImage.hide(); // Hide it at first to allow for the transition to occur
 	// This is the first card in the deck, so want to cancel out the previous offset/stacking
 	cardImage.appendTo($(playerSplitGameBoard)).offset({left: 60}).css("margin-right", "auto").show();
@@ -122,7 +122,9 @@ function doubleDown() {
 }
 
 function newGame() {
-	// when playAgainButton clicked, we need to clear out all the prior game data	
+	// when playAgainButton clicked, we need to clear out all the prior game data
+
+	currentTurn = "player";
 	gameWinner = "none";
 
 	dealerHand = [];

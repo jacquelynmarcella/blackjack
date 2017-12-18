@@ -105,5 +105,4 @@ function announceWinner() {
 	} else if (gameWinner === "tie") {
 		$("#game-outcome").text("You tied");
 	}
-
 }
