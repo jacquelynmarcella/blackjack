@@ -17,7 +17,8 @@ var startGame = function() {
 		$(".brand-logo").text("blackjack"); //Adds title to nav once off welcome screen
 		$("#game-board").show("fade", 1000);
 
-		// Then shuffles the card deck array
+		// Pull in cards, then shuffles the card deck array
+		cardsInDeck = cards;
 		cardsInDeck.sort(function() 
 			{return 0.5 - Math.random()});
 
@@ -27,9 +28,9 @@ var startGame = function() {
 
 			setTimeout(function(){
 				currentTurn = "player";
-				dealCard(playerHand, playerGameBoard);
+				dealCard(playerHand, playerGameBoard, playerHandTotal);
 				currentTurn = "dealer";
-				dealCard(dealerHand, dealerGameBoard);
+				dealCard(dealerHand, dealerGameBoard, dealerHandTotal);
 			}, i*1500);
 		}
 
@@ -121,10 +122,7 @@ function doubleDown() {
 }
 
 function newGame() {
-	// when playAgainButton clicked, we need to clear out all the prior game data
-
-	cardsInDeck = cards;	
-	currentTurn = "player";
+	// when playAgainButton clicked, we need to clear out all the prior game data	
 	gameWinner = "none";
 
 	dealerHand = [];

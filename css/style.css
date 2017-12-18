@@ -264,7 +264,7 @@ table {
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
 	.navbar-fixed {
-		margin-bottom: 10px !important;
+		margin-bottom: 8px !important;
 	}
 
 	.game-section {
@@ -320,9 +320,9 @@ table {
 
 	.wager-gameplay span {
 		display: inline-block;
-		position: relative;
-		bottom: 10px
 		margin-left: 20px;
+		position: relative;
+		bottom: 10px;
 	}
 
 }

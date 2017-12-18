@@ -1,85 +1,58 @@
 // This file contains the main logic utilized during active gameplay, before the game is declared over
-
 // Can put player or dealer into function to make this action work for both
-function dealCard(hand, location) {
+function dealCard(hand, location, handTotal) {
 	// Take the card out of the main array and add to the player or dealer's card deck array
 	var cardDrawn = cardsInDeck.pop();
 	hand.push(cardDrawn);
-
-	// Sometimes it claims this is undefined, so needed to set more parameters
-	// though they may seem redundant
 	var index = hand.length - 1;
-
-	// if (hand.length === 1) {
-	// 	index = 0;
-	// } else if (hand.length > 1) {
-	// 	index = 
-	// }
-
-	// console.log(hand);
-
-	// console.log("Card selected is " + hand[index].src + " " + hand[index].name + " " + hand[index].suit);
 
 	// Create card image for card drawn and place in player/dealer's card section
 	// Hide it initially so it doesn't show right away and we can control the transition
 	var cardImage = $("<img>").attr("class", "card").attr("src", "img/" + hand[index].src).hide();
+	cardImage.attr("id", currentTurn + "-card-" + index);
+	console.log(cardImage);
 
 	// To create stacked card effect
-	// May need to adjust sizing after new deck input
 	if (index === 0) {
 		cardImage.appendTo($(location));
 	} else if (index > 0) {
 		cardImage.appendTo($(location)).offset({left: -60}).css("margin-right", -60);	
 	} 
-
 	cardImage.show();
+
+	// For only the dealer's second card, we want it to show as the card back until it's flipped
+	if (currentTurn === "dealer" && hand.length === 2) {
+		cardImage.attr("src", "img/card_back.png");
+	}
+
+	// Make note of if there's aces or not in the active deck
+	if (hand[index].name === "ace" && currentTurn != "dealer") {
+		playerHasAce = true;
+	}
 	
-	// Update total count of cards in hand based on who is playing
 
-	// Add total into params
-	// dealCard(hand, location, total)
+	// Put into the correct player's hand deck dependent on if deck was split
+	if (currentTurn === "player") {
+		playerHandTotal += hand[index].value;
 
-	// NEW CODE IDEA:
-	// total += hand[index].value;
-	// cardImage.attr("id", currentTurn + "-card-" + index);
-
-	// if (currentTurn === "dealer" && hand.length === 2) {
-	// 	cardImage.attr("src", "img/card_back.png");
-	// }
-
-	// if (hand[index].name === "ace" && currentTurn != "dealer") {
-	// 	playerHasAce = true;
-	// }
-
-		// Make note of if there's aces or not in the active deck
-		if (hand[index].name === "ace" && currentTurn != "dealer") {
-			playerHasAce = true;
-		}
-
-		// Put into the correct player's hand deck dependent on if deck was split
-		if (currentTurn === "player") {
-			playerHandTotal += hand[index].value;
-			cardImage.attr("id", "player-card-" + index);
-			if (splitGame === true) {
-			}
-
-		} else if (currentTurn === "playerSplit") {
-			playerSplitHandTotal += hand[index].value;
-			cardImage.attr("id", "player-split-card-" + index);
+	} else if (currentTurn === "playerSplit") {
+		playerSplitHandTotal += hand[index].value;
 
 	} else if (currentTurn === "dealer") {
 		dealerHandTotal += hand[index].value;
-		cardImage.attr("id", "dealer-card-" + index);
-		
-		// Second card only for dealer should show face down, so need to do just this one as the card back
-		if (dealerHand.length === 2) {
-			cardImage.attr("src", "img/card_back.png");
-		}
 	}
+
+	// Update the totals 
+	var cardValue = hand[index].value; // (we need to be able to return this, so it's a separate function)
+	updateTotal(handTotal, cardValue);
 	updateVisibleHandTotals();
 	evaluateGameStatus();
 }
 
+function updateTotal(handTotal, cardValue) {
+	handTotal += cardValue;
+	return handTotal;
+}
 
 //POSSIBLE LAYOUT FOR FUNCTION
 
