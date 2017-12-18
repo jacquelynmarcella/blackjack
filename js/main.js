@@ -3,7 +3,7 @@ var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible c
 var currentTurn = "player";
 var currentWager = 0;
 var currentChipBalance = 500; 
-var gameWinner; // To be declared at end of game
+var gameWinner = "none"; // To be declared at end of game
 var isGameOver = false;
 
 // Dealer hand and starting totals
@@ -102,15 +102,18 @@ function enlargeDeck(deck, totalDisplay) {
 	$(deck).removeClass("splithand-scaledown");
 }
 
+// Toggling rules from main nav gives an animation effect
 $(".rules-nav").click(function(){
 	$("#rules").toggle("blind", 500);
 });
 
+// But clicking close does not provide an animation effect
 $("#rules-close").click(function(){
 	$("#rules").hide();
 });
 
-$(".modal").modal({ //Materialize modal
+//Materialize modal
+$(".modal").modal({ 
       dismissible: false, 
       opacity: .40, 
       inDuration: 300, 
@@ -133,17 +136,17 @@ $(doubleDownButton).click(doubleDown);
 $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
+// Note: split button not included here as it shouldn't be activated automatically
+
 $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, would only be reducing in 1st deck
 	function(){
 		reduceAcesValue(playerHand);
+		disableButton(splitButton, split);
 }); 
-// Note: split button not included here as it shouldn't be activated automatically
+
 
 
 // TO DO:
 // Icons for bank, chips
-// Prompt user for name?
 // Switch statement for win?
-// Scale down reduce aces function possibly?
 // Read me
-// Rules

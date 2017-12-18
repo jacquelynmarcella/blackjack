@@ -11,7 +11,6 @@ function dealCard(hand, location) {
 	// Hide it initially so it doesn't show right away and we can control the transition
 	var cardImage = $("<img>").attr("class", "card").attr("src", "img/" + hand[index].src).hide();
 	cardImage.attr("id", currentTurn + "-card-" + index);
-	console.log(cardImage);
 
 	// To create stacked card effect
 	// May need to adjust sizing after new deck input
@@ -27,6 +26,7 @@ function dealCard(hand, location) {
 	}
 
 	// Put into the correct player's hand deck dependent on if deck was split
+	// Tried to dry this out by putting totals as a param but it wasn't quite working
 	if (currentTurn === "player") {
 		playerHandTotal += hand[index].value;
 	} else if (currentTurn === "playerSplit") {
@@ -52,8 +52,7 @@ function evaluateGameStatus() {
 	// Player can only split or double down after 
 	if (playerHand.length === 3 || dealerStatus === "hit") {
 		disableButton(doubleDownButton);
-		if (playerSplitHand.length > 0)
-		{
+		if (playerSplitHand.length > 0) {
 			disableButton(splitButton);
 		}	
 	}
@@ -150,6 +149,8 @@ function reviewAcesValue(hand, total) {
 			reduceAcesValue(hand);
 			isPlayerDone();
 		}
+	} else if (total <= 21) {
+		isPlayerDone();
 	}
 }
 
@@ -171,9 +172,8 @@ function reduceAcesValue(deck) {
 			}
 
 			updateVisibleHandTotals();
-			//evaluategameStatus again
 			Materialize.toast("Your ace value changed from 11 to 1", 4000);
-		}
+		}	
 	}
 }
 

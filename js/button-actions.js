@@ -17,7 +17,7 @@ var startGame = function() {
 		$(".brand-logo").text("blackjack"); //Adds title to nav once off welcome screen
 		$("#game-board").show("fade", 1000);
 
-		// Then shuffles the card deck array
+		// Shuffles the card deck array
 		cardsInDeck = cards;
 		cardsInDeck.sort(function() 
 			{return 0.5 - Math.random()});
@@ -89,7 +89,7 @@ var split = function() {
 	// And move the image on the game board
 	var cardImage = $("#player-card-1").attr("id", "playerSplit-card-0");
 	cardImage.hide(); // Hide it at first to allow for the transition to occur
-	// This is the first card in the deck, so want to cancel out the previous offset/stacking
+	// This is the first card in the deck, so want to cancel out the previous offset/stacking and have it go to the initial normal spot
 	cardImage.appendTo($(playerSplitGameBoard)).offset({left: 60}).css("margin-right", "auto").show();
 
 	// Double the original wager when they split
@@ -102,7 +102,6 @@ var split = function() {
 	dealCard(playerHand, playerGameBoard);
 	currentTurn = "playerSplit";
 	dealCard(playerSplitHand, playerSplitGameBoard);
-	currentTurn = "player"; 
 
 	// Make split button no longer clickable as in this game you can only split once
 	disableButton(splitButton);
@@ -110,6 +109,7 @@ var split = function() {
 	// Shrink the inactive deck to both signal what deck they are playing and to make room on the board
 	setTimeout(function(){
 		scaleDownDeck(playerSplitGameBoard, playerSplitHandTotalDisplay);
+		currentTurn = "player"; 
 	}, 1000);
 
 }
@@ -124,7 +124,6 @@ function doubleDown() {
 function newGame() {
 	// when playAgainButton clicked, we need to clear out all the prior game data
 
-	currentTurn = "player";
 	gameWinner = "none";
 
 	dealerHand = [];
