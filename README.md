@@ -36,9 +36,9 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
    * Added in double down functionality once the betting process was up and running.
 1. Added split card functionality (required a lot of reworking of win logic and player interactions since there are now 2 decks).
 1. Worked through automated turn switching functionality to keeps the game moving if the player goes over 21 on their current deck (without them needing to press "stand").
-1. Added toggling in/out of rules functionality using jQuery UI plugin.
 1. Worked on an announce winner screen that shows who won, current chip balance, and final hand totals.
    * Implemented play again button to reset card deck values and start a new game.
+1. Added toggling in/out of rules functionality using jQuery UI plugin.
 1. Implemented CSS animations and transitions using keyframes to add more engaging animations to the game.
    * Dealer's second card appears to flip over when it is eventually displayed.
    * Cards move in on the screen and appear to be coming out of the deck.
