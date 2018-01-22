@@ -306,7 +306,6 @@ table {
 		margin: 10px auto;
 	}
 
-	/* Make images smaller on mobile during gameplay */
 	.wager-gameplay .wager {
 		height: 30px;
 		width: 30px;

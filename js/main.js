@@ -125,7 +125,6 @@ $(".modal").modal({
   );
 
 // EVENT LISTENERS:
-// Adjust wager based on chip clicked
 $("#chip-10").click(function(){selectWager(10)});
 $("#chip-25").click(function(){selectWager(25)});
 $("#chip-50").click(function(){selectWager(50)});
@@ -137,7 +136,6 @@ $(doubleDownButton).click(doubleDown);
 $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
-// Note: split button not included here as it shouldn't be activated automatically
 
 $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, would only be reducing in 1st deck
 	function(){
