@@ -1,6 +1,7 @@
 // This file contains key interactions that will occur after the player has clicked a button
 
 var startGame = function() {
+	getCards();
 	if (currentWager === 0) {
 		Materialize.toast("You must select a bet to play", 1000);
 	} else {
@@ -11,8 +12,7 @@ var startGame = function() {
 		$(".brand-logo").text("blackjack"); 
 		$("#game-board").show("fade", 1000);
 		cardsInDeck = cards;
-		cardsInDeck.sort(function() 
-			{return 0.5 - Math.random()});
+		cardsInDeck.sort(function() {return 0.5 - Math.random()});
 		for (let i = 0; i <= 1; i++) {
 			setTimeout(function(){
 				currentTurn = "player";
@@ -26,7 +26,8 @@ var startGame = function() {
 			if (playerHand.length === 2 && playerHand[0].name === playerHand[1].name) {
 				enableButton(splitButton, split);
 			}
-		}, 2100);
+		}, 2500);
+			
 	}
 }
 
@@ -92,6 +93,8 @@ function doubleDown() {
 }
 
 function newGame() {
+	getCards();
+	cardsInDeck = cards;
 	gameWinner = "none";
 	dealerHand = [];
 	dealerHandTotal = 0;
@@ -108,8 +111,7 @@ function newGame() {
 
 	if (currentWager === 0) { 
 		Materialize.toast("You must select a bet to play", 1000);
-	} else {
-		updateVisibleHandTotals();
+	} else {	
 		$(playerSplitGameBoard).hide();
 		$(".split-hand-total").hide();
 		enableButton(standButton, stand);
@@ -118,6 +120,7 @@ function newGame() {
 		dealerGameBoard.empty();
 		playerGameBoard.empty();
 		playerSplitGameBoard.empty();
-		startGame(); 
+		updateVisibleHandTotals();
+		startGame(); 		
 	}
 }

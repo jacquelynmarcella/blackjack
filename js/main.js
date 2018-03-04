@@ -1,8 +1,15 @@
 // Starting game board values
-var cardsInDeck = cards;	//Pulling from cards.js file of full list of possible cards
+var cardsInDeck;
+
+$( document ).ready(function() {
+  getCards();
+  cardsInDeck = cards;
+  updateVisibleChipBalances();
+});
+
 var currentTurn = "player";
 var currentWager = 0;
-var currentChipBalance = 500; 
+var currentChipBalance = localStorage.getItem('blackjackChips') || 500;
 var gameWinner = "none"; // To be declared at end of game
 var isGameOver = false;
 
@@ -55,6 +62,7 @@ function enableButton(buttonName, event) {
 function updateVisibleChipBalances() {
 	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
+	localStorage.setItem('blackjackChips', currentChipBalance);
 }
 
 // Update card hand totals displayed to user throughout the game

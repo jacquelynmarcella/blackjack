@@ -59,11 +59,17 @@ button:active {
 
 /* Rules section hidden at start and can toggle in from above */
 #rules {
-	padding: 20px;
-	margin: 20px auto 30px auto;
+	padding: 30px 20px 20px 20px;
+/*	margin: 20px auto 30px auto;*/
 	text-align: left;
 	display: none; 
 	background: #0F2725;
+	position: absolute;
+	top: 55px;
+	right: 0;
+	width: 100%;
+	z-index: 99;
+	font-size: .75em;
 }
 
 #rules button {
@@ -260,11 +266,24 @@ table {
 }
 
 /* Resposive mobile adjustments*/
+@media all and (max-width: 600px){
+	.wager-gameplay {
+		top: 0;
+	}
+}
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
 	.navbar-fixed {
 		margin-bottom: 8px !important;
+	}
+
+	.game-board h4 {
+		font-size: 1.25em;
+	}
+
+	.game-over h3 {
+		font-size: 2.25em;
 	}
 
 	p {
