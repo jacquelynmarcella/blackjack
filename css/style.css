@@ -331,6 +331,7 @@ table {
 	}
 
 	.wager-gameplay span {
+		font-size: 1.25em;
 		display: inline-block;
 		margin-left: 20px;
 		position: relative;
