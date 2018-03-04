@@ -3,8 +3,11 @@ https://jacquelynmarcella.github.io/blackjack/
 
 A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 without going over.
 
+![](http://www.jacquelynmarcella.com/img/blackjack-1.jpg)
+![](http://www.jacquelynmarcella.com/img/blackjack-mobile.jpg)
+
 ## :diamonds: Requirements
-* Game is playable as either two player or AI
+* Game is playable against dealer
 * Game is winnable and winner is displayed 
 * Game has directions on how to play    
 * Appropriate Use of GitHub and deployed on Github Pages    
@@ -48,13 +51,11 @@ A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 wit
    * If the deck is split, the inactive deck scales down to both signify to the user what deck they are currently on, as well as make room on the page to fit both decks. When the user moves onto the second deck, the first deck scales down and the second deck scales up.
    * Set timeouts regularly to give a chance for these animations to complete before moving on to the next move.
 1. Added modal for the rare chance that a player draws 2 aces - they need to be able to choose to split or not before the game automatically reduces their aces to value 1.
-1. Further adjusted and tested layout for responsiveness using the Materialize framework. Currently working decently on mobile, but tablet may be iffy.
+1. Further adjusted and tested layout for responsiveness using the Materialize framework.
+1. Added local storage to chip balance.
 
 ## :diamonds: Next Steps
-* Several areas where I would like code to be more dry.
 * Further test the double ace drawing scenario to ensure it is working consistently.
-* Occasional bug occurs where the cards.js deck doesn't load in, if this continues to happen at random intervals would like to get this fixed.
-* Finish responsive scaling for tablet size devices, as the mobile preview works but tablet could use some work.
 
 ## :diamonds: Resources Used
 * CSS Framework: http://materializecss.com/
