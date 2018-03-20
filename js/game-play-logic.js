@@ -126,12 +126,11 @@ function reduceAcesValue(deck) {
 			deck[i].value = 1;
 			if (currentTurn === "player") {
 				playerHandTotal -= 10;
-
 			} else if (currentTurn === "playerSplit") {
 				playerSplitHandTotal -= 10;
 			}
 			updateVisibleHandTotals();
-			Materialize.toast("Your ace value changed from 11 to 1", 4000);
+			Materialize.toast("Your ace value changed from 11 to 1", 1500);
 		}	
 	}
 }
