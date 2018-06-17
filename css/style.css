@@ -43,11 +43,15 @@ button, button:focus {
 	border: 0;
 }
 
+button.secondary {
+	background: #1E6692;
+}
+
 button:active {
 	background: black;
 }
 
-.disabled-button {
+button.disabled-button, button.secondary.disabled-button {
 	background: #0F2725;
 }
 
