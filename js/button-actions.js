@@ -90,10 +90,15 @@ var split = function() {
 }
 
 function doubleDown() {
-	currentChipBalance -= currentWager; //subtracts the same value again from current balance
-	currentWager = currentWager * 2;
-	updateVisibleChipBalances();
-	disableButton(doubleDownButton);
+	if (currentChipBalance - currentWager <= 0) {
+		Materialize.toast("Insufficient chip balance" , 1000);
+	}
+	else {
+		currentChipBalance -= currentWager; //subtracts the same value again from current balance
+		currentWager = currentWager * 2;
+		updateVisibleChipBalances();
+		disableButton(doubleDownButton);
+	}
 }
 
 function newGame() {
